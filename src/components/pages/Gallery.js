@@ -35,7 +35,7 @@ function Gallery(props) {
             }
             else
             {
-                $(".filter").not('.'+value).hide('4000');
+                $(".filter").not('.'+value).hide('fast');
                 $('.filter').filter('.'+value).fadeIn('8000');
                 
             }

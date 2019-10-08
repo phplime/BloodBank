@@ -1,8 +1,6 @@
 npm install react-loader-spinner --save
 https://www.npmjs.com/package/react-loader-spinner
 
-#2 npm install react-slick --save
-https://www.npmjs.com/package/react-slick
 
 #npm install --save react-icofont 
 import Icofont from 'react-icofont';
