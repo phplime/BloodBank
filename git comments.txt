@@ -1,0 +1,8 @@
+git init
+git config --global user.name 'nazmul-nm'
+git config --global user.email 'mdnazmul.nm@gmail.com'
+$ git add .
+git remote add githubRepo https://github.com/Nazmul-nm/BloodBank.git
+
+
+git push -u origin master
