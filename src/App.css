@@ -328,3 +328,17 @@ ul.gallery_sort li button.active {
 .filter{
   padding: 7px;
 }
+.footerArea {
+  background: #222;
+  color: #fff;
+  text-align: center;
+}
+
+.footer_Content {
+  text-align: center;
+  width: 100%;
+}
+
+.footer_Content h4 {
+  padding: 20px;
+}

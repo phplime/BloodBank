@@ -8,6 +8,7 @@ import DonarList from './pages/DonarList';
 import img1 from "./assets/images/girl-2209147_1920.jpg";
 import AllDonar from './pages/AllDonar';
 import Gallery from './pages/Gallery';
+import SignUp from './pages/SignUp';
 
 const portfolio = [
     {
@@ -84,6 +85,24 @@ class Home extends Component {
                         <div className="donation_progress_area mt-20">
                             <div className="row">
                                 <CounterTo />
+                            </div>
+                        </div>
+                   </div>
+                </div>
+
+                <div className="contentWarpper text-center">
+                    <div className="container">
+                        <div className="defaultHeading">
+                            <div className="heading_text">
+                                <h2>SignUp</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                            </div>
+                        </div>
+                        <div className="donation_progress_area mt-20">
+                            <div className="row">
+                                <div className="col-sm-6 offset-3 text-left">
+                                        <SignUp />
+                                </div>
                             </div>
                         </div>
                    </div>

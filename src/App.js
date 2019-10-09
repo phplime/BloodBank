@@ -6,6 +6,7 @@ import Home from './components/Home';
 import ContactUs from './components/ContactUs';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner'
+import Footer from './components/inc/Footer';
 
 class App extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class App extends Component {
             <Route exact={true} path='/' component={() => <Home />} />
             <Route path='/contactUs' component={() => <ContactUs showBanner={true} />} />
           </Header>
+          <Footer/>
         </Router>
       )
     }
