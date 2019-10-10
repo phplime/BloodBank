@@ -28,7 +28,6 @@ function AllDonar(props) {
         fallbackEasing: 'swing',
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
     };
-    console.log(props.donar)
     return (
             <OwlCarousel options={options} >
                 {props.donar.map((portfolio, i) => {

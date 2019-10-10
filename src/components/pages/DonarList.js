@@ -28,7 +28,6 @@ function DonarList(props) {
         fallbackEasing: 'swing',
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
     };
-    console.log(props.portfolio)
     return (
             <OwlCarousel options={options} >
                 {props.portfolio.map((portfolio, i) => {

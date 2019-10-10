@@ -2,43 +2,51 @@ import React, { Component } from 'react';
 import * as Yup from "yup";
 import { withFormik } from "formik";
 import { Form, Button} from 'react-bootstrap';
-import ContactForm from './ContactForm';
+import SignUpForm from './SignUpForm';
+import axios from 'axios';
+
 
 const fields = {
     sections: [
         [
             {label:'Name',name:'name',elementName:'input',type:'text',placeholder:'Your Name *', col:'col-sm-12'},
-            {label:'Email',name:'email',elementName:'input',type:'email',placeholder:'Your Email (if any)', col:'col-sm-12'},
             {label:'Phone',name:'phone',elementName:'input',type:'phone',placeholder:'Your Phone Number *', col:'col-sm-12'},
             
         ],
         [
-            { label: 'Blood', name: 'group', elementName: 'select', type: 'select', placeholder: '', col: 'col-sm-6' } 
+            { label: 'Blood', name: 'blood_group', elementName: 'select', type: 'select', placeholder: '', col: 'col-sm-6' }, 
+            { label: 'Gender', name: 'gender', elementName: 'select', type: 'select', placeholder: '', col: 'col-sm-6' } 
+        ],
+        [
+            { label: 'Address', name: 'address', elementName: 'textarea', type: 'text', placeholder: 'Your Address', col: 'col-sm-12' } 
         ]
         
     ],
-    group: [
-        {name: 'O+', value:'o+'},
-        {name: 'O-', value:'o-'},
-        {name: 'A+', value:'a+'},
-        {name: 'A-', value:'a-'},
-        {name: 'B+', value:'b+'},
-        {name: 'B-', value:'b-'},
-        {name: 'AB+', value:'ab+'},
-        {name: 'AB-', value:'ab-'},
-    ]
+   
+    
 }
 
+
 export class SignUp extends Component {
+    constructor(props){
+        super(props)
+    
+        this.state = {
+            error: null,
+            user: [],
+            loading:true, 
+        }
+    }
+
     render() {
         return (
             <div>
-                <Form onSubmit={this.props.handleSubmit}>
+                <Form onSubmit={this.props.handleSubmit} id='create-course-form'>
                         {fields.sections.map((section, i) => {
                             return(
                                 <div className="row" key={i}>
                                     {section.map((field, j) => {
-                                        return <ContactForm
+                                        return <SignUpForm
                                             {...field}
                                             key={j}
                                             value={this.props.values[field.name]}
@@ -47,7 +55,6 @@ export class SignUp extends Component {
                                             onBlur={this.props.handleBlur}
                                             touched={(this.props.touched[field.name])}
                                             errors={this.props.errors[field.name]}
-                                            group={fields.group}
                                         />
                                     })}
                                 </div>
@@ -55,7 +62,7 @@ export class SignUp extends Component {
                         })}
                     
                         <div className="text-right">
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" disabled={this.props.isSubmitting}>
                                 Submit
                             </Button>
                         </div>
@@ -65,19 +72,40 @@ export class SignUp extends Component {
     }
 }
 
+
+
 export default withFormik({
+    
     mapPropsToValues: () => ({
         name: '',
-        email: '',
-        message:'',
+        phone:'',
+        blood_group:'',
+        address:'',
+        gender:'',
     }),
     validationSchema: Yup.object().shape({
         name: Yup.string().min(3, 'Name is longer then that').required('You Must give us Your name.'),
-        email:Yup.string().email('You need to give us a valid email').required('You Must give us Your Email.'),
+        phone:Yup.string().required('You Must give us Your Phone.'),
+        blood_group:Yup.number().required('You Must give us Your Blood group.'),
+        address:Yup.string().required('You Must give us Your Address.'),
+        gender:Yup.string().required('You Must give us Your Gender.'),
     }),
    
-    handleSubmit: (values, { setSubmitting }) => {
-        console.log(values);
-        alert('You have submitted the form',JSON.stringify(values))
+     handleSubmit: (data, {setSubmitting}) => {
+         
+         setTimeout(() => {
+            alert(JSON.stringify(data, null, 2));
+            setSubmitting(false);
+           
+             axios.post('http://localhost/blood/api/add_user', JSON.stringify(data))
+            .then(result => {
+                document.getElementById("create-course-form").reset();
+            })
+            .catch(error => {
+               console.log(error)
+            })
+            
+         }, 4000);
+         
     }
 })(SignUp) 

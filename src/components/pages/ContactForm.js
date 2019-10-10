@@ -2,6 +2,7 @@ import React from 'react'
 import { Form} from 'react-bootstrap'
 
 function ContactForm(props) {
+    console.log(props)
     if (props.elementName === 'input') {
         return (
             <div className={props.col}>
