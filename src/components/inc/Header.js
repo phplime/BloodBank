@@ -1,6 +1,10 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
+import LoginModal from './LoginModal';
 function Header(props) {
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
     return (
         
         <div>
@@ -12,7 +16,7 @@ function Header(props) {
                 <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/contactUs">Contact</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link href="#" onClick={handleShow}>Login</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -23,14 +27,23 @@ function Header(props) {
                 </Nav>
                 <Form inline>
                 <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button variant="outline-success">Search</Button>
+                <Button  type="button" onClick={handleShow} variant="outline-success">Search</Button>
                 </Form>
             </Navbar.Collapse>
             </Navbar>
             </>
-           {props.children}
+            {props.children}
+           
+            <LoginModal show={show} handleClose={handleClose}/>
+            
         </div>
+        
+    
+
     )
 }
+
+
+
 
 export default Header

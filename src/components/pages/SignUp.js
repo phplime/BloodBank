@@ -4,6 +4,8 @@ import { withFormik } from "formik";
 import { Form, Button} from 'react-bootstrap';
 import SignUpForm from './SignUpForm';
 import axios from 'axios';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from 'react-loader-spinner'
 
 
 const fields = {
@@ -26,7 +28,6 @@ const fields = {
     
 }
 
-
 export class SignUp extends Component {
     constructor(props){
         super(props)
@@ -34,16 +35,32 @@ export class SignUp extends Component {
         this.state = {
             error: null,
             user: [],
-            loading:true, 
+            loading: true, 
+            
         }
     }
 
+    componentDidMount() {
+        axios.get(`http://localhost/blood/api/get_all_blood_group`)
+        .then(response => {
+            this.setState({
+                blood_group: response.data,
+            })
+        })
+        .catch(error => {
+            this.setState({
+                error:'Somethings Were wrong',
+            })
+        })
+    }
+   
     render() {
         return (
             <div>
-                <Form onSubmit={this.props.handleSubmit} id='create-course-form'>
+                {this.props.isSubmitting !== true ?
+                    <Form onSubmit={this.props.handleSubmit} id='create-course-form'>
                         {fields.sections.map((section, i) => {
-                            return(
+                            return (
                                 <div className="row" key={i}>
                                     {section.map((field, j) => {
                                         return <SignUpForm
@@ -55,6 +72,7 @@ export class SignUp extends Component {
                                             onBlur={this.props.handleBlur}
                                             touched={(this.props.touched[field.name])}
                                             errors={this.props.errors[field.name]}
+                                        // group = {this.state.blood_group}
                                         />
                                     })}
                                 </div>
@@ -67,6 +85,16 @@ export class SignUp extends Component {
                             </Button>
                         </div>
                     </Form>
+                    : <div className="loader_area text-center" style={{height:'250px'}}>
+                        <Loader
+                        type="Watch"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                        timeout={3000} //3 secs
+            
+                    />
+                    </div>}
             </div>
         )
     }
@@ -92,20 +120,17 @@ export default withFormik({
     }),
    
      handleSubmit: (data, {setSubmitting}) => {
-         
-         setTimeout(() => {
-            alert(JSON.stringify(data, null, 2));
-            setSubmitting(false);
-           
-             axios.post('http://localhost/blood/api/add_user', JSON.stringify(data))
-            .then(result => {
-                document.getElementById("create-course-form").reset();
-            })
-            .catch(error => {
-               console.log(error)
-            })
+        //  setTimeout(() => {
+        //     setSubmitting(true);
+        //     //  axios.post('http://localhost/blood/api/add_user', JSON.stringify(data, null, 2))
+        //     // .then(result => {
+        //     //     document.getElementById("create-course-form").reset();
+        //     // })
+        //     // .catch(error => {
+        //     //    console.log(error)
+        //     // })
             
-         }, 4000);
+        //  }, 4000);
          
     }
 })(SignUp) 

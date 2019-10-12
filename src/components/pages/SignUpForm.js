@@ -23,6 +23,12 @@ function SignUpForm(props) {
         })
     }
 
+    const getGroup = group.map((bGroup, i) => {
+        return (
+            <option value={bGroup.id} key={i}>{bGroup.name}</option>
+        )
+    })
+  
     if (props.elementName === 'input') {
         return (
             <div className={props.col}>
@@ -86,11 +92,10 @@ function SignUpForm(props) {
                             onChange={props.onChange}
                             onBlur={props.handleBlur} >
                             <option value="">Select Group</option>
-                            {group.map((bGroup, i) => {
-                                return (
-                                    <option value={bGroup.id} key={i}>{bGroup.name}</option>
-                                )
-                            })}
+                            {group.length !== 0 && error!==true?
+                             getGroup 
+                            : <option>please wait...</option>
+                            }
                             
                         </Form.Control>
                         <div>
