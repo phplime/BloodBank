@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
 import LoginModal from './LoginModal';
+// import { Login } from './Login';
 function Header(props) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -34,7 +35,8 @@ function Header(props) {
             </>
             {props.children}
            
-            <LoginModal show={show} handleClose={handleClose}/>
+            <LoginModal show={show} handleClose={handleClose} />
+            {/* <Login show={show} handleClose={handleClose}/> */}
             
         </div>
         

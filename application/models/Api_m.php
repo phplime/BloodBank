@@ -51,6 +51,22 @@ class Api_m extends CI_Model {
 		$this->db->delete($table,array('id'=>$id));
 		return $id;
 	}
+
+	public function login_info_check($phone,$password)
+  	{
+        $this->db->select('*');
+        $this->db->from('blood_donner');
+        $this->db->where("phone",$phone);
+        $this->db->where('password', md5($password));
+        $this->db->limit(1);
+        $query = $this->db->get();
+        if($query->num_rows() ==1){
+            return $query->result_array();
+        }else{
+            return false;
+        }
+
+    }
 	
 
 }

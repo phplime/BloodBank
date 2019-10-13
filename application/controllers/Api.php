@@ -59,5 +59,45 @@ class Api extends CI_Controller {
 		
 	}
 
+	public function user_login()
+	{
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
+
+		$formdata = json_decode(file_get_contents('php://input'), true);
+		if (empty($formdata)) {
+			$msg = 'Field must not be empty!!';
+			$response = ['st' => 0, 'msg'=> $msg,];
+		}else{	
+			$phone = $formdata['phone'];
+			$password = $formdata['password'];
+			$query = $this->api_m->login_info_check($phone,$password);
+			if($query){
+				$s_array= array();
+				foreach($query as $row):
+					$s_array[] = array(
+						'id' => $row['id'],
+						'phone' => $row['name'],
+						'phone' => $row['phone'],
+						'gender' => $row['gender'],
+						'user_login' => 1,
+					);
+
+				endforeach;
+				$msg = 'Login Successfull';
+				$response = ['st' => 1, 'msg'=> $msg, 'data' => $s_array];
+			}else{
+				$msg = 'Login invalid';
+				$response = ['st' => 0, 'msg'=> $msg, 'data' => 0];
+			} 
+			
+
+		} 
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($response));
+			;
+	}
+
 
 }

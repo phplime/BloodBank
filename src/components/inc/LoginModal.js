@@ -2,12 +2,23 @@ import React from 'react'
 import {Modal,Button} from 'react-bootstrap';
 import * as Yup from "yup";
 import { withFormik } from "formik";
+import axios from 'axios';
 function LoginModal(props) {
-    // const [value, setValue] = useState()
+    // const [value, setstate] = React.useState({});
+    const {
+        isSubmitting,
+        handleBlur,
+        errors,
+        handleChange,
+        handleSubmit,
+        touched
+    } = props;
+    // var loginData = localStorage.getItem('mydata');
+    // console.log(loginData)
     return (
         <div>
             <Modal show={props.show} onHide={props.handleClose}>
-                 <form action="">
+                 <form  onSubmit={handleSubmit}>
                     <Modal.Header closeButton> <Modal.Title>Login Form</Modal.Title> </Modal.Header>
                     <Modal.Body>
                         <div className="form-group">
@@ -17,7 +28,18 @@ function LoginModal(props) {
                                 name="phone"
                                 className="form-control"
                                 placeholder="Your Phone Number"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                touched={touched}
+                                errors={errors}
                             />
+                            <div>
+                                <p className="help-block text-danger">
+                                    {(errors && touched) &&
+                                        <span>{errors.phone}</span>
+                                    }
+                                </p>
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Password</label>
@@ -25,18 +47,30 @@ function LoginModal(props) {
                                 type="password"
                                 name="password"
                                 className="form-control" 
-                                placeholder="Your Password" />
+                                placeholder="Your Password"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                touched={touched}
+                                errors={errors}
+                            />
+                             <div>
+                                <p className="help-block text-danger">
+                                    {(touched && errors) &&
+                                        <span>{errors.password}</span>
+                                    }
+                                </p>
+                            </div>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" > Login </Button>
+                        <Button variant="primary" type="submit"> {isSubmitting ? 'Loading...' : 'Login'} </Button>
                     </Modal.Footer>
                 </form>
             </Modal>
         </div>
     )
 }
-
+// this.props.form.status
 export default withFormik({
     
     mapPropsToValues: () => ({
@@ -48,18 +82,30 @@ export default withFormik({
         password:Yup.string().required('You Must give us Your Password.'),
     }),
    
-     handleSubmit: (data, {setSubmitting}) => {
-        //  setTimeout(() => {
-        //     setSubmitting(true);
-        //     //  axios.post('http://localhost/blood/api/add_user', JSON.stringify(data, null, 2))
-        //     // .then(result => {
-        //     //     document.getElementById("create-course-form").reset();
-        //     // })
-        //     // .catch(error => {
-        //     //    console.log(error)
-        //     // })
-            
-        //  }, 4000);
+    handleSubmit: (data, {setSubmitting }) => {
+            axios.post('http://localhost/blood/api/user_login', JSON.stringify(data))
+                .then(result => {
+                if (result.data.st ===1) {
+                    var resultData =  result.data.data.map(row => {
+                        return {"id": row.id, " isLogin": row.user_login };
+                    })
+                    // localStorage.setItem('mydata', JSON.stringify(resultData)) 
+                    console.log(resultData)
+                } else {
+                    console.log(result.data.msg)
+                }
+                
+                console.log(result.length)
+                console.log(result.data)
+                
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        
+        setTimeout(() => {
+            setSubmitting(true);
+        }, 2000);
          
     }
 })(LoginModal)

@@ -7,12 +7,12 @@ function SignUpForm(props) {
     const [error, setError] = useState(null)
     const [group, setGroup] = useState([])
 
-    useEffect((data) => {
+    useEffect(() => {
         fetchData();
     }, []);
 
-    const fetchData = () => {
-        axios.get(`http://localhost/blood/api/get_all_blood_group`)
+    const  fetchData = async () => {
+        await axios.get(`http://localhost/blood/api/get_all_blood_group`)
         .then(response => {
             setGroup(response.data)
             setError('')
@@ -23,11 +23,11 @@ function SignUpForm(props) {
         })
     }
 
-    const getGroup = group.map((bGroup, i) => {
-        return (
-            <option value={bGroup.id} key={i}>{bGroup.name}</option>
-        )
-    })
+        const getGroup = group.map((bGroup, i) => {
+            return (
+                <option value={bGroup.id} key={i}>{bGroup.name}</option>
+            )
+        })
   
     if (props.elementName === 'input') {
         return (
@@ -92,7 +92,7 @@ function SignUpForm(props) {
                             onChange={props.onChange}
                             onBlur={props.handleBlur} >
                             <option value="">Select Group</option>
-                            {group.length !== 0 && error!==true?
+                            {getGroup.length !== 0 && error!==true?
                              getGroup 
                             : <option>please wait...</option>
                             }
@@ -122,7 +122,7 @@ function SignUpForm(props) {
                             id={props.name}
                             onChange={props.onChange}
                             onBlur={props.handleBlur} >
-                            <option value="">Select Group</option>
+                            <option value="">Select Gender</option>
                             {gender_type.map((gender, j) => {
                                 return (
                                     <option value={gender} key={j}>{gender}</option>
