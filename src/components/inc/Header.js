@@ -1,13 +1,39 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
-import LoginModal from './LoginModal';
-// import { Login } from './Login';
+// import LoginModal from './LoginModal';
+import Login from './Login';
+import axios from 'axios';
+ 
 function Header(props) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
+    const [data, setData] = useState('');
+
+    var logData = JSON.parse(localStorage.getItem('logData'));
+        var ID;
+        if (logData !== null) {
+            ID = logData[0].id;
+        } else {
+            ID = 0;    
+        }
+    
+       
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios.get(`http://localhost/blood/api/get_login_user_info/${ID}`)
+                .then(response => {
+                    setData(response.data)
+                })
+                .catch(error => {
+                    setData('')
+                })
+        }
+        fetchData()
+    }, [ID]);
+    console.log(data)
     return (
-        
+        // 
         <div>
             <>
             <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
@@ -35,8 +61,8 @@ function Header(props) {
             </>
             {props.children}
            
-            <LoginModal show={show} handleClose={handleClose} />
-            {/* <Login show={show} handleClose={handleClose}/> */}
+            {/* <LoginModal show={show} handleClose={handleClose} /> */}
+            <Login show={show} handleClose={handleClose}/>
             
         </div>
         

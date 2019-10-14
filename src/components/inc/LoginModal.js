@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { withFormik } from "formik";
 import axios from 'axios';
 function LoginModal(props) {
-    // const [value, setstate] = React.useState({});
+    // const [value, setValue] = React.useState({});
     const {
         isSubmitting,
         handleBlur,
@@ -89,14 +89,11 @@ export default withFormik({
                     var resultData =  result.data.data.map(row => {
                         return {"id": row.id, " isLogin": row.user_login };
                     })
-                    // localStorage.setItem('mydata', JSON.stringify(resultData)) 
+                    localStorage.setItem('mydata', JSON.stringify(resultData)) 
                     console.log(resultData)
                 } else {
                     console.log(result.data.msg)
                 }
-                
-                console.log(result.length)
-                console.log(result.data)
                 
             })
             .catch(error => {
