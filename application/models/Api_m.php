@@ -70,10 +70,11 @@ class Api_m extends CI_Model {
 
     public function get_login_user_info($id)
   	{
-        $this->db->select('b.*,bg.id as group_id, bg.name as blood_group');
+        $this->db->select('b.id,b.name as name,blood_group,phone,gender,address');
+        $this->db->select('bg.id as group_id, bg.name as blood_group');
         $this->db->from('blood_donner b');
         $this->db->join('blood_group as bg','bg.id = b.blood_group');
-        $this->db->where("b.id",$id);
+        $this->db->where("md5(b.id)",$id);
         $query = $this->db->get();
         return $query->row_array();
 

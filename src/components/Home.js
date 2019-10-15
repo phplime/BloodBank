@@ -60,12 +60,22 @@ const portfolio = [
 ];
 
 
+
+
 class Home extends Component {
     handleToggle = () => {
         const el = findDOMNode(this.refs.toggle);
         $(el).slideToggle();
     }
-
+    // componentWillMount(){
+    //     window.addEventListener("beforeunload", (ev) => 
+    //     {  
+    //         ev.preventDefault();
+    //         localStorage.remove('logData');
+    //         localStorage.remove('mydata');
+            
+    //     })
+    // }
     
 
     render() {

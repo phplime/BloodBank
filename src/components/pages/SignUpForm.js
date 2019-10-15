@@ -1,33 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Form} from 'react-bootstrap'
 
 function SignUpForm(props) {
-    
-    const [error, setError] = useState(null)
-    const [group, setGroup] = useState([])
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const  fetchData = async () => {
-        await axios.get(`http://localhost/blood/api/get_all_blood_group`)
-        .then(response => {
-            setGroup(response.data)
-            setError('')
-        })
-        .catch(error => {
-            setGroup('')
-            setError('Somethings were wrong')
-        })
-    }
-
-        const getGroup = group.map((bGroup, i) => {
-            return (
-                <option value={bGroup.id} key={i}>{bGroup.name}</option>
-            )
-        })
   
     if (props.elementName === 'input') {
         return (
@@ -92,8 +66,12 @@ function SignUpForm(props) {
                             onChange={props.onChange}
                             onBlur={props.handleBlur} >
                             <option value="">Select Group</option>
-                            {getGroup.length !== 0 && error!==true?
-                             getGroup 
+                            {props.group ?
+                                props.group.map((bGroup, i) => {
+                                    return (
+                                        <option value={bGroup.id} key={i}>{bGroup.name}</option>
+                                    )
+                                })
                             : <option>please wait...</option>
                             }
                             

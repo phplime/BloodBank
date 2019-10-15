@@ -1,8 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
+// import {Redirect,withRouter } from 'react-router-dom';
 // import LoginModal from './LoginModal';
 import Login from './Login';
 import axios from 'axios';
+import md5 from 'md5';
  
 function Header(props) {
     const [show, setShow] = useState(false);
@@ -10,28 +12,37 @@ function Header(props) {
     const handleClose = () => setShow(false);
     const [data, setData] = useState('');
 
-    var logData = JSON.parse(localStorage.getItem('logData'));
-        var ID;
+        var logData = JSON.parse(localStorage.getItem('logData'));
+         var ID;
         if (logData !== null) {
             ID = logData[0].id;
+            localStorage.setItem('userId', JSON.stringify(data['id']));
         } else {
-            ID = 0;    
+            ID = 0;   
         }
+        
+        useEffect(() => {
+            const fetchData = async () => {
+                await axios.get(`http://localhost/blood/api/get_login_user_info/${md5(ID)}`)
+                    .then(response => {
+                        setData(response.data)
+                    })
+                    .catch(error => {
+                        setData(error)
+                    })
+            }
+            fetchData()
+            // clearconsole(); 
+        }, [ID]);
     
-       
-    useEffect(() => {
-        const fetchData = async () => {
-            await axios.get(`http://localhost/blood/api/get_login_user_info/${ID}`)
-                .then(response => {
-                    setData(response.data)
-                })
-                .catch(error => {
-                    setData('')
-                })
-        }
-        fetchData()
-    }, [ID]);
-    console.log(data)
+
+    const logout = () => {
+        localStorage.removeItem('logData');
+        localStorage.removeItem('userId');
+        localStorage.clear();
+        window.location.href = '/';
+    }
+      
     return (
         // 
         <div>
@@ -42,8 +53,16 @@ function Header(props) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/contactUs">Contact</Nav.Link>
-                <Nav.Link href="#" onClick={handleShow}>Login</Nav.Link>
+                            <Nav.Link href="/contactUs">Contact</Nav.Link>
+                {!logData &&
+                    <Nav.Link href="#" onClick={handleShow}>Login</Nav.Link>
+                }
+                {logData &&
+                    <Nav.Link href="#"  refresh="true" onClick={logout}>Logout</Nav.Link>
+                            }
+                {logData &&
+                    <Nav.Link href="#">{data['name']}</Nav.Link>
+                 }
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

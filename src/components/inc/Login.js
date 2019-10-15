@@ -29,6 +29,7 @@ class Login extends Component {
                         msg:result.data.msg,
                         st:result.data.st,
                     })
+                    window.location.reload(); 
                 } else {
                     this.setState({
                         isLoggedIn: false,
@@ -70,7 +71,7 @@ class Login extends Component {
     
     // value={this.state.name} onChange={this.changeHandler}
     render() {
-        // console.log(localStorage.getItem('mydata'));
+        //  console.log(localStorage.getItem('logData'));
         return (
         <Formik
             initialValues={{

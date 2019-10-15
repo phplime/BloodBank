@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router,Route} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import './App.css';
 import Header from './components/inc/Header';
 import Home from './components/Home';
@@ -45,12 +45,14 @@ class App extends Component {
     } else {
       return (
         <Router>
-          <Header>
-            <Route exact={true} path='/' component={() => <Home />} />
-            <Route path='/contactUs' component={() => <ContactUs showBanner={true} />} />
-          </Header>
-          <Footer/>
-        </Router>
+          <Switch>
+            <Header>
+              <Route exact={true} path='/' component={() => <Home />} />
+              <Route path='/contactUs' component={() => <ContactUs showBanner={true} />} />
+            </Header>
+            <Footer/>
+          </Switch>
+         </Router>
       )
     }
   }

@@ -72,7 +72,7 @@ export class SignUp extends Component {
                                             onBlur={this.props.handleBlur}
                                             touched={(this.props.touched[field.name])}
                                             errors={this.props.errors[field.name]}
-                                        // group = {this.state.blood_group}
+                                            group = {this.state.blood_group}
                                         />
                                     })}
                                 </div>

@@ -39,7 +39,7 @@ class ContactUs extends Component {
                             <Form onSubmit={this.props.handleSubmit}>
                                 <Card.Body>
                                     {fields.sections.map((section, i) => {
-                                        console.log(section);
+                                        //console.log(section);
                                         return(
                                             <div className="row" key={i}>
                                                 {section.map((field, j) => {
@@ -87,7 +87,7 @@ export default withFormik({
     }),
    
     handleSubmit: (values, { setSubmitting }) => {
-        console.log(values);
+        //console.log(values);
         alert('You have submitted the form',JSON.stringify(values))
     }
 })(ContactUs) 
