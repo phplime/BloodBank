@@ -342,3 +342,41 @@ ul.gallery_sort li button.active {
 .footer_Content h4 {
   padding: 20px;
 }
+.profile_header {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 19px 0 10px;
+}
+
+.profile_header img {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+label.uploader {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 100%;
+}
+
+label.uploader span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+}
+#myTabContent {
+  border: 1px solid #ddd;
+  padding: 10px 15px 0;
+  border-top: 0;
+}

@@ -5,8 +5,9 @@ npm install --save react-router-dom</p>
 <p class="has-line-data" data-line-start="3" data-line-end="7"><u>09/10/19</u></p><br>
     npm install --save formik<br>
     npm install --save yup<br>
-    npm install react-bootstrap bootstrap
-    npm install md5
+    npm install react-bootstrap bootstrap<br>
+    npm install md5 <br>
+   	npm install jquery --save <br>
 </blockquote>
 <pre><code class="has-line-data" data-line-start="8" data-line-end="10" class="language-sh">
 </code></pre>

@@ -7,6 +7,7 @@ import ContactUs from './components/ContactUs';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner'
 import Footer from './components/inc/Footer';
+import Profile from './components/pages/Profile';
 
 class App extends Component {
   constructor(props) {
@@ -49,6 +50,7 @@ class App extends Component {
             <Header>
               <Route exact={true} path='/' component={() => <Home />} />
               <Route path='/contactUs' component={() => <ContactUs showBanner={true} />} />
+              <Route path='/Profile' component={() => <Profile showBanner={false} />} />
             </Header>
             <Footer/>
           </Switch>

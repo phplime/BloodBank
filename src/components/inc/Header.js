@@ -12,11 +12,10 @@ function Header(props) {
     const handleClose = () => setShow(false);
     const [data, setData] = useState('');
 
-        var logData = JSON.parse(localStorage.getItem('logData'));
+        var logData = localStorage.getItem('ID');
          var ID;
         if (logData !== null) {
-            ID = logData[0].id;
-            localStorage.setItem('userId', JSON.stringify(data['id']));
+            ID = logData;
         } else {
             ID = 0;   
         }
@@ -52,8 +51,24 @@ function Header(props) {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/contactUs">Contact</Nav.Link>
+                    <Nav.Link href="/">Home</Nav.Link>
+                                <Nav.Link href="/contactUs">Contact</Nav.Link>
+                    
+                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                    </NavDropdown>
+                </Nav>
+                 <Nav className="mr-auto ">
+                    <Form inline>
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                        <Button  type="button" onClick={handleShow} variant="outline-success">Search</Button>
+                    </Form>
+                        </Nav>
+                <Nav className="navbar-nav">
                 {!logData &&
                     <Nav.Link href="#" onClick={handleShow}>Login</Nav.Link>
                 }
@@ -61,20 +76,10 @@ function Header(props) {
                     <Nav.Link href="#"  refresh="true" onClick={logout}>Logout</Nav.Link>
                             }
                 {logData &&
-                    <Nav.Link href="#">{data['name']}</Nav.Link>
-                 }
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                </NavDropdown>
+                    <Nav.Link href="/profile">{data['name']}</Nav.Link>
+                            }
                 </Nav>
-                <Form inline>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button  type="button" onClick={handleShow} variant="outline-success">Search</Button>
-                </Form>
+               
             </Navbar.Collapse>
             </Navbar>
             </>
