@@ -49,8 +49,13 @@ class Api extends CI_Controller {
 				'gender' => $formdata['gender'],
 				'address' => $formdata['address'],
 			);
+
+			if(isset($formdata['id']) && $formdata['id'] !=0){
+				$insert = $this->api_m->update($data,$formdata['id'],'blood_donner');
+			}else{
+				$insert = $this->api_m->insert($data,'blood_donner');
+			}
 			
-			$insert = $this->api_m->insert($data,'blood_donner');
 			if($insert){
 				$msg = 'Registration Successfull';
 				$response = ['st' => 1, 'msg'=> $msg,];
@@ -69,6 +74,9 @@ class Api extends CI_Controller {
 		;
 		
 	}
+
+
+
 
 	public function user_login()
 	{

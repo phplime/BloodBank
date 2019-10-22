@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
+import { API_URL } from "../inc/Config";
 // import {Redirect,withRouter } from 'react-router-dom';
 // import LoginModal from './LoginModal';
 import Login from './Login';
@@ -22,7 +23,7 @@ function Header(props) {
         
         useEffect(() => {
             const fetchData = async () => {
-                await axios.get(`http://localhost/blood/api/get_login_user_info/${md5(ID)}`)
+                await axios.get(`${API_URL}/get_login_user_info/${md5(ID)}`)
                     .then(response => {
                         setData(response.data)
                     })

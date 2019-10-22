@@ -3,6 +3,7 @@ import {Modal,Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { API_URL } from "./Config";
 
 class Login extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class Login extends Component {
     }
     onSubmit = (values) => {
         this.setState({ loading: true });
-        axios.post('http://localhost/blood/api/user_login', JSON.stringify(values))
+        axios.post(`${API_URL}/user_login`, JSON.stringify(values))
         .then(result => {
                 if (result.data.st ===1) {
                     var resultData =  result.data.data.map(row => {

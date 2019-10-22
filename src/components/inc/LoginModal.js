@@ -3,6 +3,7 @@ import {Modal,Button} from 'react-bootstrap';
 import * as Yup from "yup";
 import { withFormik } from "formik";
 import axios from 'axios';
+import { API_URL } from "../inc/Config";
 function LoginModal(props) {
     // const [value, setValue] = React.useState({});
     const {
@@ -83,14 +84,13 @@ export default withFormik({
     }),
    
     handleSubmit: (data, {setSubmitting }) => {
-            axios.post('http://localhost/blood/api/user_login', JSON.stringify(data))
+            axios.post(`${API_URL}/user_login`, JSON.stringify(data))
                 .then(result => {
                 if (result.data.st ===1) {
                     var resultData =  result.data.data.map(row => {
                         return {"id": row.id, " isLogin": row.user_login };
                     })
                     localStorage.setItem('mydata', JSON.stringify(resultData)) 
-                    console.log(resultData)
                 } else {
                     console.log(result.data.msg)
                 }

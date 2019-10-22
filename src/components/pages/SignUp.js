@@ -5,7 +5,8 @@ import { Form, Button} from 'react-bootstrap';
 import SignUpForm from './SignUpForm';
 import axios from 'axios';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from 'react-loader-spinner'
+import Loader from 'react-loader-spinner';
+import { API_URL } from "../inc/Config";
 
 
 const fields = {
@@ -41,7 +42,7 @@ export class SignUp extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost/blood/api/get_all_blood_group`)
+        axios.get(`${API_URL}/get_all_blood_group`)
         .then(response => {
             this.setState({
                 blood_group: response.data,
