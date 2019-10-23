@@ -119,4 +119,79 @@ class Api extends CI_Controller {
 	}
 
 
+	public function upload_image()
+	{	
+		// echo "<pre>";print_r($_POST);exit();
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
+		header('Content-Type: application/json; charset=utf-8');
+
+	    $data = array();
+	    $formdata = json_decode(file_get_contents('php://input'), true);
+	    if (!empty($_FILES['file']['name'])) {
+	        $filesCount = count($_FILES['file']['name']);
+	        for ($i = 0; $i < $filesCount; $i++) {
+	              $_FILES['uploadFile']['name'] = str_replace(",","_",$_FILES['file']['name'][$i]);
+	              $_FILES['uploadFile']['type'] = $_FILES['file']['type'][$i];
+	              $_FILES['uploadFile']['tmp_name'] = $_FILES['file']['tmp_name'][$i];
+	              $_FILES['uploadFile']['error'] = $_FILES['file']['error'][$i];
+	              $_FILES['uploadFile']['size'] = $_FILES['file']['size'][$i];
+
+	              //Directory where files will be uploaded
+	              $uploadPath = 'uploads/';
+
+
+	              $config['upload_path'] = $uploadPath;
+	              // Specifying the file formats that are supported.
+	              $config['allowed_types'] = 'jpg|jpeg|png|pdf|doc|docx|xls|xlsx|ppt|pptx|txt|rtf';
+	              $config['overwrite'] = TRUE;
+				  $config['encrypt_name'] = TRUE;
+	              $this->load->library('upload', $config);
+	              $this->upload->initialize($config);
+	              // resize library
+	              $this->load->library('image_lib');
+
+	              if ($this->upload->do_upload('file')) {
+	                  $fileData = $this->upload->data();
+	                  $uploadData[$i]['file_name'] = $fileData['file_name'];
+	                  // echo "<pre>";print_r($fileData);exit();
+	                  // resize
+			            $config = array(
+						    'source_image'      => $fileData['full_path'], 
+						    'new_image'         => $uploadPath.'/thumb', //path to
+						    'maintain_ratio'    => true,
+						    'width'             => 600,
+						    'height'            => 600
+						);
+						    $this->image_lib->initialize($config);
+						    $this->image_lib->resize();
+						// resize
+						    
+	              }
+
+	        }
+
+	          
+	        if (!empty($uploadData)) {
+	          $list=array();
+	            foreach ($uploadData as $value) {
+		          	$data = array(
+		          		'image' => 'uploads/'.$value['file_name'],
+		          		'thumb' => 'uploads/thumb/'.$value['file_name'],
+		          	);
+
+		          	//insert image into database query
+		          	$this->api_m->update($data,$_POST['uid'],'blood_donner');
+		          	
+	          	}
+	    		echo json_encode(array('st'=>1,));
+		  	}else{
+		    	$msg = 'Please insert an image';
+		    	echo json_encode(array('st'=>0,'msg'=>$msg,));
+		    }
+
+	    }
+	}
+
+
 }

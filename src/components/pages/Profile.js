@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { API_URL } from "../inc/Config";
+import { API_URL,IMG_URL } from "../inc/Config";
 import axios from "axios";
 
 export class Profile extends Component {
@@ -18,22 +18,23 @@ export class Profile extends Component {
             blood_group:'',
             group_id: '',
             isLoading: false,
+            image: '',
+            progress: 0,
         } 
         if(props.user){
             this.state = this.props.user
           } else {
             this.state = this.state;
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.uploadFileData = this.uploadFileData.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
+        //
+        // this.onFormSubmit = this.onFormSubmit.bind(this)
+        // this.onChange = this.onChange.bind(this)
+        // this.fileUpload = this.fileUpload.bind(this)
     }
 
-    handleChange = (e) => {
-        this.setState({
-            file: URL.createObjectURL(e.target.files[0]),
-            uploadText:false,
-        })
-    }
+    
     
 
     changeHandler = (e) => {
@@ -68,9 +69,68 @@ export class Profile extends Component {
         });
         
     }
+
+    //upload image
+    uploadFileData = (e) => {
+        const file = e.target.files[0];
+        this.setState({file: file})
+        const url = `${API_URL}/upload_image`;
+        const formData = new FormData();
+        formData.append('file',file)
+        formData.append('uid',this.state.id)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            },
+            onUploadProgress: function(progressEvent) {
+                var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                //     this.setState({progress: percentCompleted})
+                //console.log("Progress:-"+percentCompleted);
+            }   
+            
+        }
+
+        this.setState({isLoading: true }, () => {
+            axios.post(url, formData,config)
+            .then(response => {
+                this.setState({
+                    isLoading: false,
+                    file: URL.createObjectURL(this.state.file),
+                    uploadText: false,
+                });
+               
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        });
+
+    }
+    // onFormSubmit(e){
+    //     e.preventDefault() // Stop form submit
+    //     this.fileUpload(this.state.file).then((response)=>{
+    //       console.log(response.data);
+    //     })
+    //   }
+    //   onChange(e) {
+    //     this.setState({file:e.target.files[0]})
+    //   }
+    //   fileUpload(file){
+    //     const url = `${API_URL}/upload_image`;
+    //     const formData = new FormData();
+    //     formData.append('file',file)
+    //     const config = {
+    //         headers: {
+    //             'content-type': 'multipart/form-data'
+    //         }
+    //     }
+    //     return  post(url, formData,config)
+    //   }
+
     
     render() {
-        // console.log(this.state)
+        console.log(this.state.progress)
         return (
             <div className="container" style={{marginTop:'50px'}}>
                 <div className="row">
@@ -87,14 +147,14 @@ export class Profile extends Component {
                             </ul>
                             <div className="tab-content" id="myTabContent">
                                 <div className={`tab-pane fade show active ${this.state.isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <form action="" onSubmit={this.submitHandler}>
                                         <div className="profile_area" >
                                             <div className="single_profile">
+                                            <form action="">
                                                 <div className="profile_header">
-                                                    <label className="uploader" onChange={this.handleChange}>
-                                                        <img src={this.state.file !==null?this.state.file:``} alt="" />
+                                                    <label className="uploader" onChange={this.uploadFileData}>
+                                                        <img src={this.state.file !==undefined?this.state.file:`${IMG_URL+this.state.image}`} alt="" />
                                                         <input type="file" name="file" style={{ display: 'none' }} />
-                                                        {!this.state.uploadText &&
+                                                        {!this.state.uploadText && !this.state.image &&
                                                             <span>
                                                                 <i className="fa fa-upload"></i> <br/>
                                                                 Upload Profile
@@ -102,6 +162,13 @@ export class Profile extends Component {
                                                         }
                                                     </label>
                                                 </div>
+                                            </form>
+                                            {/* <form onSubmit={this.onFormSubmit}>
+                                                <h1>File Upload</h1>
+                                                <input type="file" onChange={this.onChange} />
+                                                <button type="submit">Upload</button>
+                                            </form> */}
+                                            <form action="" onSubmit={this.submitHandler}>
                                                 <div className="single_profile_body">
                                                     <div className="form-group">
                                                         <label>Username</label>
@@ -135,9 +202,9 @@ export class Profile extends Component {
                                                         <button type="submit" className="btn btn-success" >Save Change</button>
                                                     </div>
                                                 </div>
+                                                </form>
                                             </div>
                                         </div>
-                                   </form>
                                 </div>
                                 <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     
