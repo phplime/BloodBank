@@ -121,17 +121,17 @@ export default withFormik({
     }),
    
      handleSubmit: (data, {setSubmitting}) => {
-        //  setTimeout(() => {
-        //     setSubmitting(true);
-        //     //  axios.post('http://localhost/blood/api/add_user', JSON.stringify(data, null, 2))
-        //     // .then(result => {
-        //     //     document.getElementById("create-course-form").reset();
-        //     // })
-        //     // .catch(error => {
-        //     //    console.log(error)
-        //     // })
+         setTimeout(() => {
+            setSubmitting(false);
+             axios.post('http://localhost/blood/api/add_user', JSON.stringify(data, null, 2))
+            .then(result => {
+                document.getElementById("create-course-form").reset();
+            })
+            .catch(error => {
+               console.log(error)
+            })
             
-        //  }, 4000);
+         }, 4000);
          
     }
 })(SignUp) 

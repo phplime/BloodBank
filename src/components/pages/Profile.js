@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { ProgressBar } from 'react-bootstrap'
 import { API_URL,IMG_URL } from "../inc/Config";
+import $ from "jquery";
 import axios from "axios";
+
 
 export class Profile extends Component {
     constructor(props) {
@@ -17,9 +20,12 @@ export class Profile extends Component {
             gender:'',
             blood_group:'',
             group_id: '',
+            facebook: '',
+            twitter: '',
+            instagram: '',
             isLoading: false,
             image: '',
-            progress: 0,
+            isProgress: false,
         } 
         if(props.user){
             this.state = this.props.user
@@ -43,7 +49,6 @@ export class Profile extends Component {
         this.setState({
             [name]: value
         })
-        // this.setState({value: e.target.value});
        
     }
     
@@ -55,7 +60,10 @@ export class Profile extends Component {
             email: this.state.email,
             address:this.state.address,
             gender:e.target.gender.value,
-            blood_group:e.target.blood_group.value
+            blood_group: e.target.blood_group.value,
+            facebook: this.state.facebook,
+            twitter: this.state.twitter,
+            instagram: this.state.instagram,
         }
 
         this.setState({isLoading: true }, () => {
@@ -84,17 +92,17 @@ export class Profile extends Component {
             },
             onUploadProgress: function(progressEvent) {
                 var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                //     this.setState({progress: percentCompleted})
-                //console.log("Progress:-"+percentCompleted);
+                $('.progress-bar').animate({width: percentCompleted+'%'});
+                $('.progress-bar').text(percentCompleted+'%');
             }   
             
         }
 
-        this.setState({isLoading: true }, () => {
+        this.setState({isProgress: true }, () => {
             axios.post(url, formData,config)
             .then(response => {
                 this.setState({
-                    isLoading: false,
+                    isProgress: false,
                     file: URL.createObjectURL(this.state.file),
                     uploadText: false,
                 });
@@ -130,9 +138,10 @@ export class Profile extends Component {
 
     
     render() {
-        console.log(this.state.progress)
+       
+        
         return (
-            <div className="container" style={{marginTop:'50px'}}>
+            <div className="container" style={{ marginTop: '50px' }}>
                 <div className="row">
                     <div className="col-sm-6 offset-3">
                         <div className="profileArea">
@@ -161,6 +170,11 @@ export class Profile extends Component {
                                                             </span>
                                                         }
                                                     </label>
+                                                    {this.state.isProgress &&
+                                                        <div className="progress custom_progress">
+                                                            <div className="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </form>
                                             {/* <form onSubmit={this.onFormSubmit}>
@@ -196,8 +210,58 @@ export class Profile extends Component {
                                                         <label>Address</label>
                                                         <textarea name="address" id="1" className="form-control" cols="5"  rows="5" onChange={this.changeHandler} value={this.state.address}></textarea>
                                                     </div>
+
+                                                    <div className="row">
+                                                        <div className="form-group col-sm-6">
+                                                            <div className="social_icon_area">
+                                                                <div className="s_icon">
+                                                                    <i className="fa fa-facebook"></i>
+                                                                </div>
+                                                                <input type="text"
+                                                                    name="facebook"
+                                                                    className="form-control"
+                                                                    placeholder="Your Facebook Link"
+                                                                    value={this.state.facebook}
+                                                                    onChange={this.changeHandler}
+                                                                />
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div className="form-group col-sm-6">
+                                                            <div className="social_icon_area">
+                                                                <div className="s_icon">
+                                                                    <i className="fa fa-twitter"></i>
+                                                                </div>
+                                                                <input type="text"
+                                                                    name="twitter"
+                                                                    className="form-control"
+                                                                    placeholder="Your Twitter Link"
+                                                                    value={this.state.twitter}
+                                                                    onChange={this.changeHandler}
+                                                                />
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div className="form-group col-sm-6">
+                                                            <div className="social_icon_area">
+                                                                <div className="s_icon">
+                                                                    <i className="fa fa-instagram"></i>
+                                                                </div>
+                                                                <input type="text"
+                                                                    name="instagram"
+                                                                    className="form-control"
+                                                                    placeholder="Your Instagram Link"
+                                                                    value={this.state.instagram}
+                                                                    onChange={this.changeHandler}
+                                                                />
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        
+                                                    </div>
                                                     
                                                     <div className="form-group text-right">
+                                                        {/* <ProgressBar className="pro" animated now={45} /> */}
                                                         <input type='hidden' name="id" value={this.state.id} />
                                                         <button type="submit" className="btn btn-success" >Save Change</button>
                                                     </div>

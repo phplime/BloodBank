@@ -37,23 +37,24 @@ class Api extends CI_Controller {
 		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
 
 		$formdata = json_decode(file_get_contents('php://input'), true);
+		 // echo "<pre>";print_r($formdata);exit();
 
 		if (empty($formdata)) {
 			$msg = 'Field must not be empty!!';
 			$response = ['st' => 0, 'msg'=> $msg,];
 		}else{	
-			$data = array(
-				'name' => $formdata['name'],
-				'phone' => $formdata['phone'],
-				'blood_group' => $formdata['blood_group'],
-				'gender' => $formdata['gender'],
-				'address' => $formdata['address'],
-			);
+			// $data = array(
+			// 	'name' => $formdata['name'],
+			// 	'phone' => $formdata['phone'],
+			// 	'blood_group' => $formdata['blood_group'],
+			// 	'gender' => $formdata['gender'],
+			// 	'address' => $formdata['address'],
+			// );
 
 			if(isset($formdata['id']) && $formdata['id'] !=0){
-				$insert = $this->api_m->update($data,$formdata['id'],'blood_donner');
+				$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donner');
 			}else{
-				$insert = $this->api_m->insert($data,'blood_donner');
+				$insert = $this->api_m->insert($formdata,'blood_donner');
 			}
 			
 			if($insert){

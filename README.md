@@ -7,6 +7,7 @@ npm install --save react-router-dom</p>
     npm install --save yup<br>
     npm install react-bootstrap bootstrap<br>
     npm install md5 <br>
+    npm install --save rc-progress <br>
 </blockquote>
 <pre><code class="has-line-data" data-line-start="8" data-line-end="10" class="language-sh">
 </code></pre>

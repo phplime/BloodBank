@@ -349,6 +349,7 @@ ul.gallery_sort li button.active {
   flex-direction: column;
   flex-wrap: nowrap;
   margin: 19px 0 10px;
+  position: relative;
 }
 
 .profile_header img {
@@ -366,6 +367,7 @@ label.uploader {
   cursor: pointer;
   border: 1px solid #ddd;
   border-radius: 100%;
+  z-index: 5;
 }
 
 label.uploader span {
@@ -409,4 +411,41 @@ label.uploader span {
   z-index: 9;
   background: rgba(255,255,255,.8);
   content: '';
+}
+.progress.custom_progress {
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  font-size: .75rem;
+  background-color: #e9ecef;
+  border-radius: 100%;
+  height: 170px;
+  width: 170px;
+  position: absolute;
+  z-index: 3;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-51%);
+}
+.social_icon_area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.s_icon {
+  width: 43px;
+  border: 1px solid #ddd;
+  background: #ddd;
+  padding: 6px 15px;
+  text-align: left;
+  border-radius: 5px 0 0px 5px;
+}
+
+.s_icon i {
+  font-size: 20px;
+}
+.social_icon_area .form-control{
+  border-radius: 0 .25rem .25rem 0;
 }
