@@ -55,7 +55,7 @@ class Api_m extends CI_Model {
 	public function login_info_check($phone,$password)
   	{
         $this->db->select('*');
-        $this->db->from('blood_donner');
+        $this->db->from('blood_donors');
         $this->db->where("phone",$phone);
         $this->db->where('password', md5($password));
         $this->db->limit(1);
@@ -68,11 +68,27 @@ class Api_m extends CI_Model {
 
     }
 
+
+    public function check_existing_value($field_name,$value,$table)
+  	{
+        $this->db->select();
+        $this->db->from($table);
+        $this->db->where($field_name,$value);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        if($query->num_rows() ==1){
+            return 1;
+        }else{
+            return 0;
+        }
+
+    }
+
     public function get_login_user_info($id)
   	{
-        $this->db->select('b.id,b.name as name,blood_group,phone,gender,address,email,image,thumb');
+        $this->db->select('b.id,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,');
         $this->db->select('bg.id as group_id, bg.name as blood_group');
-        $this->db->from('blood_donner b');
+        $this->db->from('blood_donors b');
         $this->db->join('blood_group as bg','bg.id = b.blood_group');
         $this->db->where("md5(b.id)",$id);
         $query = $this->db->get();

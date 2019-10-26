@@ -12,7 +12,8 @@ import { API_URL } from "../inc/Config";
 const fields = {
     sections: [
         [
-            {label:'Name',name:'name',elementName:'input',type:'text',placeholder:'Your Name *', col:'col-sm-12'},
+            {label:'First Name',name:'first_name',elementName:'input',type:'text',placeholder:'Your First Name *', col:'col-sm-6'},
+            {label:'Last Name',name:'last_name',elementName:'input',type:'text',placeholder:'Your Last Name *', col:'col-sm-6'},
             {label:'Phone',name:'phone',elementName:'input',type:'phone',placeholder:'Your Phone Number *', col:'col-sm-12'},
             
         ],
@@ -113,7 +114,8 @@ export default withFormik({
         gender:'',
     }),
     validationSchema: Yup.object().shape({
-        name: Yup.string().min(3, 'Name is longer then that').required('You Must give us Your name.'),
+        first_name: Yup.string().min(3, 'First Name is longer then that').required('You Must give us Your First name.'),
+        last_name: Yup.string().min(3, 'Last Name is longer then that').required('You Must give us Your Last name.'),
         phone:Yup.string().required('You Must give us Your Phone.'),
         blood_group:Yup.number().required('You Must give us Your Blood group.'),
         address:Yup.string().required('You Must give us Your Address.'),

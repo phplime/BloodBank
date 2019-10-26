@@ -23,7 +23,7 @@ class Api extends CI_Controller {
 	public function get_login_user_info($id)
 	{
 		header("Access-Control-Allow-Origin: *");
-		$user_info = $this->api_m->get_login_user_info($id,'blood_donner');
+		$user_info = $this->api_m->get_login_user_info($id,'blood_donors');
 		$this->output
 		->set_content_type('application/json')
 		->set_output(json_encode($user_info));
@@ -52,9 +52,9 @@ class Api extends CI_Controller {
 			// );
 
 			if(isset($formdata['id']) && $formdata['id'] !=0){
-				$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donner');
+				$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donors');
 			}else{
-				$insert = $this->api_m->insert($formdata,'blood_donner');
+				$insert = $this->api_m->insert($formdata,'blood_donors');
 			}
 			
 			if($insert){
@@ -62,6 +62,41 @@ class Api extends CI_Controller {
 				$response = ['st' => 1, 'msg'=> $msg,];
 			}else{
 				$msg = 'omethings Were Wrong';
+				$response = ['st' => 0, 'msg'=> $msg,];
+
+			}	
+			
+			
+			
+		}
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($response));
+		;
+		
+	}
+
+
+	public function check_existing_value(){
+
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
+
+		$formdata = json_decode(file_get_contents('php://input'), true);
+		  // echo "<pre>";print_r($formdata);exit();
+
+		if (empty($formdata)) {
+			$msg = 'Field must not be empty!!';
+			$response = ['st' => 0, 'msg'=> $msg,];
+		}else{	
+			
+			$check = $this->api_m->check_existing_value($formdata['field_name'],$formdata['value'],$formdata['table']);
+			
+			if($check!=1){
+				$msg = '<i class="fa fa-check-square-o" style="color:green" title="Done"></i>';
+				$response = ['st' => 1, 'msg'=> $msg,];
+			}else{
+				$msg = '<i class="fa fa-close" style="color:red" title="This <b>'.$formdata['value']. '</b>  already exists"> </i>';
 				$response = ['st' => 0, 'msg'=> $msg,];
 
 			}	
@@ -97,7 +132,7 @@ class Api extends CI_Controller {
 				foreach($query as $row):
 					$s_array[] = array(
 						'id' => $row['id'],
-						'phone' => $row['name'],
+						'username' => $row['username'],
 						'phone' => $row['phone'],
 						'gender' => $row['gender'],
 						'user_login' => 1,
@@ -182,7 +217,7 @@ class Api extends CI_Controller {
 		          	);
 
 		          	//insert image into database query
-		          	$this->api_m->update($data,$_POST['uid'],'blood_donner');
+		          	$this->api_m->update($data,$_POST['uid'],'blood_donors');
 		          	
 	          	}
 	    		echo json_encode(array('st'=>1,));

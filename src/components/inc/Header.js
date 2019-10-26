@@ -77,7 +77,7 @@ function Header(props) {
                     <Nav.Link href="#"  refresh="true" onClick={logout}>Logout</Nav.Link>
                             }
                 {logData &&
-                    <Nav.Link href="/profile">{data['name']}</Nav.Link>
+                    <Nav.Link href="/profile">{data['username'] !==''?data['username']:data['first_name']}</Nav.Link>
                             }
                 </Nav>
                

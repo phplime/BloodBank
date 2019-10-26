@@ -449,3 +449,16 @@ label.uploader span {
 .social_icon_area .form-control{
   border-radius: 0 .25rem .25rem 0;
 }
+.profile_banner{
+  height: 300px;
+}
+.p-r {
+  position: relative;
+}
+
+p.errorMsg {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+}
