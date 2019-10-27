@@ -4,6 +4,7 @@ import { withFormik } from "formik";
 import { Form, Button} from 'react-bootstrap';
 import SignUpForm from './SignUpForm';
 import axios from 'axios';
+import $ from 'jquery';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner';
 import { API_URL } from "../inc/Config";
@@ -38,8 +39,12 @@ export class SignUp extends Component {
             error: null,
             user: [],
             loading: true, 
+            phone: '',
+            ExistingLoading: false,
             
         }
+        
+        this.existingHandler = this.existingHandler.bind(this);
     }
 
     componentDidMount() {
@@ -54,6 +59,40 @@ export class SignUp extends Component {
                 error:'Somethings Were wrong',
             })
         })
+    }
+
+    existingHandler = (phone) =>{
+        
+       phone = this.removeExtra(phone)
+        this.setState({
+            phone:phone
+        })
+
+        const formData = {
+            field_name: 'phone',
+            table: 'blood_donors',
+            value: phone,
+        }
+
+        this.setState({ExistingLoading: true }, () => {
+            axios.post(`${API_URL}/check_existing_value`, JSON.stringify(formData))
+                .then(response => {
+                    this.setState({
+                        ExistingLoading: false,
+                        st:response.data.st,
+                    })
+                    $('.errorMsg').html(response.data.msg);
+               
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        });
+        
+    }
+
+    removeExtra(text) {
+        return  text.replace(/[^0-9]/g, '');
     }
    
     render() {
@@ -122,18 +161,20 @@ export default withFormik({
         gender:Yup.string().required('You Must give us Your Gender.'),
     }),
    
-     handleSubmit: (data, {setSubmitting}) => {
-         setTimeout(() => {
-            setSubmitting(false);
-             axios.post('http://localhost/blood/api/add_user', JSON.stringify(data, null, 2))
-            .then(result => {
-                document.getElementById("create-course-form").reset();
-            })
-            .catch(error => {
-               console.log(error)
-            })
+    handleSubmit: (data, { setSubmitting }) => {
+        //existingHandler(data['phone'])
+        console.log(data['phone'])
+        //  setTimeout(() => {
+        //     setSubmitting(false);
+        //      axios.post('http://localhost/blood/api/add_user', JSON.stringify(data, null, 2))
+        //     .then(result => {
+        //         document.getElementById("create-course-form").reset();
+        //     })
+        //     .catch(error => {
+        //        console.log(error)
+        //     })
             
-         }, 4000);
+        //  }, 4000);
          
     }
 })(SignUp) 
