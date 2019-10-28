@@ -462,3 +462,13 @@ p.errorMsg {
   right: 6px;
   transform: translateY(-50%);
 }
+.button_group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+button.editBtn {
+    border: 0;
+    background: transparent;
+    font-size: 20px;
+}

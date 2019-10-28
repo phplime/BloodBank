@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { Form, Button} from 'react-bootstrap';
 import SignUpForm from './SignUpForm';
 import axios from 'axios';
-import $ from 'jquery';
+// import $ from 'jquery';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner';
 import { API_URL } from "../inc/Config";
