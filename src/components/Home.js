@@ -8,7 +8,8 @@ import DonarList from './pages/DonarList';
 import img1 from "./assets/images/girl-2209147_1920.jpg";
 import AllDonar from './pages/AllDonar';
 import Gallery from './pages/Gallery';
-import SignUp from './pages/SignUp';
+// import SignUp from './pages/SignUp';
+import Registration from './pages/Registration';
 
 const portfolio = [
     {
@@ -111,7 +112,7 @@ class Home extends Component {
                         <div className="donation_progress_area mt-20">
                             <div className="row">
                                 <div className="col-sm-6 offset-3 text-left">
-                                        <SignUp />
+                                        <Registration/>
                                 </div>
                             </div>
                         </div>
