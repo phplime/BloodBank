@@ -230,4 +230,40 @@ class Api extends CI_Controller {
 	}
 
 
+	public function change_password(){	
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
+		$formdata = json_decode(file_get_contents('php://input'), true);
+		// echo "<pre>";print_r($formdata);exit();
+		$pass = $formdata['old_password'];
+		$check = $this->api_m->check_pass($pass,$formdata['id']);
+
+		if($check){
+			$data = array(
+				'password' => md5($formdata['new_password']),
+			);	
+			$insert = $this->api_m->update($data,$formdata['id'],'blood_donors');
+				if($insert){
+					$msg = 'Your password change successfully';
+					$response = ['st' => 1, 'msg'=> $msg,];
+					
+				}else{
+					$msg = 'Something Were Wrong! Try again later';
+					$response = ['st' => 0, 'msg'=> $msg,];
+				}
+			}else{
+				$msg = 'Your Old password was wrong';
+				$response = ['st' => 0, 'msg'=> $msg,];
+			}	
+
+			$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($response));
+			;
+	
+	}
+
+
+
+
 }

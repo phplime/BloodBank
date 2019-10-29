@@ -3,6 +3,7 @@ import $ from "jquery";
 import ProfileInfo from './common/ProfileInfo';
 import MyInfo from './common/MyInfo';
 import ProfileBanner from './common/ProfileBanner';
+import ChangePassword from './common/ChangePassword';
 
 
 export class Profile extends Component {
@@ -20,10 +21,7 @@ export class Profile extends Component {
         }
      
         this.TabHandler = this.TabHandler.bind(this);
-        //
-        // this.onFormSubmit = this.onFormSubmit.bind(this)
-        // this.onChange = this.onChange.bind(this)
-        // this.fileUpload = this.fileUpload.bind(this)
+        
     }
 
    
@@ -31,15 +29,8 @@ export class Profile extends Component {
     TabHandler = (e) => {
         var ID = e.target.getAttribute('data-id');
         $(ID).addClass('active');
-       
+       console.log(ID)
     }
-    
-    
-
-
-
-    
-
     
     // onFormSubmit(e){
     //     e.preventDefault() // Stop form submit
@@ -81,18 +72,14 @@ export class Profile extends Component {
                                         <a className="nav-link " data-id="myInfo" data-toggle="tab" href="#myInfo" role="tab" aria-controls="myInfo" aria-selected="false" onClick={this.TabHandler}>My Information</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" data-id="profile" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" onClick={this.TabHandler}>Change Password</a>
+                                        <a className="nav-link" data-id="password" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false" onClick={this.TabHandler}>Change Password</a>
                                     </li>
                                     
                                 </ul>
                                 <div className="tab-content" id="myTabContent">
                                     <ProfileInfo user = {this.props.user}/>
-                                    <MyInfo user = {this.props.user} />
-                                    <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex non quas ducimus veniam modi ipsam? Voluptas hic quam, voluptates deleniti magni dolorum aspernatur numquam deserunt consectetur tempore fuga voluptatem esse similique labore voluptate temporibus officiis modi laudantium eius sequi, iusto ducimus. Quia, accusamus ab atque quis sed molestiae voluptate nulla? Iste rem, recusandae neque necessitatibus repellat nam nihil, labore eum reprehenderit minima a blanditiis. Omnis laboriosam cum aut voluptate! Facilis quisquam vitae quidem laboriosam illum nam fugit totam! Laudantium, dolorem. Nisi aliquam odit possimus ea ipsam corporis debitis illo, totam, laboriosam, dignissimos voluptate. Repellat nihil similique debitis, eius esse dolor!
-                                    </div>
-                                    
+                                    <MyInfo user={this.props.user} />
+                                    <ChangePassword/>
                                 </div>
                             </div>
                         </div>

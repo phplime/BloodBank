@@ -95,6 +95,22 @@ class Api_m extends CI_Model {
         return $query->row_array();
 
     }
+
+    public function check_pass($pass,$uid)
+  	{
+        $this->db->select('u.*');
+        $this->db->from('blood_donors as u');
+        $this->db->where('u.password', md5($pass));
+        $this->db->where('u.id', $uid);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        if($query->num_rows() ==1){
+            return $query->result();
+        }else{
+            return false;
+        }
+
+    }
 	
 
 }

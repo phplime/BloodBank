@@ -16,7 +16,8 @@ export class ProfileInfo extends Component {
             linkedin: '',
             ExistingLoading: false,
             isLoading: false,
-            st:0,
+            st:'',
+            readonly:false
         }
         if(props.user){
             this.state = this.props.user
@@ -50,7 +51,9 @@ export class ProfileInfo extends Component {
         }
 
         this.setState({ isLoading: true }, () => {
-            if (this.state.st === 1) {
+
+            
+            if (this.state.st===1 || this.state.readonly===undefined) {
                 axios.post(`${API_URL}/add_user`, JSON.stringify(formData))
                     .then(response => {
                         this.setState({ isLoading: false });
@@ -64,9 +67,13 @@ export class ProfileInfo extends Component {
             } else {
                 this.setState({ isLoading: false });
             }
+
+
+
         });
         
     }
+
     existingHandler = (e) => {
         e.preventDefault();
         var username = this.removeExtra(e.target.value)
@@ -101,25 +108,35 @@ export class ProfileInfo extends Component {
 
     removeExtra(text) {
        return  text.replace(/[^a-zA-Z]/g, '');
-     }
+    }
+    
+
+    
+    handleToggle = () => {
+       
+        if (this.state.readonly === false || this.state.readonly === undefined) {
+            this.setState({ readonly: true })
+        } 
+        // const el = findDOMNode(this.refs.toggle);
+        // $(el).attr('readonly', function (_, attr) { return !attr });
+        
+    }
     
     render() {
         return (
             <div className={`tab-pane fade show active ${this.state.isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div className={`profile_area `} >
                     <div className="single_profile">
-                    {/* <form onSubmit={this.onFormSubmit}>
-                        <h1>File Upload</h1>
-                        <input type="file" onChange={this.onChange} />
-                        <button type="submit">Upload</button>
-                    </form> */}
                     <form action="" onSubmit={this.submitHandler}>
                         <div className="single_profile_body">
                             
                             <div className="form-group">
-                                <label>Username</label>
+                               <div className="button_group">
+                                    <label>Username</label>
+                                        <button type="button" className="editBtn" onClick={() => window.confirm("Are you sure? You Have to change username after this!") && this.handleToggle()}><i className="fa fa-edit"></i></button>
+                               </div>
                                 <div className="p-r">
-                                    <input type="text" name="username" className="form-control" value={this.state.username} onChange={this.existingHandler} />
+                                    <input type="text" name="username" className="form-control" readOnly={this.state.readonly?false:true} value={this.state.username} onChange={this.existingHandler} />
                                         {this.state.ExistingLoading
                                             ?
                                             <p className="errorMsg"><i className="fa fa-spinner fa-spin"></i></p>

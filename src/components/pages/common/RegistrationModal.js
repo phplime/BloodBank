@@ -1,44 +1,46 @@
 import React, { Component } from 'react'
+import {Modal,Button} from 'react-bootstrap';
 
 export class RegistrationModal extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-             open:''
+             open: false,
         }
+
         if(props.open){
-            this.state = this.props.open
+            this.state = props.open
+           
         } else {
             this.state = this.state;
         }
+     
     }
 
+    handleClose = () => {
+        this.setState({ open: false });
+    }
   
     
     render() {
-        console.log(this.state.open)
+           console.log(this.state.open)
         return (
             <div>
-                <div style={{display:this.state.open===true?'block':'none'}} className="modal fade" id="signupModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            ...
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
-                        </div>
-                        </div>
-                    </div>
-                </div> 
+                <Modal show={this.state.open} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={this.handleClose}>
+                        Save Changes
+                    </Button>
+                    </Modal.Footer>
+                </Modal> 
             </div>
         )
     }
