@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import $ from "jquery";
-import { findDOMNode } from "react-dom";
 import { API_URL } from "../../inc/Config";
 
 export class ProfileInfo extends Component {
@@ -123,12 +122,6 @@ export class ProfileInfo extends Component {
         
     }
     
-    handleToggle = () => {
-        const el = findDOMNode(this.refs.toggle);
-        $(el).attr('readonly', function (_, attr) { return !attr });
-        
-    }
-    
     render() {
         return (
             <div className={`tab-pane fade show active ${this.state.isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -140,17 +133,10 @@ export class ProfileInfo extends Component {
                             <div className="form-group">
                                <div className="button_group">
                                     <label>Username</label>
-<<<<<<< HEAD
                                         <button type="button" className="editBtn" onClick={() => window.confirm("Are you sure? You Have to change username after this!") && this.handleToggle()}><i className="fa fa-edit"></i></button>
                                </div>
                                 <div className="p-r">
                                     <input type="text" name="username" className="form-control" readOnly={this.state.readonly?false:true} value={this.state.username} onChange={this.existingHandler} />
-=======
-                                        <button type="button" className="editBtn" onClick={this.handleToggle}><i className="fa fa-edit"></i></button>
-                               </div>
-                                <div className="p-r">
-                                    <input type="text" name="username" ref="toggle" className="form-control" readOnly={true} value={this.state.username} onChange={this.existingHandler} />
->>>>>>> d4c59b329ec5ab1d2ce1592865117433b03d3671
                                         {this.state.ExistingLoading
                                             ?
                                             <p className="errorMsg"><i className="fa fa-spinner fa-spin"></i></p>

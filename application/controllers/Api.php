@@ -112,6 +112,21 @@ class Api extends CI_Controller {
 	}
 
 
+	public function get_single_value(){
+
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
+
+		$formdata = json_decode(file_get_contents('php://input'), true);	
+		$check = $this->api_m->single_select_by_id($formdata['field_name'],$formdata['table']);
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($check));
+		;
+		
+	}
+
+
 
 
 	public function user_login()

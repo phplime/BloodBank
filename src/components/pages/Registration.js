@@ -39,6 +39,7 @@ export class Registration extends Component {
         super(props)
     
         this.state = {
+            id:'',
             error: null,
             user: [],
             loading: true, 
@@ -71,25 +72,30 @@ export class Registration extends Component {
     }
     
     onSubmit = (values) => {
-        this.setState({modalStatus:true})
+        const valuesToRemove = values['phone']
+        // const value = values.filter(values => !valuesToRemove.includes(values))
+        const value = values.filter(values => values !== valuesToRemove)
+        console.log(value);
         // this.existingHandler(values['phone']).then(data => {
         //     if (data === 0) {
         //         this.setState({
-        //             msg: `This <b>${values['phone']}</b> Number already exists!`,
+        //             msg: `This ${values['phone']} Number already exists!`,
         //             st:0
         //         })
         //     } else {
         //         this.setState({ isSubmit: true, msg:'' });
         //         axios.post(`${API_URL}/add_user`, JSON.stringify(values))
         //             .then(result => {
+        //                 // console.log(result);
         //                 if (result.data.st === 1) {
-        //                     document.getElementById("create-course-form").reset();
         //                     this.setState({
         //                         isSubmit: false,
         //                         msg: result.data.msg,
         //                         st: result.data.st,
+        //                         modalStatus: true,
+        //                         id:result.data.id,
         //                     })
-
+        //                     document.getElementById("create-course-form").reset();
         //                 } else {
         //                     this.setState({
         //                         isSubmit: false,
@@ -113,8 +119,8 @@ export class Registration extends Component {
         //                 .bind(this),
         //             3000
         //         );
-        //     } //endif
-        // })
+            //} //endif
+        //})
         
     };
  
@@ -141,7 +147,10 @@ export class Registration extends Component {
         
         
     }
-    
+
+    handleClose = () => {
+        this.setState({ modalStatus: false });
+    }
   
       
     
@@ -158,17 +167,17 @@ export class Registration extends Component {
                     gender: '',
                 }}
                 validationSchema={Yup.object().shape({
-                    first_name: Yup.string().min(3, 'First Name is longer then that').required('You Must give us Your First name.'),
-                    last_name: Yup.string().min(3, 'Last Name is longer then that').required('You Must give us Your Last name.'),
-                    phone: Yup.string()
-                    // .test('len', 'Must be exactly 11 characters', val => val.length === 11)
-                    .required('Phone is required')
-                    .matches(phoneRegExp, 'Phone can only contain Number.')
-                    // .matches(/^[0-9]{11}$/, 'Phone can only contain only Number.')
-                    ,
-                    blood_group:Yup.number().required('You Must give us Your Blood group.'),
-                    address:Yup.string().required('You Must give us Your Address.'),
-                    gender:Yup.string().required('You Must give us Your Gender.'),
+                    // first_name: Yup.string().min(3, 'First Name is longer then that').required('You Must give us Your First name.'),
+                    // last_name: Yup.string().min(3, 'Last Name is longer then that').required('You Must give us Your Last name.'),
+                    // phone: Yup.string()
+                    // // .test('len', 'Must be exactly 11 characters', val => val.length === 11)
+                    // .required('Phone is required')
+                    // .matches(phoneRegExp, 'Phone can only contain Number.')
+                    // // .matches(/^[0-9]{11}$/, 'Phone can only contain only Number.')
+                    // ,
+                    // blood_group:Yup.number().required('You Must give us Your Blood group.'),
+                    // address:Yup.string().required('You Must give us Your Address.'),
+                    // gender:Yup.string().required('You Must give us Your Gender.'),
                 })}
                 onSubmit={this.onSubmit}
                 render={({ handleChange, handleBlur, values, errors, handleSubmit, touched}) => (
@@ -221,7 +230,7 @@ export class Registration extends Component {
                                     timeout={3000} //3 secs
                                 />
                             </div>}
-                        <RegistrationModal open={this.state.modalStatus}/>
+                        <RegistrationModal open={this.state.modalStatus} cancel={this.handleClose} id={this.state.id}/>
                     </div>
                 )}
             />
