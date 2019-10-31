@@ -72,55 +72,59 @@ export class Registration extends Component {
     }
     
     onSubmit = (values) => {
-        const valuesToRemove = values['phone']
-        // const value = values.filter(values => !valuesToRemove.includes(values))
-        const value = values.filter(values => values !== valuesToRemove)
-        console.log(value);
-        // this.existingHandler(values['phone']).then(data => {
-        //     if (data === 0) {
-        //         this.setState({
-        //             msg: `This ${values['phone']} Number already exists!`,
-        //             st:0
-        //         })
-        //     } else {
-        //         this.setState({ isSubmit: true, msg:'' });
-        //         axios.post(`${API_URL}/add_user`, JSON.stringify(values))
-        //             .then(result => {
-        //                 // console.log(result);
-        //                 if (result.data.st === 1) {
-        //                     this.setState({
-        //                         isSubmit: false,
-        //                         msg: result.data.msg,
-        //                         st: result.data.st,
-        //                         modalStatus: true,
-        //                         id:result.data.id,
-        //                     })
-        //                     document.getElementById("create-course-form").reset();
-        //                 } else {
-        //                     this.setState({
-        //                         isSubmit: false,
-        //                         msg: result.data.msg,
-        //                         st: result.data.st,
-        //                     })
-        //                 }
+       
+        this.existingHandler(values['phone']).then(data => {
+            // console.log(data)
+            if (data.st === 0) {
+                this.setState({
+                    msg: `This ${values['phone']} Number already exists!`,
+                    st:0
+                })
+                if (data.data['password']==='') {
+                    this.setState({
+                        id:data.data['id'],
+                        modalStatus: true,
+                    })
+                }
+            } else {
+                this.setState({ isSubmit: true, msg:'' });
+                axios.post(`${API_URL}/add_user`, JSON.stringify(values))
+                    .then(result => {
+                        // console.log(result);
+                        if (result.data.st === 1) {
+                            this.setState({
+                                isSubmit: false,
+                                msg: result.data.msg,
+                                st: result.data.st,
+                                modalStatus: true,
+                                id:result.data.id,
+                            })
+                            document.getElementById("create-course-form").reset();
+                        } else {
+                            this.setState({
+                                isSubmit: false,
+                                msg: result.data.msg,
+                                st: result.data.st,
+                            })
+                        }
             
-        //             })
-        //             .catch(error => {
-        //                 console.log(error)
-        //             })
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
 
-        //         setTimeout(
-        //             function () {
-        //                 this.setState({
-        //                     msg: '',
-        //                     isSubmit: false,
-        //                 });
-        //             }
-        //                 .bind(this),
-        //             3000
-        //         );
-            //} //endif
-        //})
+                setTimeout(
+                    function () {
+                        this.setState({
+                            msg: '',
+                            isSubmit: false,
+                        });
+                    }
+                        .bind(this),
+                    3000
+                );
+            } //endif
+        })
         
     };
  
@@ -139,7 +143,7 @@ export class Registration extends Component {
         }
        return axios.post(`${API_URL}/check_existing_value`, JSON.stringify(formData))
         .then(response => {
-            return response.data.st;
+            return response.data;
         })
         .catch(error => {
             console.log(error)
@@ -167,17 +171,17 @@ export class Registration extends Component {
                     gender: '',
                 }}
                 validationSchema={Yup.object().shape({
-                    // first_name: Yup.string().min(3, 'First Name is longer then that').required('You Must give us Your First name.'),
-                    // last_name: Yup.string().min(3, 'Last Name is longer then that').required('You Must give us Your Last name.'),
-                    // phone: Yup.string()
-                    // // .test('len', 'Must be exactly 11 characters', val => val.length === 11)
-                    // .required('Phone is required')
-                    // .matches(phoneRegExp, 'Phone can only contain Number.')
-                    // // .matches(/^[0-9]{11}$/, 'Phone can only contain only Number.')
-                    // ,
-                    // blood_group:Yup.number().required('You Must give us Your Blood group.'),
-                    // address:Yup.string().required('You Must give us Your Address.'),
-                    // gender:Yup.string().required('You Must give us Your Gender.'),
+                    first_name: Yup.string().min(3, 'First Name is longer then that').required('You Must give us Your First name.'),
+                    last_name: Yup.string().min(3, 'Last Name is longer then that').required('You Must give us Your Last name.'),
+                    phone: Yup.string()
+                    // .test('len', 'Must be exactly 11 characters', val => val.length === 11)
+                    .required('Phone is required')
+                    .matches(phoneRegExp, 'Phone can only contain Number.')
+                    // .matches(/^[0-9]{11}$/, 'Phone can only contain only Number.')
+                    ,
+                    blood_group:Yup.number().required('You Must give us Your Blood group.'),
+                    address:Yup.string().required('You Must give us Your Address.'),
+                    gender:Yup.string().required('You Must give us Your Gender.'),
                 })}
                 onSubmit={this.onSubmit}
                 render={({ handleChange, handleBlur, values, errors, handleSubmit, touched}) => (
@@ -193,7 +197,7 @@ export class Registration extends Component {
                             </div>
                         }
                         {this.state.isSubmit !== true ?
-                            <Form onSubmit={handleSubmit} id='create-course-form'>
+                            <Form onSubmit={handleSubmit} id='create-course-form' className="form_height">
                                 {fields.sections.map((section, i) => {
                                     return (
                                         <div className="row" key={i}>

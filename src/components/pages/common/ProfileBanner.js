@@ -54,8 +54,6 @@ export class ProfileBanner extends Component {
                     file: URL.createObjectURL(this.state.file),
                     uploadText: false,
                 });
-               
-                console.log(response.data);
             })
             .catch(error => {
                 console.log(error)

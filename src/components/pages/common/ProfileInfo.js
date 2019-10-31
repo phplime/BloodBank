@@ -11,13 +11,16 @@ export class ProfileInfo extends Component {
             username: '',
             email: '',
             facebook: '',
+            designation: '',
+            dob: '',
             twitter: '',
             instagram: '',
             linkedin: '',
             ExistingLoading: false,
             isLoading: false,
             st:'',
-            readonly:false
+            readonly: false,
+            
         }
         if(props.user){
             this.state = this.props.user
@@ -44,6 +47,8 @@ export class ProfileInfo extends Component {
             id:this.state.id,
             username: this.state.username,
             email: this.state.email,
+            designation: this.state.designation,
+            dob: this.state.dob,
             facebook: this.state.facebook,
             twitter: this.state.twitter,
             instagram: this.state.instagram,
@@ -56,7 +61,11 @@ export class ProfileInfo extends Component {
             if (this.state.st===1 || this.state.readonly===undefined) {
                 axios.post(`${API_URL}/add_user`, JSON.stringify(formData))
                     .then(response => {
-                        this.setState({ isLoading: false });
+                        this.setState({
+                            isLoading: false,
+                            // readonly:false,
+                        });
+                        $('.st_alert').html(``);
                     })
                     .catch(error => {
                         console.log(error)
@@ -66,6 +75,7 @@ export class ProfileInfo extends Component {
                 this.setState({ isLoading: false });
             } else {
                 this.setState({ isLoading: false });
+                $('.st_alert').html(``);
             }
 
 
@@ -123,6 +133,7 @@ export class ProfileInfo extends Component {
     }
     
     render() {
+        // console.log(this.state)
         return (
             <div className={`tab-pane fade show active ${this.state.isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div className={`profile_area `} >
@@ -143,7 +154,8 @@ export class ProfileInfo extends Component {
                                             :
                                             <p className="errorMsg"></p>
                                         }
-                                    <p className="st_alert"></p>
+                                    {this.state.st===0 &&
+                                    <p className="st_alert"></p>}
                                 </div>
                             </div>
                             <div className="form-group">
@@ -154,49 +166,82 @@ export class ProfileInfo extends Component {
                                 <div className="form-group col-sm-6 col-lg-6 col-xs-12">
                                     <div className="social_icon_area">
                                         <div className="s_icon">
-                                            <i className="fa fa-facebook"></i>
+                                            <i className="fa fa-calendar"></i>
                                         </div>
                                         <input type="text"
-                                            name="facebook"
+                                            name="dob"
                                             className="form-control"
-                                            placeholder="Your Facebook Link"
-                                            value={this.state.facebook}
+                                            placeholder="Date Of Birth"
+                                            value={this.state.dob}
                                             onChange={this.profileHandler}
                                         />
                                     </div>
-                                    
                                 </div>
                                 <div className="form-group col-sm-6 col-lg-6 col-xs-12">
                                     <div className="social_icon_area">
                                         <div className="s_icon">
-                                            <i className="fa fa-twitter"></i>
+                                            <i className="fa fa-user-circle"></i>
                                         </div>
                                         <input type="text"
-                                            name="twitter"
+                                            name="designation"
                                             className="form-control"
-                                            placeholder="Your Twitter Link"
-                                            value={this.state.twitter}
+                                            placeholder="Your Designation"
+                                            value={this.state.designation}
                                             onChange={this.profileHandler}
                                         />
                                     </div>
-                                    
                                 </div>
-                                <div className="form-group col-sm-6 col-lg-6 col-xs-12">
-                                    <div className="social_icon_area">
-                                        <div className="s_icon">
-                                            <i className="fa fa-instagram"></i>
-                                        </div>
-                                        <input type="text"
-                                            name="instagram"
-                                            className="form-control"
-                                            placeholder="Your Instagram Link"
-                                            value={this.state.instagram}
-                                            onChange={this.profileHandler}
-                                        />
+                            </div>   
+                            <div className="">
+                                    <div className="row social_area">
+                                    <div className="col-sm-12 social_area_top">
+                                        <h5>Social Network</h5>    
                                     </div>
-                                    
-                                </div>
-                                <div className="form-group col-sm-6 col-lg-6 col-xs-12">
+                                    <div className="form-group col-sm-6 col-lg-6 col-xs-12">
+                                        <div className="social_icon_area">
+                                            <div className="s_icon">
+                                                <i className="fa fa-facebook"></i>
+                                            </div>
+                                            <input type="text"
+                                                name="facebook"
+                                                className="form-control"
+                                                placeholder="Your Designation"
+                                                value={this.state.facebook}
+                                                onChange={this.profileHandler}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="form-group col-sm-6 col-lg-6 col-xs-12">
+                                        <div className="social_icon_area">
+                                            <div className="s_icon">
+                                                <i className="fa fa-twitter"></i>
+                                            </div>
+                                            <input type="text"
+                                                name="twitter"
+                                                className="form-control"
+                                                placeholder="Your Twitter Link"
+                                                value={this.state.twitter}
+                                                onChange={this.profileHandler}
+                                            />
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="form-group col-sm-6 col-lg-6 col-xs-12">
+                                        <div className="social_icon_area">
+                                            <div className="s_icon">
+                                                <i className="fa fa-instagram"></i>
+                                            </div>
+                                            <input type="text"
+                                                name="instagram"
+                                                className="form-control"
+                                                placeholder="Your Instagram Link"
+                                                value={this.state.instagram}
+                                                onChange={this.profileHandler}
+                                            />
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="form-group col-sm-6 col-lg-6 col-xs-12">
                                     <div className="social_icon_area">
                                         <div className="s_icon">
                                             <i className="fa fa-linkedin"></i>
@@ -211,7 +256,7 @@ export class ProfileInfo extends Component {
                                     </div>
                                     
                                 </div>
-                                
+                                </div>
                             </div>
                             
                             <div className="form-group text-right">

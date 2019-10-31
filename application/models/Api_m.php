@@ -28,11 +28,11 @@ class Api_m extends CI_Model {
 		$query = $query->result_array();
 		return $query;
 	}
-	public function single_select_by_id($id,$table)
+	public function single_select_by_id($id,$type,$table)
 	{
 		$this->db->select();
 		$this->db->from($table);
-		$this->db->where('id',$id);
+		$this->db->where($type,$id);
 		$query = $this->db->get();
 		$query = $query->row_array();
 		return $query;
@@ -77,7 +77,7 @@ class Api_m extends CI_Model {
         $this->db->limit(1);
         $query = $this->db->get();
         if($query->num_rows() ==1){
-            return 1;
+            return array('check'=>1,'result'=>$query->row_array());
         }else{
             return 0;
         }
@@ -86,7 +86,7 @@ class Api_m extends CI_Model {
 
     public function get_login_user_info($id)
   	{
-        $this->db->select('b.id,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,');
+        $this->db->select('b.id,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation');
         $this->db->select('bg.id as group_id, bg.name as blood_group');
         $this->db->from('blood_donors b');
         $this->db->join('blood_group as bg','bg.id = b.blood_group');

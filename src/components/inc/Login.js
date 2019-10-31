@@ -87,9 +87,9 @@ class Login extends Component {
             onSubmit={this.onSubmit}
             render={({ handleChange, handleBlur, values, errors, handleSubmit, touched }) => (
             <div>
-                <Modal show={this.props.show} onHide={this.props.handleClose}>
+                <Modal show={this.props.show} onHide={this.props.handleClose} className="form_height">
                     <form  onSubmit={handleSubmit}>
-                        <Modal.Header closeButton> <Modal.Title>Login Form</Modal.Title> </Modal.Header>
+                        <Modal.Header closeButton> <Modal.Title>Login </Modal.Title> </Modal.Header>
                             <Modal.Body>
                                 {this.state.msg &&
                                     <div className="success_msg">

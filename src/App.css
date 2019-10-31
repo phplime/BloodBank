@@ -472,3 +472,27 @@ button.editBtn {
     background: transparent;
     font-size: 20px;
 }
+.text-center.success_alet_msg {
+  padding: 32px;
+}
+
+.text-center.success_alet_msg h4 {
+  padding: 5px;
+}
+.form_height input.form-control, select.form-control {
+  height: 46px;
+  border-radius: 0;
+}
+.form_height .btn{
+  padding: 11px 27px;
+  border-radius: 0;
+}
+.row.social_area {
+  background: #eee;
+  padding: 5px 0 0;
+  margin-bottom: 10px;
+}
+
+.social_area_top h5 {
+  padding: 0 0 15px 0;
+}

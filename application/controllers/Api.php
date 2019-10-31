@@ -92,12 +92,12 @@ class Api extends CI_Controller {
 			
 			$check = $this->api_m->check_existing_value($formdata['field_name'],$formdata['value'],$formdata['table']);
 			
-			if($check!=1){
+			if($check['check']!=1){
 				$msg = '<i class="fa fa-check-square-o" style="color:green" title="Done"></i>';
 				$response = ['st' => 1, 'msg'=> $msg,];
 			}else{
 				$msg = '<i class="fa fa-close" style="color:red" title="This <b>'.$formdata['value']. '</b>  already exists"> </i>';
-				$response = ['st' => 0, 'msg'=> $msg,];
+				$response = ['st' => 0, 'msg'=> $msg, 'data'=>$check['result'],];
 
 			}	
 			
@@ -118,7 +118,7 @@ class Api extends CI_Controller {
 		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
 
 		$formdata = json_decode(file_get_contents('php://input'), true);	
-		$check = $this->api_m->single_select_by_id($formdata['field_name'],$formdata['table']);
+		$check = $this->api_m->single_select_by_id($formdata['field_value'],$formdata['field_name'],$formdata['table']);
 		$this->output
 		->set_content_type('application/json')
 		->set_output(json_encode($check));
@@ -143,6 +143,7 @@ class Api extends CI_Controller {
 			$password = $formdata['password'];
 			$query = $this->api_m->login_info_check($phone,$password);
 			if($query){
+				
 				$s_array= array();
 				foreach($query as $row):
 					$s_array[] = array(
@@ -153,6 +154,8 @@ class Api extends CI_Controller {
 						'user_login' => 1,
 					);
 
+					$data = array('last_login'=>d_time());
+					$this->api_m->update($data,$row['id'],'blood_donors');
 				endforeach;
 				$msg = 'Login Successfull';
 				$response = ['st' => 1, 'msg'=> $msg, 'data' => $s_array];
