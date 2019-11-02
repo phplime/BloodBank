@@ -5,6 +5,7 @@ import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css';
 import { Link } from 'react-router-dom';
 import Icofont from 'react-icofont';
+import { IMG_URL } from '../inc/Config';
 
 function AllDonar(props) {
     const options = {
@@ -28,12 +29,15 @@ function AllDonar(props) {
         fallbackEasing: 'swing',
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
     };
-    return (
+    if (props.donar.length === 0) {
+        return <div className="isLoading">Loading...</div>
+    } else {
+        return (
             <OwlCarousel options={options} >
                 {props.donar.map((portfolio, i) => {
                     {
                         
-                        let order = i+1;
+                        let order = i + 1;
                         var orderText = '';
                         if (order === 1) {
                             orderText = `${order}st`;
@@ -41,7 +45,7 @@ function AllDonar(props) {
                             orderText = `${order}nd`;
                         } else if (order === 3) {
                             orderText = `${order}rd`;;
-                        } else{
+                        } else {
                             orderText = `${order}th`;;
                         }
                     }
@@ -50,27 +54,27 @@ function AllDonar(props) {
                             <div className="portfolioCardTop donarList">
                                 <div className="PortfolioCovetTop">
                                     <div className="portfolioCardHeader donarList">
-                                        <img src={portfolio.image} alt="" />
+                                        <img src={`${IMG_URL}/${portfolio.image}`} alt="" />
                                         <span className="order_lebel">{orderText}</span>
                                     </div>
                                     <div className="portfolioCardBody donarList">
                                         <div className="portfolioBodyTopper donarList">
                                             <div className="portfolioBodyTop">
-                                                <h4>{portfolio.name}</h4>
+                                                <h4>{portfolio.first_name} {portfolio.last_name}</h4>
                                                 <p>{portfolio.designation}</p>
                                             </div>
                                             <div className="portfolioDetails">
-                                                {portfolio.details}
+                                                 <p>  {portfolio.about_me}</p>
                                                 <Button variant="primary">Go somewhere</Button>
                                             </div>
                                         </div>
                                     </div>
                                     {/* cover image */}
                                     <div className="allDonar_cover">
-                                        <img src={portfolio.image} alt="" />
+                                        <img src={`${IMG_URL}/${portfolio.image}`} alt="" />
                                         <span className="order_lebel">{orderText}</span>
                                         <div className="profileCover_title">
-                                            <h4>{portfolio.name}</h4>
+                                            <h4>{portfolio.first_name} {portfolio.last_name}</h4>
                                             <p>{portfolio.designation}</p>
                                         </div>
                                     </div>
@@ -86,10 +90,11 @@ function AllDonar(props) {
                             
                             
                         </div>
-                    )  
+                    )
                 })}
             </OwlCarousel>
-    )
+        )
+    }
 }
 
 export default AllDonar

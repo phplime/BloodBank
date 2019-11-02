@@ -12,6 +12,7 @@ export class MyInfo extends Component {
             first_name: '',
             last_name: '',
             address:'',
+            about_me:'',
             gender:'',
             blood_group:'',
             group_id: '',
@@ -47,6 +48,7 @@ export class MyInfo extends Component {
             address:this.state.address,
             gender:e.target.gender.value,
             blood_group: e.target.blood_group.value,
+            about_me: this.state.about_me,
         }
 
         this.setState({infoLoading: true }, () => {
@@ -59,6 +61,7 @@ export class MyInfo extends Component {
             })
             .catch(error => {
                 console.log(error)
+                return null
             })
         });
         
@@ -98,6 +101,10 @@ export class MyInfo extends Component {
                                             <option value={this.state.gender}>{this.state.gender}</option>
                                     </select>
                                     </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>About Me</label>
+                                    <textarea name="about_me" id="1" className="form-control" cols="5"  rows="5" onChange={this.changeHandler} value={this.state.about_me} placeholder="About Your self"></textarea>
                                 </div>
                                 <div className="form-group">
                                     <label>Address</label>

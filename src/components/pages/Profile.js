@@ -4,6 +4,8 @@ import ProfileInfo from './common/ProfileInfo';
 import MyInfo from './common/MyInfo';
 import ProfileBanner from './common/ProfileBanner';
 import ChangePassword from './common/ChangePassword';
+import Toaster from '../inc/Toaster';
+// import { ToastProvider, useToasts } from 'react-toast-notifications'
 
 
 export class Profile extends Component {
@@ -29,7 +31,7 @@ export class Profile extends Component {
     TabHandler = (e) => {
         var ID = e.target.getAttribute('data-id');
         $(ID).addClass('active');
-       console.log(ID)
+    //    console.log(ID)
     }
     
     // onFormSubmit(e){
@@ -53,7 +55,15 @@ export class Profile extends Component {
     //     return  post(url, formData,config)
     //   }
 
-    
+    // const Demo = ({ content, toastManager }) => (
+    //     toastManager.add(content, {
+    //       appearance: 'success',
+    //       autoDismiss: true,
+    //       pauseOnHover: false,
+    //     })
+    //   );
+      
+  
     render() {
         // console.log(this.state.tabActive)
         
@@ -85,6 +95,18 @@ export class Profile extends Component {
                         </div>
                     </div>
                 </div>
+                {this.props.user.username === undefined ||this.props.user.username === ''?
+                     <Toaster type="success" msg="Username is empty" st="1" />
+                    :''
+                }
+                {this.props.user.designation === undefined ||this.props.user.designation === ''?
+                     <Toaster type="success" msg="Designation is empty" st="0" />
+                    :''
+                }
+                {this.props.user.email === undefined ||this.props.user.email === ''?
+                    <Toaster type="success" msg="Designation is empty" st="1" />
+                    :''
+                }
             </div>
         )
     }

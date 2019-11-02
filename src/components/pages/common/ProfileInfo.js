@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import $ from "jquery";
+// import DateTimeField  from "react-bootstrap-datetimepicker";
 import { API_URL } from "../../inc/Config";
 
 export class ProfileInfo extends Component {
@@ -57,7 +58,6 @@ export class ProfileInfo extends Component {
 
         this.setState({ isLoading: true }, () => {
 
-            
             if (this.state.st===1 || this.state.readonly===undefined) {
                 axios.post(`${API_URL}/add_user`, JSON.stringify(formData))
                     .then(response => {
@@ -134,8 +134,9 @@ export class ProfileInfo extends Component {
     
     render() {
         // console.log(this.state)
+        const {id,username, email,facebook, designation,dob,twitter,instagram,linkedin,ExistingLoading,isLoading,st,readonly} = this.state;
         return (
-            <div className={`tab-pane fade show active ${this.state.isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div className={`tab-pane fade show active ${isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div className={`profile_area `} >
                     <div className="single_profile">
                     <form action="" onSubmit={this.submitHandler}>
@@ -147,20 +148,20 @@ export class ProfileInfo extends Component {
                                         <button type="button" className="editBtn" onClick={() => window.confirm("Are you sure? You Have to change username after this!") && this.handleToggle()}><i className="fa fa-edit"></i></button>
                                </div>
                                 <div className="p-r">
-                                    <input type="text" name="username" className="form-control" readOnly={this.state.readonly?false:true} value={this.state.username} onChange={this.existingHandler} />
-                                        {this.state.ExistingLoading
+                                    <input type="text" name="username" className="form-control" readOnly={readonly?false:true} value={username} onChange={this.existingHandler} />
+                                        {ExistingLoading
                                             ?
                                             <p className="errorMsg"><i className="fa fa-spinner fa-spin"></i></p>
                                             :
                                             <p className="errorMsg"></p>
                                         }
-                                    {this.state.st===0 &&
+                                    {st===0 &&
                                     <p className="st_alert"></p>}
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label>Email</label>
-                                <input type="text" name="email" className="form-control" value={this.state.email}  onChange={this.profileHandler} />
+                                <input type="text" name="email" className="form-control" value={email}  onChange={this.profileHandler} />
                             </div>
                             <div className="row">
                                 <div className="form-group col-sm-6 col-lg-6 col-xs-12">
@@ -172,7 +173,7 @@ export class ProfileInfo extends Component {
                                             name="dob"
                                             className="form-control"
                                             placeholder="Date Of Birth"
-                                            value={this.state.dob}
+                                            value={dob}
                                             onChange={this.profileHandler}
                                         />
                                     </div>
@@ -186,7 +187,7 @@ export class ProfileInfo extends Component {
                                             name="designation"
                                             className="form-control"
                                             placeholder="Your Designation"
-                                            value={this.state.designation}
+                                            value={designation}
                                             onChange={this.profileHandler}
                                         />
                                     </div>
@@ -206,7 +207,7 @@ export class ProfileInfo extends Component {
                                                 name="facebook"
                                                 className="form-control"
                                                 placeholder="Your Designation"
-                                                value={this.state.facebook}
+                                                value={facebook}
                                                 onChange={this.profileHandler}
                                             />
                                         </div>
@@ -220,7 +221,7 @@ export class ProfileInfo extends Component {
                                                 name="twitter"
                                                 className="form-control"
                                                 placeholder="Your Twitter Link"
-                                                value={this.state.twitter}
+                                                value={twitter}
                                                 onChange={this.profileHandler}
                                             />
                                         </div>
@@ -235,7 +236,7 @@ export class ProfileInfo extends Component {
                                                 name="instagram"
                                                 className="form-control"
                                                 placeholder="Your Instagram Link"
-                                                value={this.state.instagram}
+                                                value={instagram}
                                                 onChange={this.profileHandler}
                                             />
                                         </div>
@@ -250,7 +251,7 @@ export class ProfileInfo extends Component {
                                             name="linkedin"
                                             className="form-control"
                                             placeholder="Your Linkedin Link"
-                                            value={this.state.linkedin}
+                                            value={linkedin}
                                             onChange={this.profileHandler}
                                         />
                                     </div>
@@ -262,7 +263,7 @@ export class ProfileInfo extends Component {
                             <div className="form-group text-right">
                                 {/* <ProgressBar className="pro" animated now={45} /> */}
                                 <div className="form_footer">
-                                    <input type='hidden' name="id" value={this.state.id} />
+                                    <input type='hidden' name="id" value={id} />
                                     <button type="submit" className="btn btn-success" >Save Change</button>
                             </div>
                             </div>
@@ -270,8 +271,10 @@ export class ProfileInfo extends Component {
                         </form>
                     </div>
                 </div>
+                
             </div>
         )
+       
     }
 }
 
