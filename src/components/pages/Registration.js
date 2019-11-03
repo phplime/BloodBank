@@ -53,14 +53,21 @@ export class Registration extends Component {
             modalStatus:false,
             
         }
-        
+        this._isMounted = false;
         // this.existingHandler = this.existingHandler.bind(this);
     }
     
     componentDidMount() {
-        axios.get(`${API_URL}/get_all_blood_group`)
+        this._isMounted = true;
+        this._isMounted && this.get_all_blood_group();
+        
+    }
+
+
+    get_all_blood_group = async () => {
+       await axios.get(`${API_URL}/get_all_blood_group`)
         .then(response => {
-            this.setState({
+            this._isMounted && this.setState({
                 blood_group: response.data,
             })
         })
@@ -69,6 +76,7 @@ export class Registration extends Component {
                 error:error,
             })
         })
+        
     }
     
     onSubmit = (values) => {
@@ -156,7 +164,9 @@ export class Registration extends Component {
         this.setState({ modalStatus: false });
     }
   
-      
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
     
     render() {
         const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;

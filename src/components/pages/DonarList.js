@@ -30,7 +30,7 @@ function DonarList(props) {
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
     };
     if (props.portfolio.userInfo.length === 0) {
-        return <div className="isLoading">Loading...</div>
+        return <div className="isLoading text-center">Loading...</div>
     } else {
         return (
             <OwlCarousel options={options} >
@@ -63,7 +63,8 @@ function DonarList(props) {
                                             <p>{portfolio.designation}</p>
                                         </div>
                                         <div className="portfolioDetails">
-                                            {portfolio.about_me}
+                                            {/* {portfolio.about_me} */}
+                                            <p><Icofont icon="icofont-blood-drop" /> {portfolio.blood_group} </p>
                                             <Button variant="primary">Go somewhere</Button>
                                         </div>
                                     </div>

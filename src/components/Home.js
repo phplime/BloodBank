@@ -11,26 +11,32 @@ import Gallery from './pages/Gallery';
 import Registration from './pages/Registration';
 
 class Home extends Component {
+    
     constructor(props) {
         super(props)
-    
+        this._isMounted = false;
         this.state = {
             loading: false,
             userInfo: [],
-           error:'',
+            error:'',
         }
+        
     }
     
-    componentWillMount() {
-        this.getAll_donnor()
+    componentDidMount() {
+        this._isMounted = true;
+        this._isMounted && this.getAll_donnor()
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
     getAll_donnor =  () => {
         this.setState({Loading: true }, () => {
             axios.get(`${API_URL}/get_all_user_info`)
-            .then(response => {
-                this.setState({
-                    userInfo:response.data,
+                .then(response => {
+                    this._isMounted && this.setState({
+                    userInfo: response.data,
                     Loading: false,
                 });
             })

@@ -22,16 +22,21 @@ function Header(props) {
         }
         
         useEffect(() => {
+            let isMounted = true;
             const fetchData = async () => {
                 await axios.get(`${API_URL}/get_login_user_info/${md5(ID)}`)
                     .then(response => {
-                        setData(response.data)
+                        isMounted && setData(response.data)
                     })
                     .catch(error => {
                         setData(error)
+                        return null;
                     })
             }
-            fetchData()
+            isMounted && fetchData()
+            return () => {
+                isMounted = false;
+              };
             // clearconsole(); 
         }, [ID]);
     

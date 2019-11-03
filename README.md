@@ -8,7 +8,7 @@ npm install --save react-router-dom</p>
     npm install react-bootstrap bootstrap<br>
     npm install md5 <br>
     npm install --save rc-progress <br>
-    npm install react-bootstrap-datetimepicker <a href="http://dev.quri.com/react-bootstrap-datetimepicker/">Here</a><br>
+    npm i input-moment --save <a href="https://github.com/wangzuo/input-moment">Here</a><br>
     
 </blockquote>
 <pre><code class="has-line-data" data-line-start="8" data-line-end="10" class="language-sh">

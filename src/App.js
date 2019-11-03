@@ -21,11 +21,13 @@ class App extends Component {
       isLoading: false,
       isLogin: false,
     }
+    this._isMounted = false;
   }
 
   componentDidMount() {
+    this._isMounted = true;
     if (localStorage.getItem('ID')) {
-      this.loginUser();
+      this._isMounted && this.loginUser();
     }
 
     setTimeout(
@@ -37,8 +39,8 @@ class App extends Component {
     );
   }
 
-  loginUser = () => {
-      axios.get(`${API_URL}/get_login_user_info/${md5(localStorage.getItem('ID'))}`)
+  loginUser = async () => {
+    await axios.get(`${API_URL}/get_login_user_info/${md5(localStorage.getItem('ID'))}`)
       .then(response => {
           this.setState({
             user: response.data,
@@ -52,9 +54,13 @@ class App extends Component {
       })
   }
 
-  
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   render() {
-    if (this.state.isLoading) {
+    const { user, isLogin, isLoading } = this.state;
+    if (isLoading) {
       return (
         <div className="loader_area text-center">
             <Loader
@@ -68,13 +74,16 @@ class App extends Component {
         </div>
       )
     } else {
+      
       return (
         <Router>
           <Switch>
             <Header>
               <Route exact={true} path='/' component={() => <Home />} />
               <Route path='/contactUs' component={() => <ContactUs showBanner={true} />} />
-              <Route path='/Profile' component={() => <Profile showBanner={false} user = {this.state.user} />} />
+              {isLogin &&
+                <Route path='/Profile' component={() => <Profile showBanner={true} user={user} />} />
+              }
             </Header>
             <Footer/>
           </Switch>

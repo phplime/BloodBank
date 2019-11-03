@@ -1,6 +1,6 @@
 // import React,{ useState} from 'react'
 // import { Toast } from 'react-bootstrap';
-import {useToasts,ToastProvider } from 'react-toast-notifications'
+import {useToasts } from 'react-toast-notifications'
 
 // function Toaster(props) {
 //     var status;

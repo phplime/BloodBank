@@ -294,6 +294,7 @@ p.countTo_icon i {
 }
 .portfolioCardBody.donarList {
   padding-bottom: 10px;
+  min-height: 115px;
 }
 
 /* gallery filter */
@@ -495,4 +496,15 @@ button.editBtn {
 
 .social_area_top h5 {
   padding: 0 0 15px 0;
+}
+
+.blood_group{
+  font-size: 20px;
+  font-weight: bold;
+}
+.blood_group i{
+  color: red;
+}
+.blood{
+  color: red;
 }

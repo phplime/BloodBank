@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button } from 'react-bootstrap';
+// import {Button } from 'react-bootstrap';
 import OwlCarousel from 'react-owl-carousel2';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css';
@@ -30,7 +30,7 @@ function AllDonar(props) {
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
     };
     if (props.donar.length === 0) {
-        return <div className="isLoading">Loading...</div>
+        return <div className="isLoading text-center">Please wait...</div>
     } else {
         return (
             <OwlCarousel options={options} >
@@ -60,12 +60,13 @@ function AllDonar(props) {
                                     <div className="portfolioCardBody donarList">
                                         <div className="portfolioBodyTopper donarList">
                                             <div className="portfolioBodyTop">
+                                                <h5><Icofont className="blood" icon="icofont-blood-drop" /> {portfolio.blood_group} </h5>
                                                 <h4>{portfolio.first_name} {portfolio.last_name}</h4>
                                                 <p>{portfolio.designation}</p>
                                             </div>
                                             <div className="portfolioDetails">
-                                                 <p>  {portfolio.about_me}</p>
-                                                <Button variant="primary">Go somewhere</Button>
+                                                 <p><Icofont icon="icofont-phone" /> {portfolio.phone}</p>
+                                                {/* <Button variant="primary">Go somewhere</Button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -74,8 +75,10 @@ function AllDonar(props) {
                                         <img src={`${IMG_URL}/${portfolio.image}`} alt="" />
                                         <span className="order_lebel">{orderText}</span>
                                         <div className="profileCover_title">
+                                            <p className="blood_group" ><Icofont className="blood" icon="icofont-blood-drop" /> {portfolio.blood_group} </p>
                                             <h4>{portfolio.first_name} {portfolio.last_name}</h4>
-                                            <p>{portfolio.designation}</p>
+                                            {/* <p>{portfolio.designation}</p> */}
+                                            
                                         </div>
                                     </div>
                                 </div>

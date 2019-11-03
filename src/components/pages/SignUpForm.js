@@ -66,7 +66,7 @@ function SignUpForm(props) {
                             onChange={props.onChange}
                             onBlur={props.handleBlur} >
                             <option value="">Select Group</option>
-                            {props.group ?
+                            {props.group.length !==0 ?
                                 props.group.map((bGroup, i) => {
                                     return (
                                         <option value={bGroup.id} key={i}>{bGroup.name}</option>

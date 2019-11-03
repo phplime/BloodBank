@@ -74,7 +74,16 @@
 	    }
 	}
 
+
+	if(!function_exists('create_date')){
+	    function create_date($date){        
+			$newDate = date("Y-m-d", strtotime($originalDate));    
+	        return $newDate;
+	    }
+	}
+
 	
-	
+
+
 
 	

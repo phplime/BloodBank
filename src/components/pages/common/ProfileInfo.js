@@ -55,6 +55,9 @@ export class ProfileInfo extends Component {
             instagram: this.state.instagram,
             linkedin: this.state.linkedin,
         }
+        
+
+       
 
         this.setState({ isLoading: true }, () => {
 
@@ -120,7 +123,6 @@ export class ProfileInfo extends Component {
        return  text.replace(/[^a-zA-Z]/g, '');
     }
     
-
     
     handleToggle = () => {
        
@@ -133,7 +135,6 @@ export class ProfileInfo extends Component {
     }
     
     render() {
-        // console.log(this.state)
         const {id,username, email,facebook, designation,dob,twitter,instagram,linkedin,ExistingLoading,isLoading,st,readonly} = this.state;
         return (
             <div className={`tab-pane fade show active ${isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -169,7 +170,7 @@ export class ProfileInfo extends Component {
                                         <div className="s_icon">
                                             <i className="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text"
+                                        <input type="date"
                                             name="dob"
                                             className="form-control"
                                             placeholder="Date Of Birth"
