@@ -64,8 +64,8 @@ export class Registration extends Component {
     }
 
 
-    get_all_blood_group = async () => {
-       await axios.get(`${API_URL}/get_all_blood_group`)
+    get_all_blood_group =  () => {
+        axios.get(`${API_URL}/get_all_blood_group`)
         .then(response => {
             this._isMounted && this.setState({
                 blood_group: response.data,
@@ -162,6 +162,7 @@ export class Registration extends Component {
 
     handleClose = () => {
         this.setState({ modalStatus: false });
+       
     }
   
     componentWillUnmount() {

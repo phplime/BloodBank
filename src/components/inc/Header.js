@@ -1,44 +1,28 @@
 import React,{useState,useEffect} from 'react'
 import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
-import { API_URL } from "../inc/Config";
+// import { API_URL } from "../inc/Config";
 // import {Redirect,withRouter } from 'react-router-dom';
 // import LoginModal from './LoginModal';
 import Login from './Login';
-import axios from 'axios';
-import md5 from 'md5';
- 
 function Header(props) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
     const [data, setData] = useState('');
-
-        var logData = localStorage.getItem('ID');
-         var ID;
-        if (logData !== null) {
-            ID = logData;
-        } else {
-            ID = 0;   
+    const [isLogin, setLogin] = useState(false);
+    
+    useEffect(() => {
+        var logData = JSON.parse(localStorage.getItem('logData'));
+        let isMounted = true;
+        if (isMounted && logData !== null) {
+            setData(logData);
+            setLogin(true);
         }
-        
-        useEffect(() => {
-            let isMounted = true;
-            const fetchData = async () => {
-                await axios.get(`${API_URL}/get_login_user_info/${md5(ID)}`)
-                    .then(response => {
-                        isMounted && setData(response.data)
-                    })
-                    .catch(error => {
-                        setData(error)
-                        return null;
-                    })
-            }
-            isMounted && fetchData()
-            return () => {
-                isMounted = false;
-              };
-            // clearconsole(); 
-        }, [ID]);
+        return () => {
+            isMounted = false;
+            };
+        // clearconsole(); 
+    }, []);
     
 
     const logout = () => {
@@ -75,13 +59,13 @@ function Header(props) {
                     </Form>
                         </Nav>
                 <Nav className="navbar-nav">
-                {!logData &&
+                {!isLogin &&
                     <Nav.Link href="#" onClick={handleShow}>Login</Nav.Link>
                 }
-                {logData &&
+                {isLogin &&
                     <Nav.Link href="#"  refresh="true" onClick={logout}>Logout</Nav.Link>
                             }
-                {logData &&
+                {isLogin &&
                     <Nav.Link href="/profile">{data['username'] !==''?data['username']:data['first_name']}</Nav.Link>
                             }
                 </Nav>

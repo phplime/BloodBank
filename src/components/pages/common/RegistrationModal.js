@@ -23,6 +23,7 @@ export class RegistrationModal extends Component {
         }
     }
     onSubmit = (values) => {
+     
         var value = values;
         delete value.confirm_password;
         value.id = this.props.id;

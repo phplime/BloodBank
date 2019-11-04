@@ -4,6 +4,7 @@ import ProfileInfo from './common/ProfileInfo';
 import MyInfo from './common/MyInfo';
 import ProfileBanner from './common/ProfileBanner';
 import ChangePassword from './common/ChangePassword';
+import DonateDate from './common/DonateDate';
 // import Toaster from '../inc/Toaster';
 // import { ToastProvider, useToasts } from 'react-toast-notifications'
 
@@ -84,12 +85,16 @@ export class Profile extends Component {
                                     <li className="nav-item">
                                         <a className="nav-link" data-id="password" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false" onClick={this.TabHandler}>Change Password</a>
                                     </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" data-id="donate_date" data-toggle="tab" href="#donate_date" role="tab" aria-controls="donate_date" aria-selected="false" onClick={this.TabHandler}>Donate Date</a>
+                                    </li>
                                     
                                 </ul>
                                 <div className="tab-content" id="myTabContent">
                                     <ProfileInfo user = {this.props.user}/>
                                     <MyInfo user={this.props.user} />
-                                    <ChangePassword/>
+                                    <ChangePassword />
+                                    <DonateDate/>
                                 </div>
                             </div>
                         </div>

@@ -70,7 +70,7 @@ class Api extends CI_Controller {
 			
 			if($insert){
 				$msg = 'Registration Successfull';
-				$response = ['st' => 1, 'msg'=> $msg, 'id'=>$insert];
+				$response = ['st' => 1, 'msg'=> $msg, 'id'=>md5($insert)];
 			}else{
 				$msg = 'omethings Were Wrong';
 				$response = ['st' => 0, 'msg'=> $msg,];

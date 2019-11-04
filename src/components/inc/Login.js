@@ -3,6 +3,7 @@ import {Modal,Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import md5 from 'md5';
 import { API_URL } from "./Config";
 
 class Login extends Component {
@@ -19,13 +20,18 @@ class Login extends Component {
     onSubmit = (values) => {
         this.setState({ loading: true });
         axios.post(`${API_URL}/user_login`, JSON.stringify(values))
-        .then(result => {
-                if (result.data.st ===1) {
-                    var resultData =  result.data.data.map(row => {
-                        return { id: row.id, " isLogin": true };
+            .then(result => {
+               
+                if (result.data.st === 1) {
+                    this.getLoginUser(result.data.data[0].id).then(row => { 
+                        localStorage.setItem('logData', JSON.stringify(row)); 
+                        localStorage.setItem('ID', row.id);
                     })
-                    localStorage.setItem('logData', JSON.stringify(resultData)); 
-                    localStorage.setItem('ID', result.data.data[0].id);
+                    // var resultData =  result.data.data.map(row => {
+                    //     return { id: row.id, " isLogin": true };
+                    // })
+                    // localStorage.setItem('logData', JSON.stringify(resultData)); 
+                    // localStorage.setItem('ID', result.data.data[0].id);
                     this.setState({
                         isLoggedIn: true,
                         msg:result.data.msg,
@@ -57,7 +63,16 @@ class Login extends Component {
         );
       };
 
-    
+    getLoginUser = (ID) => {
+        return axios.post(`${API_URL}/get_login_user_info/${md5(ID)}`)
+        .then(result => {
+            return result.data;
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+ 
     // submitHandler = (e) => {
        // this.setState({ loading: true }, () => {
         //     axios.post('http://localhost/blood/api/user_login', JSON.stringify(values))
@@ -73,7 +88,7 @@ class Login extends Component {
     
     // value={this.state.name} onChange={this.changeHandler}
     render() {
-       
+        
         return (
         <Formik
             initialValues={{

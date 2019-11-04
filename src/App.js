@@ -17,7 +17,7 @@ class App extends Component {
     super(props)
   
     this.state = {
-      user:[],
+      user:{},
       isLoading: false,
       isLogin: false,
     }
@@ -26,10 +26,18 @@ class App extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    if (localStorage.getItem('ID')) {
-      this._isMounted && this.loginUser();
-    }
-
+      if (localStorage.getItem('ID')) {
+        this._isMounted && this.loginUser();
+      }
+    // var logData = JSON.parse(localStorage.getItem('logData'));
+    // if(this._isMounted && logData !== null) {
+    //   this.setState({
+    //     user: logData,
+    //     isLogin: true,
+    //     // isLoading:true,
+    //   })
+    // }
+    console.clear(); 
     setTimeout(
         function() {
             this.setState({isLoading: false});
@@ -42,7 +50,7 @@ class App extends Component {
   loginUser = async () => {
     await axios.get(`${API_URL}/get_login_user_info/${md5(localStorage.getItem('ID'))}`)
       .then(response => {
-          this.setState({
+        this._isMounted && this.setState({
             user: response.data,
             isLogin: true,
           });
@@ -60,6 +68,7 @@ class App extends Component {
 
   render() {
     const { user, isLogin, isLoading } = this.state;
+    // console.log(user)
     if (isLoading) {
       return (
         <div className="loader_area text-center">

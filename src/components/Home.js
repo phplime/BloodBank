@@ -26,6 +26,15 @@ class Home extends Component {
     componentDidMount() {
         this._isMounted = true;
         this._isMounted && this.getAll_donnor()
+        // if (typeof console._commandLineAPI !== 'undefined') {
+        //     console.API = console._commandLineAPI;
+        // } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
+        //     console.API = console._inspectorCommandLineAPI;
+        // } else if (typeof console.clear !== 'undefined') {
+        //     console.API = console;
+        // }
+        // console.API.clear()
+        
     }
 
     componentWillUnmount() {
@@ -48,6 +57,7 @@ class Home extends Component {
                 });
                 return null;
             })
+           
         });
     }
     handleToggle = () => {
