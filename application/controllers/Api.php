@@ -66,10 +66,46 @@ class Api extends CI_Controller {
 				$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donors');
 			}else{
 				$insert = $this->api_m->insert($formdata,'blood_donors');
+
 			}
 			
 			if($insert){
+				$this->api_m->update(array('userId'=>md5($insert)),$insert,'blood_donors');
 				$msg = 'Registration Successfull';
+				$response = ['st' => 1, 'msg'=> $msg, 'id'=>md5($insert)];
+			}else{
+				$msg = 'omethings Were Wrong';
+				$response = ['st' => 0, 'msg'=> $msg,];
+
+			}	
+			
+			
+			
+		}
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($response));
+		;
+		
+	}
+
+
+	public function add_donateDate(){
+
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
+
+		$formdata = json_decode(file_get_contents('php://input'), true);
+		 // echo "<pre>";print_r($formdata);exit();
+
+		if (empty($formdata)) {
+			$msg = 'Field must not be empty!!';
+			$response = ['st' => 0, 'msg'=> $msg,];
+		}else{	
+
+			$insert = $this->api_m->insert($formdata,'donate_date');
+			if($insert){
+				$msg = 'Add Date into list ';
 				$response = ['st' => 1, 'msg'=> $msg, 'id'=>md5($insert)];
 			}else{
 				$msg = 'omethings Were Wrong';
@@ -129,7 +165,7 @@ class Api extends CI_Controller {
 		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
 
 		$formdata = json_decode(file_get_contents('php://input'), true);	
-		$check = $this->api_m->single_select_by_id($formdata['field_value'],$formdata['field_name'],$formdata['table']);
+		$check = $this->api_m->select_by_id($formdata['field_value'],$formdata['field_name'],$formdata['table']);
 		$this->output
 		->set_content_type('application/json')
 		->set_output(json_encode($check));

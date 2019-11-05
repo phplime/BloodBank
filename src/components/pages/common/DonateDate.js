@@ -2,33 +2,37 @@ import React, { Component } from 'react'
 import * as Yup from "yup";
 import { Formik } from "formik";
 import axios from "axios";
+import md5 from "md5";
 import { API_URL } from "../../inc/Config";
+import AllDate from './AllDate'
 
 export class DonateDate extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-            PassLoading: false,
+            DonateLoading: false,
             msg:'',
             st: '',
-            passActive:false,
+            donateActive: false,
+            allDate:[],
+            listLoading:false,
+            showList:false,
         }
     }
     
-    onSubmit = (values,{resetForm}) => {
-        this.setState({ PassLoading: true }, () => {
-            axios.post(`${API_URL}/change_password`, JSON.stringify(values))
+    onSubmit = (values) => {
+        this.setState({ DonateLoading: true }, () => {
+            axios.post(`${API_URL}/add_donateDate`, JSON.stringify(values))
                 .then(result => {
                     this.setState({
-                        PassLoading: false,
+                        DonateLoading: false,
                         msg: result.data.msg,
                         st: result.data.st,
-                        passActive: true,
+                        donateActive: true,
                         // data: [...result.data],
                     });
-                    resetForm(values)
-                    console.log(result)
+                    document.getElementById("donateForm").reset();
                 })
                 .catch(error => {
                     console.log(error)
@@ -36,11 +40,34 @@ export class DonateDate extends Component {
         })
     }
 
+    showDateList = () => {
+        this.setState({ listLoading: true }, () => {
+            const values = {
+                field_name: 'userId',
+                table: 'donate_date',
+                field_value: md5(localStorage.getItem('ID')),
+            }
+            axios.post(`${API_URL}/get_single_value`, JSON.stringify(values))
+                .then(result => {
+                    this.setState({
+                        allDate: result.data,
+                        showList:!this.state.showList,
+                        listLoading: false,
+                    });
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        })
+    }
+ 
     render() {
+        const { DonateLoading, donateActive, st, msg, allDate, showList, listLoading } = this.state;
+       
         return (
             <Formik
                 initialValues={{
-                    id:localStorage.getItem('ID'),
+                    userid:md5(localStorage.getItem('ID')),
                     donate_date: '',
                     location: '',
                 }}
@@ -50,25 +77,25 @@ export class DonateDate extends Component {
              
                 onSubmit={this.onSubmit}
                 render={({ handleChange, handleBlur, values, errors, handleSubmit, touched }) => (
-                    <div className={`tab-pane fade show ${this.state.passActive ? 'active' : ''} ${this.state.PassLoading ? 'Loading active' : ''}`} id="donate_date" role="tabpanel" aria-labelledby="password-tab">
+                    <div className={`tab-pane fade show ${donateActive ? 'active' : ''} ${DonateLoading ? 'isLoading active' : ''}`} id="donate_date" role="tabpanel" aria-labelledby="password-tab">
                         <div className="profile_area" >
                             <div className="single_profile">
-                            {this.state.msg &&
+                            {msg &&
                                     <div className="success_msg">
-                                        <div className={`alert alert-${this.state.st===1?'success':'danger'} alert-dismissible fade show`} role="alert">
-                                            <strong>Success</strong> {this.state.msg}
+                                        <div className={`alert alert-${st===1?'success':'danger'} alert-dismissible fade show`} role="alert">
+                                            <strong>Success</strong> {msg}
                                         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                     </div>
                                 }
-                                <form action="" onSubmit={handleSubmit}>
+                                <form action="" onSubmit={handleSubmit} id="donateForm">
                                     <div className="single_profile_body">
                                         <div className="row">
                                             <div className="form-group col-sm-12">
                                                 <label>Donate Date</label>
-                                                <input type="text"
+                                                <input type="date"
                                                     name="donate_date"
                                                     className="form-control"
                                                     placeholder="Donate Date"
@@ -105,19 +132,29 @@ export class DonateDate extends Component {
                                         </div>
                                         <div className="form-group text-right">
                                             {/* <ProgressBar className="pro" animated now={45} /> */}
+                                            <div className="pull-left">
+                                                <button type="button" onClick={this.showDateList} className="btn btn-primary" >Show List</button>
+                                            </div>
                                             <div className="form_footer">
-                                                <input type='hidden' name="id" value={localStorage.getItem('ID')} />
                                                 <button type="submit" className="btn btn-success" >Save Change</button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
+                            {showList &&
+                                <div className={`showList ${listLoading ? 'isLoading ' : ''}`}>
+                                    <AllDate allDate={allDate}/>
+                                </div>
+                            }
                         </div>
                     </div>
                 )}
             />
+            
+            
         )
+        
     }
 }
 

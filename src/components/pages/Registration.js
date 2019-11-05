@@ -184,7 +184,8 @@ export class Registration extends Component {
                 validationSchema={Yup.object().shape({
                     first_name: Yup.string().min(3, 'First Name is longer then that').required('You Must give us Your First name.'),
                     last_name: Yup.string().min(3, 'Last Name is longer then that').required('You Must give us Your Last name.'),
-                    phone: Yup.string()
+                    phone: Yup.string().strict(true)
+                    .trim()
                     // .test('len', 'Must be exactly 11 characters', val => val.length === 11)
                     .required('Phone is required')
                     .matches(phoneRegExp, 'Phone can only contain Number.')

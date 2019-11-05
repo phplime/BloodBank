@@ -77,6 +77,7 @@ function AllDonar(props) {
                                         <div className="profileCover_title">
                                             <p className="blood_group" ><Icofont className="blood" icon="icofont-blood-drop" /> {portfolio.blood_group} </p>
                                             <h4>{portfolio.first_name} {portfolio.last_name}</h4>
+                                            <h4>{portfolio.donate_date}</h4>
                                             {/* <p>{portfolio.designation}</p> */}
                                             
                                         </div>

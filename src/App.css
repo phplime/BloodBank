@@ -43,6 +43,9 @@ p{
 .mt-20{
   margin-top: 20px;
 }
+.mt-50{
+  margin-top: 50px;
+}
 /* .sliderarea .owl-carousel {
     height: 450px;
 } */
@@ -507,4 +510,41 @@ button.editBtn {
 }
 .blood{
   color: red;
+}
+.single_search {
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: 58px;
+}
+
+.serch_left_area {
+  height: 80px;
+  width: 80px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+  flex: 0 0 50px;
+  position: absolute;
+  top: -58%;
+  background: #fff;
+}
+
+.top_search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #28A745;
+  color: #fff;
+  padding: 5px 10px;
+}
+
+.right_search_area {
+  width: 100%;
+  margin-left: 80px;
+}
+.phoneNumber {
+  padding: 5px;
+  text-align: center;
 }

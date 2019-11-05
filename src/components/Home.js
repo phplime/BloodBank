@@ -9,6 +9,7 @@ import DonarList from './pages/DonarList';
 import AllDonar from './pages/AllDonar';
 import Gallery from './pages/Gallery';
 import Registration from './pages/Registration';
+import SearchPage from './pages/SearchPage';
 
 class Home extends Component {
     
@@ -82,6 +83,7 @@ class Home extends Component {
                 <div className="sliderarea" ref="toggle">
                     <Slider/>
                 </div>
+                <SearchPage/>
                 <div className="contentWarpper text-center">
                     <div className="container">
                         <div className="defaultHeading">
