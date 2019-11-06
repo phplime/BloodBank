@@ -529,6 +529,7 @@ button.editBtn {
   position: absolute;
   top: -58%;
   background: #fff;
+  text-align: center;
 }
 
 .top_search {
@@ -544,7 +545,34 @@ button.editBtn {
   width: 100%;
   margin-left: 80px;
 }
-.phoneNumber {
+.phoneNumberArea {
   padding: 5px;
   text-align: center;
+  transition: 1s;
+}
+.phoneNumberArea.d_flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition-duration: 1s;
+  transition: 1s;
+}
+
+
+.phoneNumberArea button {
+  background: #ddd;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1px 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+.serch_left_area i {
+  text-align: center;
+  font-size: 33px;
+  padding: 4px;
+  display: inline-block;
+}
+.hidden{
+  display: none;
 }
