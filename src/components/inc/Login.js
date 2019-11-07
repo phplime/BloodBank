@@ -26,6 +26,7 @@ class Login extends Component {
                     this.getLoginUser(result.data.data[0].id).then(row => { 
                         localStorage.setItem('logData', JSON.stringify(row)); 
                         localStorage.setItem('ID', row.id);
+                        localStorage.setItem('isLogin', true);
                     })
                     // var resultData =  result.data.data.map(row => {
                     //     return { id: row.id, " isLogin": true };
@@ -37,7 +38,8 @@ class Login extends Component {
                         msg:result.data.msg,
                         st:result.data.st,
                     })
-                    window.location.reload(); 
+                    
+                    //window.location.reload(); 
                 } else {
                     this.setState({
                         isLoggedIn: false,
@@ -88,7 +90,7 @@ class Login extends Component {
     
     // value={this.state.name} onChange={this.changeHandler}
     render() {
-        
+        // console.log(localStorage.getItem('isLogin'))
         return (
         <Formik
             initialValues={{

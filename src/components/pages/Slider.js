@@ -53,9 +53,24 @@ function Slider() {
                                 <h1>{slider.title}</h1>
                                 <p>{slider.subtitle}</p>
                                 {
-                                    slider.isBtn && <button className="sliderBtn">{slider.btnText}</button>
+                                    // slider.isBtn && <button className="sliderBtn">{slider.btnText}</button>
                                 }
+                                <div className="searchArea">
+                                    <div className="row">
+                                        <div className="col-sm-6">
+                                            <div className="slider_content">
+                                                <div className="form-group">
+                                                    <input type="text" name="search" className="form-control" />
+                                                </div>
+                                                <div className="searchHomeBtn">
+                                                    <button className="btn btn-primary">Search</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                 )
