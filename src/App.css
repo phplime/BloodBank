@@ -576,3 +576,41 @@ button.editBtn {
 .hidden{
   display: none;
 }
+.slider_content {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+
+
+.search_input input {
+  height: 46px;
+  border-radius: 5px 0 0 5px;
+  border-right: 0;
+}
+
+.searchHomeBtn button {
+  height: 46px;
+  border-radius: 0 5px 5px 0;
+}
+.searchHomeBtn button {
+  display: flex;
+  align-items: center;
+  padding: 10px 7px;
+}
+
+.searchHomeBtn button i {
+  font-size: 20px;
+  margin-right: 6px;
+}
+.group_list {
+  flex: 0 0 20%;
+ 
+}
+.search_input {
+  width: 68%;
+}
+
+.searchHomeBtn {
+  flex: 0 0 12%;
+}

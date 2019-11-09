@@ -39,7 +39,7 @@ class Login extends Component {
                         st:result.data.st,
                     })
                     
-                    //window.location.reload(); 
+                    window.location.reload(); 
                 } else {
                     this.setState({
                         isLoggedIn: false,

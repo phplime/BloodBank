@@ -10,6 +10,8 @@ import AllDonar from './pages/AllDonar';
 import Gallery from './pages/Gallery';
 import Registration from './pages/Registration';
 import SearchPage from './pages/SearchPage';
+import Icofont from 'react-icofont';
+// import _ from 'lodash';
 
 class Home extends Component {
     
@@ -21,7 +23,7 @@ class Home extends Component {
             userInfo: [],
             error:'',
         }
-        
+        // this.getAll_donnor = _.debounce(this.getAll_donnor, 500); 
     }
     
     componentDidMount() {
@@ -82,6 +84,29 @@ class Home extends Component {
             <div>
                 <div className="sliderarea" ref="toggle">
                     <Slider/>
+                </div>
+                <div className="searchArea">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-8 offset-sm-2">
+                                <div className="slider_content">
+                                    <div className="search_input">
+                                        <input type="text" name="search" className="form-control" placeholder="search with Name or place" />
+                                    </div>
+                                    <div className="group_list">
+                                        <select name="group" className="form-control">
+                                            <option value="">Blood Group</option>
+                                            <option value="">O+</option>
+                                            <option value="">O-</option>
+                                        </select>
+                                    </div>
+                                    <div className="searchHomeBtn">
+                                        <button className="btn btn-primary"> <Icofont icon="search-user" /> <span>Search</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <SearchPage/>
                 <div className="contentWarpper text-center">
