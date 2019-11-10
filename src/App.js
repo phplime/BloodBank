@@ -65,7 +65,7 @@ class App extends Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-
+ 
   render() {
     const { user, isLogin, isLoading } = this.state;
     // console.log(user)

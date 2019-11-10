@@ -9,6 +9,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner';
 import { API_URL } from "../inc/Config";
 import RegistrationModal from './common/RegistrationModal';
+import {bloodGroup} from '../inc/Functions'
 
 
 
@@ -59,25 +60,33 @@ export class Registration extends Component {
     
     componentDidMount() {
         this._isMounted = true;
-        this._isMounted && this.get_all_blood_group();
-        
+        this._isMounted && this.get_all_blood_group();  
     }
 
 
     get_all_blood_group =  () => {
-        axios.get(`${API_URL}/get_all_blood_group`)
-        .then(response => {
+        var a = bloodGroup();
+        a.then((result) => {
             this._isMounted && this.setState({
-                blood_group: response.data,
+                blood_group: result,
             })
+            
         })
-        .catch(error => {
-            this.setState({
-                error:error,
-            })
-        })
-        
     }
+    // get_all_blood_group =  () => {
+    //     axios.get(`${API_URL}/get_all_blood_group`)
+    //     .then(response => {
+    //         this._isMounted && this.setState({
+    //             blood_group: response.data,
+    //         })
+    //     })
+    //     .catch(error => {
+    //         this.setState({
+    //             error:error,
+    //         })
+    //     })
+        
+    // }
     
     onSubmit = (values) => {
        

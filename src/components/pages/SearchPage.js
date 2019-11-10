@@ -14,7 +14,7 @@ export class SearchPage extends Component {
             show: false,
             userInfo: [],
             Loading: false,
-            isLoggedin:localStorage.getItem('isLogin'),
+            isLoggedin: localStorage.getItem('isLogin'),
         }
         this._isMounted = false;
     }
@@ -39,6 +39,8 @@ export class SearchPage extends Component {
         this.setState({show:false})
     }
 
+    
+
     searchList = () => {
         this.setState({Loading: true }, () => {
             axios.get(`${API_URL}/get_all_user_info`)
@@ -62,7 +64,7 @@ export class SearchPage extends Component {
 
 
     render() {
-        const { show, userInfo, Loading, isLoggedin } = this.state;
+        const { show, userInfo, isLoggedin } = this.state;
         return (
             <div>
                 <div className="container mt-50" >
