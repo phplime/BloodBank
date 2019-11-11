@@ -118,6 +118,20 @@ class Api_m extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_search_values($query)
+  	{
+        $this->db->select('b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me');
+        $this->db->select('bg.id as group_id, bg.name as blood_group');
+        $this->db->from('blood_donors b');
+        $this->db->join('blood_group as bg','bg.id = b.blood_group');
+        $this->db->like('phone',$query['search']);
+        $this->db->or_like('username',$query['search']);
+        $this->db->or_like('address',$query['search']);
+        $this->db->where('blood_group',$query['group']);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function check_pass($pass,$uid)
   	{
         $this->db->select('u.*');

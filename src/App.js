@@ -10,7 +10,7 @@ import Footer from './components/inc/Footer';
 import Profile from './components/pages/Profile';
 import axios from 'axios';
 import md5 from "md5";
-import { API_URL } from "./components/inc/Config";
+import { API_URL} from "./components/inc/Config";
 
 class App extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class App extends Component {
     //     // isLoading:true,
     //   })
     // }
-    console.clear(); 
+    //console.clear(); 
     setTimeout(
         function() {
             this.setState({isLoading: false});
@@ -88,10 +88,10 @@ class App extends Component {
         <Router>
           <Switch>
             <Header>
-              <Route exact={true} path='/' component={() => <Home />} />
-              <Route path='/contactUs' component={() => <ContactUs showBanner={true} />} />
+              <Route exact={true} path='/' render={() => <Home />} />
+              <Route path='/contactUs' render={() => <ContactUs showBanner={true} />} />
               {isLogin &&
-                <Route path='/Profile' component={() => <Profile showBanner={true} user={user} />} />
+                <Route path='/Profile' render={() => <Profile showBanner={true} user={user} />} />
               }
             </Header>
             <Footer/>

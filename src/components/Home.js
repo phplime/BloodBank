@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import $ from "jquery";
-// import axios from "axios";
-// import { API_URL } from "./inc/Config";
+import axios from "axios";
+import { API_URL } from "./inc/Config";
 import {findDOMNode} from "react-dom";
 import CounterTo from './pages/CounterTo';
 import Slider from './pages/Slider';
@@ -26,9 +26,9 @@ class Home extends Component {
             group: '',
             search:'',
             all_group:[],
+            search_result:[],
         }
         this._isMounted = false;
-        console.log(1)
         // this.getAll_donnor = _.debounce(this.getAll_donnor, 500); 
     }
     
@@ -36,16 +36,12 @@ class Home extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-        console.log(2)
         
     }
     async componentDidMount() {
-        console.log(3)
-        this._isMounted = true;
-        // this._isMounted = true;  
+        this._isMounted = true; 
         this._isMounted && this.getAll_donnor()
-         this._isMounted && this.get_all_blood_group()
-         console.log(this._isMounted);
+        this._isMounted && this.get_all_blood_group()
        // if (typeof console._commandLineAPI !== 'undefined') {
        //     console.API = console._commandLineAPI;
        // } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
@@ -72,7 +68,24 @@ class Home extends Component {
             search: this.state.search,
             group: this.state.group,  
         }
-        console.log(data)
+        this.setState({ Loading: true }, () => {
+            axios.post(`${API_URL}/search`,JSON.stringify(data))
+                .then(response => {
+                    this._isMounted && this.setState({
+                    search_result: response.data,
+                    Loading: false,
+                });
+            })
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    Loading: false,
+                    error:error
+                });
+                return null;
+            })
+            
+        });
     }
 
     get_all_blood_group = () => {
@@ -147,7 +160,7 @@ class Home extends Component {
     
 
     render() {
-        // console.log(this.state)
+        // console.log(this.state.search_result)
         return (
             <div>
                 <div className="sliderarea" ref="toggle">

@@ -23,7 +23,7 @@ export class ProfileInfo extends Component {
             readonly: false,
             
         }
-        if(props.user){
+        if (props.user) {
             this.state = this.props.user
         } else {
             this.state = this.state;
@@ -135,6 +135,7 @@ export class ProfileInfo extends Component {
     }
     
     render() {
+        // console.log(this.props.user)
         const {id,username, email,facebook, designation,dob,twitter,instagram,linkedin,ExistingLoading,isLoading,st,readonly} = this.state;
         return (
             <div className={`tab-pane fade show active ${isLoading ? 'isLoading':''}`} id="home" role="tabpanel" aria-labelledby="home-tab">
