@@ -93,6 +93,7 @@ class App extends Component {
               {isLogin &&
                 <Route path='/Profile' render={() => <Profile showBanner={true} user={user} />} />
               }
+             
             </Header>
             <Footer/>
           </Switch>

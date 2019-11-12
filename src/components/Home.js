@@ -9,9 +9,11 @@ import DonarList from './pages/DonarList';
 import AllDonar from './pages/AllDonar';
 import Gallery from './pages/Gallery';
 import Registration from './pages/Registration';
-import SearchPage from './pages/SearchPage';
 import Icofont from 'react-icofont';
-import {get_allUserInfo,bloodGroup} from './inc/Functions'
+import { get_allUserInfo, bloodGroup } from './inc/Functions'
+// import SearchResult from './inc/SearchResult';
+import SearchPage from './pages/SearchPage';
+// import {Route } from 'react-router-dom'
 // import _ from 'lodash';
 
 class Home extends Component {
@@ -26,7 +28,8 @@ class Home extends Component {
             group: '',
             search:'',
             all_group:[],
-            search_result:[],
+            search_result: [],
+            is_search:false,
         }
         this._isMounted = false;
         // this.getAll_donnor = _.debounce(this.getAll_donnor, 500); 
@@ -74,7 +77,10 @@ class Home extends Component {
                     this._isMounted && this.setState({
                     search_result: response.data,
                     Loading: false,
+                    is_search: true,
                 });
+                    // window.location.href = '/SearchPage';
+                    // browserHistory.push('/SearchPage') 
             })
             .catch(error => {
                 console.log(error)
@@ -161,122 +167,128 @@ class Home extends Component {
 
     render() {
         // console.log(this.state.search_result)
-        return (
-            <div>
-                <div className="sliderarea" ref="toggle">
-                    <Slider/>
-                </div>
-                <div className="searchArea">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm-8 offset-sm-2">
-                                <form action="" onSubmit={this.submitHandler}>
-                                    <div className="slider_content">
-                                        <div className="search_input">
-                                            <input type="text" name="search" className="form-control" onChange={this.changeHandler} placeholder="search with Name or place" />
-                                        </div>
-                                        <div className="group_list">
-                                            <select name="group" className="form-control" onChange={this.changeHandler}>
-                                                <option value="">Blood Group</option>
-                                                {this.state.all_group.map((group,i) => (
-                                                    <option value={group.id} key={i}>{group.name}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div className="searchHomeBtn">
-                                            <button type="submit" className="btn btn-primary"> <Icofont icon="search-user" /> <span>Search</span></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+        if (this.state.is_search) {
+            return (
+              <SearchPage result={this.state.search_result} />
+            )
+        } else {
+            return (
+                <div>
+                    <div className="sliderarea" ref="toggle">
+                        <Slider />
                     </div>
-                </div>
-                <SearchPage/>
-                <div className="contentWarpper text-center">
-                    <div className="container">
-                        <div className="defaultHeading">
-                            <div className="heading_text">
-                                <h2>DONATION PROCESS</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
-                            </div>
-                        </div>
-                        <div className="donation_progress_area mt-20">
+                    <div className="searchArea">
+                        <div className="container">
                             <div className="row">
-                                <CounterTo />
-                            </div>
-                        </div>
-                   </div>
-                </div>
-
-                <div className="contentWarpper text-center">
-                    <div className="container">
-                        <div className="defaultHeading">
-                            <div className="heading_text">
-                                <h2>SignUp</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
-                            </div>
-                        </div>
-                        <div className="donation_progress_area mt-20">
-                            <div className="row">
-                                <div className="col-sm-6 offset-3 text-left">
-                                        <Registration/>
+                                <div className="col-sm-8 offset-sm-2">
+                                    <form action="" onSubmit={this.submitHandler}>
+                                        <div className="slider_content">
+                                            <div className="search_input">
+                                                <input type="text" name="search" className="form-control" onChange={this.changeHandler} placeholder="search with Name or place" />
+                                            </div>
+                                            <div className="group_list">
+                                                <select name="group" className="form-control" onChange={this.changeHandler}>
+                                                    <option value="">Blood Group</option>
+                                                    {this.state.all_group.map((group, i) => (
+                                                        <option value={group.id} key={i}>{group.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="searchHomeBtn">
+                                                <button type="submit" className="btn btn-primary"> <Icofont icon="search-user" /> <span>Search</span></button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                   </div>
-                </div>
-                
-                <div className="contentWarpper text-center">
-                    <div className="container">
-                        <div className="defaultHeading">
-                            <div className="heading_text">
-                                <h2>DONATION PROCESS</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                    </div>
+                    {/* <SearchPage /> */}
+                    <div className="contentWarpper text-center">
+                        <div className="container">
+                            <div className="defaultHeading">
+                                <div className="heading_text">
+                                    <h2>DONATION PROCESS</h2>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                </div>
+                            </div>
+                            <div className="donation_progress_area mt-20">
+                                <div className="row">
+                                    <CounterTo />
+                                </div>
                             </div>
                         </div>
-                        <div className="donation_progress_area mt-20">
-                            <div className="portfolio_slider">
-                                <DonarList portfolio={this.state} />
-                            </div>
-                        </div>
-                   </div>
-                </div>
+                    </div>
 
-                <div className="contentWarpper text-center">
-                    <div className="container">
-                        <div className="defaultHeading">
-                            <div className="heading_text">
-                                <h2>DONATION PROCESS</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                    <div className="contentWarpper text-center">
+                        <div className="container">
+                            <div className="defaultHeading">
+                                <div className="heading_text">
+                                    <h2>SignUp</h2>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                </div>
+                            </div>
+                            <div className="donation_progress_area mt-20">
+                                <div className="row">
+                                    <div className="col-sm-6 offset-3 text-left">
+                                        <Registration />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="donation_progress_area mt-20">
-                            <div className="portfolio_slider">
-                                <AllDonar donar={this.state.userInfo}/>
-                            </div>
-                        </div>
-                   </div>
-                </div>
-
-                <div className="contentWarpper text-center">
-                    <div className="container">
-                        <div className="defaultHeading">
-                            <div className="heading_text">
-                                <h2>Gallery</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
-                            </div>
-                        </div>
-                        <div className="donation_progress_area mt-20">
-                            <div className="portfolio_slider">
-                                <Gallery/>
-                            </div>
-                        </div>
-                   </div>
-                </div>
+                    </div>
                 
-            </div>
-        )
+                    <div className="contentWarpper text-center">
+                        <div className="container">
+                            <div className="defaultHeading">
+                                <div className="heading_text">
+                                    <h2>DONATION PROCESS</h2>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                </div>
+                            </div>
+                            <div className="donation_progress_area mt-20">
+                                <div className="portfolio_slider">
+                                    <DonarList portfolio={this.state} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="contentWarpper text-center">
+                        <div className="container">
+                            <div className="defaultHeading">
+                                <div className="heading_text">
+                                    <h2>DONATION PROCESS</h2>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                </div>
+                            </div>
+                            <div className="donation_progress_area mt-20">
+                                <div className="portfolio_slider">
+                                    <AllDonar donar={this.state.userInfo} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="contentWarpper text-center">
+                        <div className="container">
+                            <div className="defaultHeading">
+                                <div className="heading_text">
+                                    <h2>Gallery</h2>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                </div>
+                            </div>
+                            <div className="donation_progress_area mt-20">
+                                <div className="portfolio_slider">
+                                    <Gallery />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+            )
+        }
     }
 }
 

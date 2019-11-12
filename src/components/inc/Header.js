@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 // import { API_URL } from "../inc/Config";
 // import {Redirect,withRouter } from 'react-router-dom';
 // import LoginModal from './LoginModal';
@@ -42,7 +42,8 @@ function Header(props) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                                <Nav.Link href="/contactUs">Contact</Nav.Link>
+                    <Nav.Link href="/contactUs">Contact</Nav.Link>
+                    <Nav.Link href="/SearchPage">Search</Nav.Link>
                     
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -52,12 +53,6 @@ function Header(props) {
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
-                 <Nav className="mr-auto ">
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button  type="button" onClick={handleShow} variant="outline-success">Search</Button>
-                    </Form>
-                        </Nav>
                 <Nav className="navbar-nav">
                 {!isLogin &&
                     <Nav.Link href="#" onClick={handleShow}>Login</Nav.Link>

@@ -1,53 +1,70 @@
 import React, { Component } from 'react'
+import axios from "axios";
+import { API_URL } from "../inc/Config";
+import { bloodGroup } from '../inc/Functions'
 import Icofont from 'react-icofont';
-import $ from "jquery";
-import Login from '../inc/Login';
-import axios from 'axios';
-// import md5 from 'md5';
-import { API_URL,IMG_URL } from "../inc/Config";
-export class SearchPage extends Component {
+import SearchResult from '../inc/SearchResult';
 
+export class SearchPage extends Component {
     constructor(props) {
         super(props)
-    
+       
         this.state = {
-            show: false,
-            userInfo: [],
-            Loading: false,
-            isLoggedin: localStorage.getItem('isLogin'),
+            loading: false,
+            error: '',
+            group: '',
+            search:'',
+            all_group:[],
+            search_result: [],
+            Searching:false,
         }
         this._isMounted = false;
+        // this.getAll_donnor = _.debounce(this.getAll_donnor, 500); 
     }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+        
+    }
+    async componentDidMount() {
+        this._isMounted = true; 
+        this._isMounted && this.get_all_blood_group()
+   }
     
-    showPhone = (e) => {
-        var parent, child;
-        //  d = e.currentTarget.dataset.id 
-        // alert(e.target.getAttribute('data-id'));
-        $('.phoneNumberArea').removeClass('d_flex');
-        $('.phoneNumber').addClass('hidden');
-        parent = $(e.target).closest('.single_search').find('.phoneNumberArea');
-        parent.toggleClass('d_flex');
-        child = $(e.target).closest('.single_search').find('.phoneNumber');
-        child.toggleClass('hidden');
+    changeHandler = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({
+            [name]: value
+        })
+    }
+
+    get_all_blood_group = () => {
+        if (this._isMounted) {
+            var a = bloodGroup();
+            a.then((result) => {
+                this.setState({
+                    all_group: result,
+                })
+            
+            })
+        }
         
     }
 
-    showModal = () => {
-        this.setState({show:true})
-    }
-    closeModal = () => {
-        this.setState({show:false})
-    }
-
-    
-
-    searchList = () => {
-        this.setState({Loading: true }, () => {
-            axios.get(`${API_URL}/get_all_user_info`)
+    submitHandler = (e) => {
+        e.preventDefault();
+        const data = {
+            search: this.state.search,
+            group: this.state.group,  
+        }
+        this.setState({ Loading: true }, () => {
+            axios.post(`${API_URL}/search`,JSON.stringify(data))
                 .then(response => {
-                 this.setState({
-                    userInfo: response.data,
+                    this._isMounted && this.setState({
+                    search_result: response.data,
                     Loading: false,
+                    Searching: true,
                 });
             })
             .catch(error => {
@@ -58,56 +75,60 @@ export class SearchPage extends Component {
                 });
                 return null;
             })
-           
+            
         });
     }
 
+   
 
     render() {
-        const { show, userInfo, isLoggedin } = this.state;
         return (
             <div>
-                <div className="container mt-50" >
-                    <button onClick={this.searchList}>showlist</button>
-                    <div className="row">
-                        {
-                            userInfo.map((user, i) => (
-                                <div className="col-sm-6 col-xs-12" key={i}>
-                                    <div className="single_search">
-                                        <div className="serch_left_area">
-                                            <img src={`${IMG_URL}/${user.thumb}`} alt='' />
-                                            {user.gender === 'Male' ?
-                                                <Icofont icon="icofont-male" />  
-                                                : 
-                                                <Icofont icon="icofont-female" />
-                                            }
-                                        </div>
-                                        <div className="right_search_area">
-                                            <div className="top_search">
-                                                <h4>{user.first_name} {user.last_name}</h4>
-                                                <h4>{user.blood_group}</h4>
+                {/* <SearchForm/> */}
+                <div className=" ">
+                    <div className="searchArea searchPage">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-sm-8 offset-sm-2">
+                                    <form action="" onSubmit={this.submitHandler}>
+                                        <div className="slider_content searchPage">
+                                            <div className="search_input">
+                                                <input type="text" name="search" className="form-control" onChange={this.changeHandler} placeholder="search with Name or place" />
                                             </div>
-                                                {isLoggedin?
-                                                    <div className="phoneNumberArea">
-                                                        <button type="button" onClick={this.showPhone}>Phone Number</button>
-                                                        <div className="phoneNumber hidden">
-                                                            <h5>{user.phone}</h5>
-                                                        </div>
-                                                    </div>
-                                                :
-                                                    <div className="phoneNumberArea">
-                                                        <button type="button" onClick={this.showModal}>Phone Number</button>
-                                                    </div>
-                                                }
+                                            <div className="group_list">
+                                                <select name="group" className="form-control" onChange={this.changeHandler}>
+                                                    <option value="">Blood Group</option>
+                                                    {this.state.all_group.map((group, i) => (
+                                                        <option value={group.id} key={i}>{group.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="searchHomeBtn">
+                                                <button type="submit" className="btn btn-primary"> <Icofont icon="search-user" /> <span>Search</span></button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div> 
-                            ))
+                                    </form>
+                                    <h4>
+                                    {this.state.Searching
+                                        ?
+                                        this.state.search_result.length
+                                        :
+                                        this.props.result.length
+                                    }
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="container">
+                        {this.state.Searching
+                            ?
+                            <SearchResult result={this.state.search_result}  />
+                            :
+                            <SearchResult result={this.props.result} />
                         }
-                        
                     </div>
                 </div>
-                <Login show={show} handleClose={this.closeModal}/>
             </div>
         )
     }
