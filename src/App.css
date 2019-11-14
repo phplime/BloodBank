@@ -547,8 +547,10 @@ button.editBtn {
 }
 .phoneNumberArea {
   padding: 5px;
-  text-align: center;
   transition: 1s;
+}
+.phoneNumberArea button {
+  margin-right: 5px;
 }
 .phoneNumberArea.d_flex {
   display: flex;
@@ -614,13 +616,32 @@ button.editBtn {
 .searchHomeBtn {
   flex: 0 0 12%;
 }
-.slider_content.searchPage {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  height: 250px;
-}
+
 .searchArea.searchPage {
   background: #ddd;
   margin-bottom: 65px;
+}
+.searchBannerArea {
+  height: 250px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: row;
+}
+.searchContent {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  width: 100%;
+  /* height: 250px; */
+  flex-wrap: wrap;
+  text-align: center;
+}
+.searchDetails {
+  /* padding: 20px; */
+  margin-top: 20px;
+}
+.text-center.data-not-found {
+  text-align: center;
+  width: 100%;
 }

@@ -29,7 +29,8 @@ class Home extends Component {
             search:'',
             all_group:[],
             search_result: [],
-            is_search:false,
+            is_search: false,
+            status:''
         }
         this._isMounted = false;
         // this.getAll_donnor = _.debounce(this.getAll_donnor, 500); 
@@ -72,21 +73,23 @@ class Home extends Component {
             group: this.state.group,  
         }
         this.setState({ Loading: true }, () => {
-            axios.post(`${API_URL}/search`,JSON.stringify(data))
-                .then(response => {
+            axios.post(`${API_URL}/search`, JSON.stringify(data))
+            .then(response => {
                     this._isMounted && this.setState({
-                    search_result: response.data,
-                    Loading: false,
-                    is_search: true,
-                });
-                    // window.location.href = '/SearchPage';
+                        search_result: response.data.data,
+                        Loading: false,
+                        is_search: true,
+                        status:response.data.st
+                    });
+                
+                // window.location.href = '/SearchPage';
                     // browserHistory.push('/SearchPage') 
             })
             .catch(error => {
                 console.log(error)
                 this.setState({
                     Loading: false,
-                    error:error
+                    error: error,
                 });
                 return null;
             })
@@ -118,10 +121,9 @@ class Home extends Component {
                 })
             })
             .catch(error => {
-                console.log(error)
                 this.setState({
                     Loading: false,
-                    error:error
+                    error:'data not found'
                 });
                 return null;
             })
@@ -166,10 +168,11 @@ class Home extends Component {
     
 
     render() {
-        // console.log(this.state.search_result)
-        if (this.state.is_search) {
+        //  console.log(this.state.search_result)
+        const {search_result, status, is_search, all_group} = this.state;
+        if (is_search) {
             return (
-              <SearchPage result={this.state.search_result} />
+              <SearchPage result={search_result} status={status} />
             )
         } else {
             return (
@@ -189,7 +192,7 @@ class Home extends Component {
                                             <div className="group_list">
                                                 <select name="group" className="form-control" onChange={this.changeHandler}>
                                                     <option value="">Blood Group</option>
-                                                    {this.state.all_group.map((group, i) => (
+                                                    {all_group.map((group, i) => (
                                                         <option value={group.id} key={i}>{group.name}</option>
                                                     ))}
                                                 </select>

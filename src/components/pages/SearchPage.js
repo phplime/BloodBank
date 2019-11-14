@@ -16,7 +16,8 @@ export class SearchPage extends Component {
             search:'',
             all_group:[],
             search_result: [],
-            Searching:false,
+            Searching: false,
+            status:'',
         }
         this._isMounted = false;
         // this.getAll_donnor = _.debounce(this.getAll_donnor, 500); 
@@ -62,9 +63,10 @@ export class SearchPage extends Component {
             axios.post(`${API_URL}/search`,JSON.stringify(data))
                 .then(response => {
                     this._isMounted && this.setState({
-                    search_result: response.data,
+                    search_result: response.data.data,
                     Loading: false,
                     Searching: true,
+                    status: response.data.st,
                 });
             })
             .catch(error => {
@@ -91,31 +93,41 @@ export class SearchPage extends Component {
                             <div className="row">
                                 <div className="col-sm-8 offset-sm-2">
                                     <form action="" onSubmit={this.submitHandler}>
-                                        <div className="slider_content searchPage">
-                                            <div className="search_input">
-                                                <input type="text" name="search" className="form-control" onChange={this.changeHandler} placeholder="search with Name or place" />
-                                            </div>
-                                            <div className="group_list">
-                                                <select name="group" className="form-control" onChange={this.changeHandler}>
-                                                    <option value="">Blood Group</option>
-                                                    {this.state.all_group.map((group, i) => (
-                                                        <option value={group.id} key={i}>{group.name}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                            <div className="searchHomeBtn">
-                                                <button type="submit" className="btn btn-primary"> <Icofont icon="search-user" /> <span>Search</span></button>
+                                        <div className="searchBannerArea">
+                                            <div className="searchContent">
+                                                <div className="slider_content searchPage">
+                                                    <div className="search_input">
+                                                        <input type="text" name="search" className="form-control" onChange={this.changeHandler} placeholder="search with Name or place" />
+                                                    </div>
+                                                    <div className="group_list">
+                                                        <select name="group" className="form-control" onChange={this.changeHandler}>
+                                                            <option value="">Blood Group</option>
+                                                            {this.state.all_group.map((group, i) => (
+                                                                <option value={group.id} key={i}>{group.name}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                    <div className="searchHomeBtn">
+                                                        <button type="submit" className="btn btn-primary"> <Icofont icon="search-user" /> <span>Search</span></button>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div className="searchDetails">
+                                                    <h6> Total Donar: &nbsp;
+                                                    {this.props.status === 1 || this.state.status === 1 ?
+                                                        (this.state.Searching
+                                                        ?
+                                                        this.state.search_result.length
+                                                        :
+                                                        this.props.result.length)
+                                                        :
+                                                         0
+                                                        }
+                                                    </h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
-                                    <h4>
-                                    {this.state.Searching
-                                        ?
-                                        this.state.search_result.length
-                                        :
-                                        this.props.result.length
-                                    }
-                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -123,9 +135,9 @@ export class SearchPage extends Component {
                     <div className="container">
                         {this.state.Searching
                             ?
-                            <SearchResult result={this.state.search_result}  />
+                            <SearchResult result={this.state.search_result} status={this.state.status}  />
                             :
-                            <SearchResult result={this.props.result} />
+                            <SearchResult result={this.props.result} status={this.props.status} />
                         }
                     </div>
                 </div>

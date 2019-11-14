@@ -69,8 +69,7 @@ export class Registration extends Component {
         a.then((result) => {
             this._isMounted && this.setState({
                 blood_group: result,
-            })
-            
+            }) 
         })
     }
     // get_all_blood_group =  () => {

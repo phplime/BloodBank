@@ -334,17 +334,18 @@ class Api extends CI_Controller {
 		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
 
 		$formdata = json_decode(file_get_contents('php://input'), true);
-		  // echo "<pre>";print_r($formdata);exit();
+		  
 
-		if (empty($formdata)) {
+		if(empty($formdata['search']) || empty($formdata['group'])) {
 			$msg = 'Field must not be empty!!';
 			$response = ['st' => 0, 'msg'=> $msg,];
 		}else{	
-			$query = $this->api_m->get_search_values($formdata);	
+			$query = $this->api_m->get_search_values($formdata);
+			$response = ['st' => 1, 'data'=> $query,];	
 		}
 		$this->output
 		->set_content_type('application/json')
-		->set_output(json_encode($query));
+		->set_output(json_encode($response));
 		;
 		
 	}
