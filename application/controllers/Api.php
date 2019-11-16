@@ -341,6 +341,7 @@ class Api extends CI_Controller {
 			$response = ['st' => 0, 'msg'=> $msg,];
 		}else{	
 			$query = $this->api_m->get_search_values($formdata);
+			// echo "<pre>";print_r($query);exit();
 			$response = ['st' => 1, 'data'=> $query,];	
 		}
 		$this->output

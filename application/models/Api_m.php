@@ -129,7 +129,19 @@ class Api_m extends CI_Model {
         $this->db->or_like('address',$query['search']);
         $this->db->where('blood_group',$query['group']);
         $query = $this->db->get();
-        return $query->result_array();
+        $query = $query->result_array();
+        foreach ($query as $key => $value) {
+        	$this->db->select('dt.donate_date,userId');
+           	$this->db->from('donate_date dt');
+           	$this->db->where('dt.userId',$value['userId']);
+            $this->db->query('SET SQL_BIG_SELECTS=1');
+            $this->db->order_by('dt.id','DESC');
+            $this->db->limit(1);
+            $query2 = $this->db->get();
+            $query2 = $query2->row_array();
+            $query[$key]['date'] = $query2;
+        }
+        return $query;
     }
 
     public function check_pass($pass,$uid)

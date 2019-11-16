@@ -178,6 +178,7 @@ export class Registration extends Component {
     }
     
     render() {
+        // console.log(this.state.blood_group)
         const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
         return (
             <Formik
@@ -231,7 +232,7 @@ export class Registration extends Component {
                                                     onBlur={handleBlur}
                                                     touched={(touched[field.name])}
                                                     errors={errors[field.name]}
-                                                    group={field.name === 'blood_group' ? this.state.blood_group: ''}
+                                                    group={field.name === 'blood_group' ? (this.state.blood_group && this.state.blood_group.length > 0 ?this.state.blood_group: null):''}
                                                    
                                                 />  
                                             })}

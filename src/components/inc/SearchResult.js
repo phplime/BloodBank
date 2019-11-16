@@ -3,6 +3,8 @@ import Icofont from 'react-icofont';
 import $ from "jquery";
 import Login from '../inc/Login';
 import {IMG_URL } from "../inc/Config";
+import { Link } from 'react-router-dom';
+import avatar  from "../assets/images/avatar.jpg";
 
 export class SearchResult extends Component {
     constructor(props) {
@@ -18,14 +20,13 @@ export class SearchResult extends Component {
     }
 
     showPhone = (e) => {
-        var parent, child;
+        var child;
         //  d = e.currentTarget.dataset.id 
         // alert(e.target.getAttribute('data-id'));
         $('.phoneNumberArea').removeClass('d_flex');
         $('.phoneNumber').addClass('hidden');
-        parent = $(e.target).closest('.single_search').find('.phoneNumberArea');
-        parent.toggleClass('d_flex');
-        child = $(e.target).closest('.single_search').find('.phoneNumber');
+        $(e.target).closest('.portfolioCardBody').find('.phoneNumberArea');
+        child = $(e.target).closest('.portfolioCardBody').find('.phoneNumber');
         child.toggleClass('hidden');
         
     }
@@ -52,6 +53,7 @@ export class SearchResult extends Component {
     }
     
     render() {
+        
         const { show, isLoggedin, Loading } = this.state;
         if (Loading) {
             return (
@@ -66,37 +68,39 @@ export class SearchResult extends Component {
                         {
                         this.props && this.props.status === 1 ?
                             this.props.result.map((user, i) => (
-                                <div className="col-sm-6 col-xs-12" key={i}>
-                                    <div className="single_search">
-                                        <div className="serch_left_area">
-                                            <img src={`${IMG_URL}/${user.thumb}`} alt='' />
-                                            {user.gender === 'Male' ?
-                                                <Icofont icon="icofont-male" />
-                                                :
-                                                <Icofont icon="icofont-female" />
-                                            }
-                                        </div>
-                                        <div className="right_search_area">
-                                            <div className="top_search">
-                                                <h4>{user.first_name} {user.last_name}</h4>
-                                                <h4>{user.blood_group}</h4>
+                                <div className="portfolioCard donarList search_list col-sm-3 pl-0 pr-0" key={i}>
+                                    <div className="portfolioCardTop donarList">
+                                        <div className="PortfolioCovetTop">
+                                            <div className="portfolioCardHeader donarList search_list">
+                                                {user.image !== '' ?
+                                                    <img src={`${IMG_URL}/${user.image}`} alt="" />
+                                                    :
+                                                    <img src={`${avatar}`} alt="" />
+                                                }
                                             </div>
-                                            {isLoggedin ?
-                                                <div className="phoneNumberArea">
-                                                    <button type="button" onClick={this.showPhone}><Icofont icon="icofont-phone" /></button>
-                                                    <button type="button" onClick={this.showPhone}><Icofont icon="icofont-home" /></button>
-                                                    <div className="phoneNumber">
-                                                        <h5>{user.address}</h5>
+                                            <div className="portfolioCardBody donarList text-center">
+                                                <div className="portfolioBodyTopper donarList">
+                                                    <div className="portfolioBodyTop">
+                                                        <h5><Icofont className="blood" icon="icofont-blood-drop" /> {user.blood_group} </h5>
+                                                        <h4>{user.first_name} {user.last_name}</h4>
+                                                        <p>{user.date?user.date.donate_date:'New Donor'}</p>
                                                     </div>
-                                                    <div className="phoneNumber hidden">
-                                                        <h5>{user.phone}</h5>
+                                                    <div className="portfolioDetails phoneNumberArea">
+                                                        {isLoggedin ?
+                                                            <h5><button type="button" onClick={this.showPhone}><Icofont icon="icofont-phone" /></button> <span className="phoneNumber hidden">{user.phone}</span></h5>
+                                                            :<button type="button"onClick={this.showModal}><Icofont icon="icofont-phone" /></button> 
+                                                        }
+                                                        {/* <Button variant="primary">Go somewhere</Button> */}
                                                     </div>
                                                 </div>
-                                                :
-                                                <div className="phoneNumberArea">
-                                                    <button type="button" onClick={this.showModal}>Phone Number</button>
-                                                </div>
-                                            }
+                                            </div>
+                                        </div>
+                                        <div className="portfolioCardFooter donarList">
+                                            <ul className="social_ul">
+                                                <li><Link to=""><Icofont icon="facebook" /></Link></li>
+                                                <li><Link to=""><i className="fa fa-twitter"></i></Link></li>
+                                                <li><Link to=""><i className="fa fa-youtube"></i></Link></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

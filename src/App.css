@@ -645,3 +645,21 @@ button.editBtn {
   text-align: center;
   width: 100%;
 }
+.search_list{
+  margin-bottom: 10px;
+}
+.portfolioCardHeader.donarList.search_list {
+  height: 240px;
+}
+.pl-5{
+  padding-left: 5px;
+}
+.pr-5{
+  padding-right: 5px;
+}
+.pl-0{
+  padding-left: 0px;
+}
+.pr-0{
+  padding-right: 0px;
+}

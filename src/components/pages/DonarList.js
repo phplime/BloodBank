@@ -29,7 +29,7 @@ function DonarList(props) {
         fallbackEasing: 'swing',
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
     };
-    if (props.portfolio.userInfo.length === 0) {
+    if (props.portfolio.userInfo && props.portfolio.userInfo.length === 0) {
         return <div className="isLoading text-center">Loading...</div>
     } else {
         return (
