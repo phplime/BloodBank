@@ -83,7 +83,7 @@ export class SearchResult extends Component {
                                                     <div className="portfolioBodyTop">
                                                         <h5><Icofont className="blood" icon="icofont-blood-drop" /> {user.blood_group} </h5>
                                                         <h4>{user.first_name} {user.last_name}</h4>
-                                                        <p>{user.date?user.date.donate_date:'New Donor'}</p>
+                                                        <p>Last Donate : {user.date?user.date.donate_date:'New Donor'}</p>
                                                     </div>
                                                     <div className="portfolioDetails phoneNumberArea">
                                                         {isLoggedin ?

@@ -75,8 +75,7 @@ export class RegistrationModal extends Component {
          
          
      }
-  
-    
+
     render() {
         const { loading, successReg, data } = this.state;
         return (
@@ -84,6 +83,7 @@ export class RegistrationModal extends Component {
                 initialValues={{
                     password: '',
                     confirm_password: '',
+                    district: '',
                 }}
                 validationSchema={Yup.object().shape({
                     password: Yup.string().min(3, 'New Password is longer then that').required('You Must give New Password.'),
@@ -102,6 +102,29 @@ export class RegistrationModal extends Component {
                             {successReg === false ?
                                 <Form onSubmit={handleSubmit}>
                                     <Modal.Body className={`${loading ? 'loading' : ''}`}>
+
+                                        <Form.Group controlId="formBasicEmail">
+                                            <Form.Label>District</Form.Label>
+                                            <Form.Control
+                                                as="select"
+                                                name="district"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                error={touched.district && errors.district}
+                                                >
+                                                <option>Select District</option>
+                                                {this.props.district && this.props.district.map((district, i) => (
+                                                    <option key={i} value={district.id}>{district.en_name}</option>
+                                                ))}
+                                            </Form.Control>
+                                            <div>
+                                                <p className="help-block text-danger">
+                                                    {(touched.district && errors.district) &&
+                                                        <span>{errors.district}</span>
+                                                    }
+                                                </p>
+                                            </div>
+                                        </Form.Group>
                                     
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label>Password</Form.Label>
@@ -121,6 +144,8 @@ export class RegistrationModal extends Component {
                                                 </p>
                                             </div>
                                         </Form.Group>
+
+                                        
 
                                         <Form.Group controlId="formBasicPassword">
                                             <Form.Label>Confirm Password</Form.Label>

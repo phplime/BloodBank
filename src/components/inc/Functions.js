@@ -19,4 +19,14 @@ export const get_allUserInfo = () => {
     .catch(function (ex) {
         return ex;
    })
+};
+ 
+export const get_District = () => {
+   return axios.get(`${API_URL}/get_all_data/district`)
+    .then(function (response) {
+     return response.data
+   })
+    .catch(function (ex) {
+        return ex;
+   })
  };

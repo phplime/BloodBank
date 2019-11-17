@@ -29,6 +29,7 @@ function AllDonar(props) {
         fallbackEasing: 'swing',
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
     };
+   
     if (props.donar && props.donar.length === 0) {
         return <div className="isLoading text-center">Please wait...</div>
     } else {

@@ -9,7 +9,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner';
 import { API_URL } from "../inc/Config";
 import RegistrationModal from './common/RegistrationModal';
-import {bloodGroup} from '../inc/Functions'
+import {bloodGroup,get_District} from '../inc/Functions'
 
 
 
@@ -51,7 +51,8 @@ export class Registration extends Component {
             blood_group: [],
             existing: '',
             isSubmit: false,
-            modalStatus:false,
+            modalStatus: false,
+            all_district:[],
             
         }
         this._isMounted = false;
@@ -63,6 +64,20 @@ export class Registration extends Component {
         this._isMounted && this.get_all_blood_group();  
     }
 
+    get_all_district = () => {
+       
+        var a = get_District();
+        a.then((result) => {
+            this.setState({
+                all_district: result,
+            })
+        
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        
+    }
 
     get_all_blood_group =  () => {
         var a = bloodGroup();
@@ -101,6 +116,7 @@ export class Registration extends Component {
                         id:data.data['id'],
                         modalStatus: true,
                     })
+                    this.get_all_district();
                 }
             } else {
                 this.setState({ isSubmit: true, msg:'' });
@@ -178,7 +194,7 @@ export class Registration extends Component {
     }
     
     render() {
-        // console.log(this.state.blood_group)
+        //  console.log(this.state.all_district)
         const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
         return (
             <Formik
@@ -255,7 +271,7 @@ export class Registration extends Component {
                                     timeout={3000} //3 secs
                                 />
                             </div>}
-                        <RegistrationModal open={this.state.modalStatus} cancel={this.handleClose} id={this.state.id}/>
+                        <RegistrationModal open={this.state.modalStatus} cancel={this.handleClose} id={this.state.id} district={this.state.all_district}/>
                     </div>
                 )}
             />

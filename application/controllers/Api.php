@@ -61,13 +61,13 @@ class Api extends CI_Controller {
 			// 	'gender' => $formdata['gender'],
 			// 	'address' => $formdata['address'],
 			// );
+			echo "<pre>";print_r($formdata);exit();
+			// if(isset($formdata['id']) && $formdata['id'] !=0){
+			// 	$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donors');
+			// }else{
+			// 	$insert = $this->api_m->insert($formdata,'blood_donors');
 
-			if(isset($formdata['id']) && $formdata['id'] !=0){
-				$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donors');
-			}else{
-				$insert = $this->api_m->insert($formdata,'blood_donors');
-
-			}
+			// }
 			
 			if($insert){
 				$this->api_m->update(array('userId'=>md5($insert)),$insert,'blood_donors');
@@ -169,6 +169,17 @@ class Api extends CI_Controller {
 		$this->output
 		->set_content_type('application/json')
 		->set_output(json_encode($check));
+		;
+		
+	}
+
+	public function get_all_data($table){
+
+		header('Access-Control-Allow-Origin: *');
+		$values = $this->api_m->select($table);
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($values));
 		;
 		
 	}
