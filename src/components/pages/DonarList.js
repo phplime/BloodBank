@@ -70,9 +70,9 @@ function DonarList(props) {
                                     </div>
                                     <div className="portfolioCardFooter">
                                         <ul className="social_ul">
-                                            <li><Link to="https://www.facebook.com/"><Icofont icon="facebook" /></Link></li>
-                                            <li><Link to=""><i className="fa fa-twitter"></i></Link></li>
-                                            <li><Link to=""><i className="fa fa-youtube"></i></Link></li>
+                                            <li><Link onClick={() => window.open(`https://www.facebook.com/${portfolio.facebook}`)} to=""><Icofont icon="facebook" /></Link></li>
+                                            <li><Link onClick={() => window.open(`https://www.facebook.com/${portfolio.twitter}`)} to=""><i className="fa fa-twitter"></i></Link></li>
+                                            <li><Link onClick={() => window.open(`https://www.facebook.com/${portfolio.youtube}`)} to=""><i className="fa fa-youtube"></i></Link></li>
                                         </ul>
                                     </div>
                                 </div>

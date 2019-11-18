@@ -184,6 +184,17 @@ class Api extends CI_Controller {
 		
 	}
 
+	public function get_upazila($id){
+
+		header('Access-Control-Allow-Origin: *');
+		$values = $this->api_m->get_upazila($id);
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($values));
+		;
+		
+	}
+
 
 
 
@@ -345,14 +356,12 @@ class Api extends CI_Controller {
 		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
 
 		$formdata = json_decode(file_get_contents('php://input'), true);
-		  
 
 		if(empty($formdata['search']) || empty($formdata['group'])) {
 			$msg = 'Field must not be empty!!';
 			$response = ['st' => 0, 'msg'=> $msg,];
 		}else{	
 			$query = $this->api_m->get_search_values($formdata);
-			// echo "<pre>";print_r($query);exit();
 			$response = ['st' => 1, 'data'=> $query,];	
 		}
 		$this->output

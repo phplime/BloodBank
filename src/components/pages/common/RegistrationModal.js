@@ -14,7 +14,8 @@ export class RegistrationModal extends Component {
             id:'',
             loading:false,
             data: {},
-            successReg:false,
+            successReg: false,
+            upazilas:[],
         }
         if(props.id){
             this.state = props.id
@@ -23,7 +24,7 @@ export class RegistrationModal extends Component {
         }
     }
     onSubmit = (values) => {
-     
+        console.log(values)
         var value = values;
         delete value.confirm_password;
         value.id = this.props.id;
@@ -74,18 +75,34 @@ export class RegistrationModal extends Component {
          })
          
          
-     }
+    }
+    
+    onChangeDistric = (e) => {
+        var id = e.target.value;
+        axios.post(`${API_URL}/get_upazila/${id}`,)
+        .then(result => {
+            this.setState({
+                upazilas: result.data,
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
 
     render() {
-        const { loading, successReg, data } = this.state;
+        const { loading, successReg, data, upazilas } = this.state;
         return (
             <Formik
                 initialValues={{
                     password: '',
                     confirm_password: '',
                     district: '',
+                    upazila: '',
                 }}
                 validationSchema={Yup.object().shape({
+                    district: Yup.string().required('Select District'),
+                    upazila: Yup.string().required('Select Upazila'),
                     password: Yup.string().min(3, 'New Password is longer then that').required('You Must give New Password.'),
                     confirm_password: Yup.string()
                     .oneOf([Yup.ref('password'), null],"Passwords don't match")
@@ -102,70 +119,95 @@ export class RegistrationModal extends Component {
                             {successReg === false ?
                                 <Form onSubmit={handleSubmit}>
                                     <Modal.Body className={`${loading ? 'loading' : ''}`}>
+                                        <div className="row">
+                                            <Form.Group className="col-sm-6" controlId="formBasicEmail">
+                                                <Form.Label>District</Form.Label>
+                                                <Form.Control
+                                                    as="select"
+                                                    name="district"
+                                                    onChange={(e) => { this.onChangeDistric(e); handleChange(e)}}
+                                                    onBlur={handleBlur}
+                                                    error={touched.district && errors.district}
+                                                    >
+                                                    <option>Select District</option>
+                                                    {this.props.district && this.props.district.map((district, i) => (
+                                                        <option key={i} value={district.id}>{district.en_name}</option>
+                                                    ))}
+                                                </Form.Control>
+                                                <div>
+                                                    <p className="help-block text-danger">
+                                                        {(touched.district && errors.district) &&
+                                                            <span>{errors.district}</span>
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </Form.Group>
 
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Label>District</Form.Label>
-                                            <Form.Control
-                                                as="select"
-                                                name="district"
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                error={touched.district && errors.district}
-                                                >
-                                                <option>Select District</option>
-                                                {this.props.district && this.props.district.map((district, i) => (
-                                                    <option key={i} value={district.id}>{district.en_name}</option>
-                                                ))}
-                                            </Form.Control>
-                                            <div>
-                                                <p className="help-block text-danger">
-                                                    {(touched.district && errors.district) &&
-                                                        <span>{errors.district}</span>
-                                                    }
-                                                </p>
-                                            </div>
-                                        </Form.Group>
-                                    
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Label>Password</Form.Label>
-                                            <Form.Control
-                                                type="password"
-                                                name="password"
-                                                placeholder="Enter Password"
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                error={touched.password && errors.password}
-                                            />
-                                            <div>
-                                                <p className="help-block text-danger">
-                                                    {(touched.password && errors.password) &&
-                                                        <span>{errors.password}</span>
-                                                    }
-                                                </p>
-                                            </div>
-                                        </Form.Group>
-
+                                            <Form.Group className="col-sm-6" controlId="formBasicEmail">
+                                                <Form.Label>Upazilla</Form.Label>
+                                                <Form.Control
+                                                    as="select"
+                                                    name="upazilla"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    error={touched.upazila && errors.upazila}
+                                                    >
+                                                    <option>Select Upazilla</option>
+                                                    {upazilas && upazilas.map((upazila, i) => (
+                                                        <option key={i} value={upazila.id}>{upazila.name}</option>
+                                                    ))}
+                                                </Form.Control>
+                                                <div>
+                                                    <p className="help-block text-danger">
+                                                        {(touched.upazila && errors.upazila) &&
+                                                            <span>{errors.upazila}</span>
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </Form.Group>
+                                        </div>
                                         
+                                        <div className="row">
+                                            <Form.Group className="col-sm-6" controlId="formBasicEmail">
+                                                <Form.Label>Password</Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    name="password"
+                                                    placeholder="Enter Password"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    error={touched.password && errors.password}
+                                                />
+                                                <div>
+                                                    <p className="help-block text-danger">
+                                                        {(touched.password && errors.password) &&
+                                                            <span>{errors.password}</span>
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </Form.Group>
 
-                                        <Form.Group controlId="formBasicPassword">
-                                            <Form.Label>Confirm Password</Form.Label>
-                                            <Form.Control
-                                                type="password"
-                                                name="confirm_password"
-                                                placeholder="Confirm Password"
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                error={touched.confirm_password && errors.confirm_password}
-                                            />
-                                            <div>
-                                                <p className="help-block text-danger">
-                                                    {(touched.confirm_password && errors.confirm_password) &&
-                                                        <span>{errors.confirm_password}</span>
-                                                    }
-                                                </p>
-                                            </div>
-                                        </Form.Group>
-                            
+                                            
+
+                                            <Form.Group className="col-sm-6" controlId="formBasicPassword">
+                                                <Form.Label>Confirm Password</Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    name="confirm_password"
+                                                    placeholder="Confirm Password"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    error={touched.confirm_password && errors.confirm_password}
+                                                />
+                                                <div>
+                                                    <p className="help-block text-danger">
+                                                        {(touched.confirm_password && errors.confirm_password) &&
+                                                            <span>{errors.confirm_password}</span>
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </Form.Group>
+                                        </div>                 
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <input type="hidden" name="id" value={this.props.id} />

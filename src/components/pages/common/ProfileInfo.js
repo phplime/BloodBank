@@ -3,6 +3,8 @@ import axios from "axios";
 import $ from "jquery";
 // import DateTimeField  from "react-bootstrap-datetimepicker";
 import { API_URL } from "../../inc/Config";
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
 export class ProfileInfo extends Component {
     constructor(props) {
@@ -55,9 +57,6 @@ export class ProfileInfo extends Component {
             instagram: this.state.instagram,
             linkedin: this.state.linkedin,
         }
-        
-
-       
 
         this.setState({ isLoading: true }, () => {
 
@@ -171,13 +170,14 @@ export class ProfileInfo extends Component {
                                         <div className="s_icon">
                                             <i className="fa fa-calendar"></i>
                                         </div>
-                                        <input type="date"
+                                        {/* <input type="date"
                                             name="dob"
                                             className="form-control"
                                             placeholder="Date Of Birth"
                                             value={dob}
                                             onChange={this.profileHandler}
-                                        />
+                                            /> */}
+                                        <DayPickerInput  name="dob"  className="form-control" value={dob} onChange={this.profileHandler} />
                                     </div>
                                 </div>
                                 <div className="form-group col-sm-6 col-lg-6 col-xs-12">

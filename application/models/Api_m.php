@@ -159,6 +159,15 @@ class Api_m extends CI_Model {
         }
 
     }
+
+    public function get_upazila($id)
+  	{
+        $this->db->select('up.*');
+        $this->db->from('upazilas as up');
+        $this->db->where('up.district_id',$id);
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
 	
 
 }

@@ -10,6 +10,7 @@ npm install --save react-router-dom</p>
     npm install --save rc-progress <br>
     npm i input-moment --save <a href="https://github.com/wangzuo/input-moment">Here</a><br>
     npm i --save lodash<br>
+    https://react-day-picker.js.org/<br>
     
 </blockquote>
 <pre><code class="has-line-data" data-line-start="8" data-line-end="10" class="language-sh">
