@@ -53,21 +53,15 @@ class Api extends CI_Controller {
 		if (empty($formdata)) {
 			$msg = 'Field must not be empty!!';
 			$response = ['st' => 0, 'msg'=> $msg,];
-		}else{	
-			// $data = array(
-			// 	'name' => $formdata['name'],
-			// 	'phone' => $formdata['phone'],
-			// 	'blood_group' => $formdata['blood_group'],
-			// 	'gender' => $formdata['gender'],
-			// 	'address' => $formdata['address'],
-			// );
-			echo "<pre>";print_r($formdata);exit();
-			// if(isset($formdata['id']) && $formdata['id'] !=0){
-			// 	$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donors');
-			// }else{
-			// 	$insert = $this->api_m->insert($formdata,'blood_donors');
+		}else{
 
-			// }
+			// echo "<pre>";print_r($formdata);exit();
+			if(isset($formdata['id']) && $formdata['id'] !=0){
+				$insert = $this->api_m->update($formdata,$formdata['id'],'blood_donors');
+			}else{
+				$insert = $this->api_m->insert($formdata,'blood_donors');
+
+			}
 			
 			if($insert){
 				$this->api_m->update(array('userId'=>md5($insert)),$insert,'blood_donors');
@@ -166,6 +160,20 @@ class Api extends CI_Controller {
 
 		$formdata = json_decode(file_get_contents('php://input'), true);	
 		$check = $this->api_m->select_by_id($formdata['field_value'],$formdata['field_name'],$formdata['table']);
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($check));
+		;
+		
+	}
+
+	public function get_single_value_hash(){
+
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
+
+		$formdata = json_decode(file_get_contents('php://input'), true);	
+		$check = $this->api_m->single_select_by_md5_id($formdata['field_value'],$formdata['field_name'],$formdata['table']);
 		$this->output
 		->set_content_type('application/json')
 		->set_output(json_encode($check));

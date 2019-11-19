@@ -236,10 +236,7 @@ p.countTo_icon i {
 .portfolio_slider .owl-theme .owl-nav .owl-next{
   right: -22px;
 }
-.defaultHeading {
-	margin-top: 50px;
-	padding-top: 20px;
-}
+
 .order_lebel {
 	position: absolute;
 	top: 0;
@@ -662,4 +659,44 @@ button.editBtn {
 }
 .pr-0{
   padding-right: 0px;
+}
+.bg_img {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  position: relative;
+}
+
+.bg_img::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 0;
+}
+
+.contactHeading {
+  padding: 27px 0;
+  color: #fff;
+}
+.registrationContent {
+  padding: 25px 0 57px 0!important;
+}
+#create-course-form label{
+  color: #fff;
+}
+.counter_area {
+  background-image: linear-gradient(to right top, #115259, #004a68, #2e3c6a, #552656, #660a2e);
+  padding: 50px 0 70px 0 !important;
+  color: #fff;
+}
+.searchArea {
+  padding: 10px 0 20px 0;
+}
+.contentWarpper.text-center {
+  padding: 70px 0;
 }

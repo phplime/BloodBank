@@ -13,8 +13,10 @@ import Icofont from 'react-icofont';
 import { get_allUserInfo, bloodGroup } from './inc/Functions'
 // import SearchResult from './inc/SearchResult';
 import SearchPage from './pages/SearchPage';
+import contactImg from './assets/images/contact_cover.jpg';
 // import {Route } from 'react-router-dom'
 // import _ from 'lodash';
+import ScrollAnimation from 'react-animate-on-scroll';
 
 class Home extends Component {
     
@@ -207,7 +209,8 @@ class Home extends Component {
                         </div>
                     </div>
                     {/* <SearchPage /> */}
-                    <div className="contentWarpper text-center">
+                    <ScrollAnimation animateIn="fadeIn">
+                    <div className="contentWarpper text-center counter_area">
                         <div className="container">
                             <div className="defaultHeading">
                                 <div className="heading_text">
@@ -222,18 +225,26 @@ class Home extends Component {
                             </div>
                         </div>
                     </div>
-
-                    <div className="contentWarpper text-center">
+                    </ScrollAnimation>
+                    
+                    <div className="contentWarpper registrationContent text-center bg_img" style={{ backgroundImage: `url(${contactImg})` }}>
                         <div className="container">
-                            <div className="defaultHeading">
+                            <div className="defaultHeading contactHeading p-r">
                                 <div className="heading_text">
                                     <h2>SignUp</h2>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
                                 </div>
                             </div>
-                            <div className="donation_progress_area mt-20">
+                        </div>
+                        <div className="donation_progress_area mt-20" >
+                            <div className="container">  
                                 <div className="row">
-                                    <div className="col-sm-6 offset-3 text-left">
+                                    <div className="col-md-6 d-none d-sm-block">
+                                        <div className="left_contact_img">
+                                            <img src={contactImg} alt=""/>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6 text-left">
                                         <Registration />
                                     </div>
                                 </div>

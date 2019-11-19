@@ -51,6 +51,18 @@ class Api_m extends CI_Model {
       
 	}
 
+	public function single_select_by_md5_id($id,$field_name,$table)
+	{
+		$this->db->select();
+		$this->db->from($table);
+		$this->db->where('md5('.$field_name.')',$id);
+		$this->db->order_by('id','DESC');	
+		$query = $this->db->get();
+		$query = $query->row_array();
+		return $query;
+      
+	}
+
 	public function update($data,$id,$table)
 	{
 		$this->db->where('id',$id);

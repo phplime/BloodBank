@@ -4,7 +4,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { API_URL } from "../../inc/Config";
-import  md5  from "md5";
+import md5 from "md5";
+// import {Redirect} from 'react-router-dom'
 
 export class RegistrationModal extends Component {
     constructor(props) {
@@ -24,9 +25,9 @@ export class RegistrationModal extends Component {
         }
     }
     onSubmit = (values) => {
-        console.log(values)
         var value = values;
         delete value.confirm_password;
+
         value.id = this.props.id;
         value.password = md5(values['password']);
         this.setState({ loading: true }, () => {
@@ -39,6 +40,11 @@ export class RegistrationModal extends Component {
                             loading: false,
                             successReg:true,
                         })
+
+                        localStorage.setItem('logData', JSON.stringify(row)); 
+                        localStorage.setItem('ID', row.id);
+                        localStorage.setItem('isLogin', true);
+                        window.location.reload(); 
                     })
                 } 
         
@@ -66,7 +72,7 @@ export class RegistrationModal extends Component {
              field_name: 'id',
              table: 'blood_donors',
          }
-        return axios.post(`${API_URL}/get_single_value`, JSON.stringify(formData))
+        return axios.post(`${API_URL}/get_single_value_hash`, JSON.stringify(formData))
          .then(response => {
              return response.data;
          })
@@ -147,7 +153,7 @@ export class RegistrationModal extends Component {
                                                 <Form.Label>Upazilla</Form.Label>
                                                 <Form.Control
                                                     as="select"
-                                                    name="upazilla"
+                                                    name="upazila"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     error={touched.upazila && errors.upazila}
