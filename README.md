@@ -10,6 +10,7 @@ npm install --save react-router-dom</p>
     npm install --save rc-progress <br>
     npm i input-moment --save <a href="https://github.com/wangzuo/input-moment">Here</a><br>
     npm install --save animate.css && npm install react-animate-on-scroll --save <a href="https://www.npmjs.com/package/react-animate-on-scroll">Here</a><br>
+    npm install react-toastify --save  <a href="https://www.c-sharpcorner.com/article/toastr-notification-in-reactjs/">Here</a><br>
     npm i --save lodash<br>
     https://react-day-picker.js.org/<br>
     

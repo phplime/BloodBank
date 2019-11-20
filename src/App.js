@@ -11,6 +11,9 @@ import Profile from './components/pages/Profile';
 import axios from 'axios';
 import md5 from "md5";
 import { API_URL} from "./components/inc/Config";
+import { ToastContainer, toast} from 'react-toastify';    
+import 'react-toastify/dist/ReactToastify.css';
+import SearchPage from './components/pages/SearchPage';
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +31,12 @@ class App extends Component {
     this._isMounted = true;
       if (localStorage.getItem('ID')) {
         this._isMounted && this.loginUser();
-      }
+        alert(this.state.user)
+        if (this.state.user.username === '') {
+          toast.error('Username is empty')
+        }
+    }
+   
     // var logData = JSON.parse(localStorage.getItem('logData'));
     // if(this._isMounted && logData !== null) {
     //   this.setState({
@@ -38,6 +46,7 @@ class App extends Component {
     //   })
     // }
     //console.clear(); 
+   
     setTimeout(
         function() {
             this.setState({isLoading: false});
@@ -85,7 +94,7 @@ class App extends Component {
     } else {
       
       return (
-        <Router>
+        <Router> {/*basename="/demo/react" */}
           <Switch>
             <Header>
               <Route exact={true} path='/' render={() => <Home />} />
@@ -93,7 +102,8 @@ class App extends Component {
               {isLogin &&
                 <Route path='/Profile' render={() => <Profile showBanner={true} user={user} />} />
               }
-             
+              <Route path='/Search' render={() => <SearchPage showBanner={true} status={0}/>} /> 
+              <ToastContainer /> 
             </Header>
             <Footer/>
           </Switch>

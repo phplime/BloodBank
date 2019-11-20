@@ -4,7 +4,8 @@ import $ from "jquery";
 import Login from '../inc/Login';
 import {IMG_URL } from "../inc/Config";
 import { Link } from 'react-router-dom';
-import avatar  from "../assets/images/avatar.jpg";
+import avatar from "../assets/images/avatar.jpg";
+
 
 export class SearchResult extends Component {
     constructor(props) {

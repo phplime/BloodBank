@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import md5 from 'md5';
 import { API_URL } from "./Config";
+import { toast } from 'react-toastify';
 
 class Login extends Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class Login extends Component {
                         localStorage.setItem('logData', JSON.stringify(row)); 
                         localStorage.setItem('ID', row.id);
                         localStorage.setItem('isLogin', true);
+                        toast.success(`${row.first_name} successfully login`);
                     })
                     // var resultData =  result.data.data.map(row => {
                     //     return { id: row.id, " isLogin": true };

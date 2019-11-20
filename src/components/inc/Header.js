@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 // import { API_URL } from "../inc/Config";
 // import {Redirect,withRouter } from 'react-router-dom';
 // import LoginModal from './LoginModal';
@@ -30,6 +31,7 @@ function Header(props) {
         localStorage.removeItem('userId');
         localStorage.clear();
         window.location.href = '/';
+        toast.info('Logout successfully')
     }
       
     return (
@@ -43,15 +45,14 @@ function Header(props) {
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/contactUs">Contact</Nav.Link>
-                    <Nav.Link href="/SearchPage">Search</Nav.Link>
-                    
-                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                    <Nav.Link href="/Search">Search</Nav.Link>
+                    {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                    </NavDropdown>
+                    </NavDropdown> */}
                 </Nav>
                 <Nav className="navbar-nav">
                 {!isLogin &&

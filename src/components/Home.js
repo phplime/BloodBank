@@ -14,9 +14,10 @@ import { get_allUserInfo, bloodGroup } from './inc/Functions'
 // import SearchResult from './inc/SearchResult';
 import SearchPage from './pages/SearchPage';
 import contactImg from './assets/images/contact_cover.jpg';
-// import {Route } from 'react-router-dom'
+// import {Redirect,withRouter   } from 'react-router-dom'
 // import _ from 'lodash';
 import ScrollAnimation from 'react-animate-on-scroll';
+
 
 class Home extends Component {
     
@@ -56,7 +57,7 @@ class Home extends Component {
        //     console.API = console;
        // }
        // console.API.clear()
-     
+       
        
    }
 
@@ -84,8 +85,8 @@ class Home extends Component {
                         status:response.data.st
                     });
                 
-                // window.location.href = '/SearchPage';
-                    // browserHistory.push('/SearchPage') 
+                //  window.location.href = '/Search';
+                //  browserHistory.push('/SearchPage') 
             })
             .catch(error => {
                 console.log(error)
@@ -132,27 +133,7 @@ class Home extends Component {
            
         });
     }
-    // getAll_donnor =  () => {
-    //     this.setState({Loading: true }, () => {
-    //         axios.get(`${API_URL}/get_all_user_info`)
-    //             .then(response => {
-    //                 this._isMounted && this.setState({
-    //                 userInfo: response.data,
-    //                 Loading: false,
-    //             });
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //             this.setState({
-    //                 Loading: false,
-    //                 error:error
-    //             });
-    //             return null;
-    //         })
-           
-    //     });
-    // }
-
+   
 
     handleToggle = () => {
         const el = findDOMNode(this.refs.toggle);
@@ -174,6 +155,10 @@ class Home extends Component {
         const {search_result, status, is_search, all_group} = this.state;
         if (is_search) {
             return (
+                // <Redirect to={{
+                //     pathname: '/Search',
+                //     state: { result: search_result,status:status }
+                // }} />
               <SearchPage result={search_result} status={status} />
             )
         } else {
@@ -215,7 +200,8 @@ class Home extends Component {
                             <div className="defaultHeading">
                                 <div className="heading_text">
                                     <h2>DONATION PROCESS</h2>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                         
                                 </div>
                             </div>
                             <div className="donation_progress_area mt-20">
@@ -226,31 +212,32 @@ class Home extends Component {
                         </div>
                     </div>
                     </ScrollAnimation>
-                    
-                    <div className="contentWarpper registrationContent text-center bg_img" style={{ backgroundImage: `url(${contactImg})` }}>
-                        <div className="container">
-                            <div className="defaultHeading contactHeading p-r">
-                                <div className="heading_text">
-                                    <h2>SignUp</h2>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                    <ScrollAnimation animateIn="fadeIn">
+                        <div className="contentWarpper registrationContent text-center bg_img" style={{ backgroundImage: `url(${contactImg})` }}>
+                            <div className="container">
+                                <div className="defaultHeading contactHeading p-r">
+                                    <div className="heading_text">
+                                        <h2>SignUp</h2>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="donation_progress_area mt-20" >
-                            <div className="container">  
-                                <div className="row">
-                                    <div className="col-md-6 d-none d-sm-block">
-                                        <div className="left_contact_img">
-                                            <img src={contactImg} alt=""/>
+                            <div className="donation_progress_area mt-20" >
+                                <div className="container">  
+                                    <div className="row">
+                                        <div className="col-md-6 d-none d-sm-block">
+                                            <div className="left_contact_img">
+                                                <img src={contactImg} alt=""/>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6 text-left">
+                                            <Registration />
                                         </div>
                                     </div>
-                                    <div className="col-sm-6 text-left">
-                                        <Registration />
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </ScrollAnimation>
                 
                     <div className="contentWarpper text-center">
                         <div className="container">

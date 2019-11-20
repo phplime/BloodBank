@@ -5,6 +5,7 @@ import $ from "jquery";
 import { API_URL } from "../../inc/Config";
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { toast } from 'react-toastify';
 
 export class ProfileInfo extends Component {
     constructor(props) {
@@ -67,6 +68,7 @@ export class ProfileInfo extends Component {
                             isLoading: false,
                             // readonly:false,
                         });
+                        toast.success('Update successfully')
                         $('.st_alert').html(``);
                     })
                     .catch(error => {
@@ -75,6 +77,7 @@ export class ProfileInfo extends Component {
             }else if(this.state.st === 0){
                 $('.st_alert').html(`Sorry Your Name Is Already Exists`);
                 this.setState({ isLoading: false });
+                toast.error('This Username Already exists')
             } else {
                 this.setState({ isLoading: false });
                 $('.st_alert').html(``);
