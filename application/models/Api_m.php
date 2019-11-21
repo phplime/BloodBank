@@ -110,7 +110,7 @@ class Api_m extends CI_Model {
 
     public function get_login_user_info($id)
   	{
-        $this->db->select('b.id,b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me');
+        $this->db->select('b.id,b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me,upazila,district');
         $this->db->select('bg.id as group_id, bg.name as blood_group');
         $this->db->from('blood_donors b');
         $this->db->join('blood_group as bg','bg.id = b.blood_group');
@@ -122,7 +122,7 @@ class Api_m extends CI_Model {
 
     public function get_all_user_info()
   	{
-        $this->db->select('b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me');
+        $this->db->select('b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me,upazila,district');
         $this->db->select('bg.id as group_id, bg.name as blood_group');
         $this->db->from('blood_donors b');
         $this->db->join('blood_group as bg','bg.id = b.blood_group');
@@ -130,9 +130,23 @@ class Api_m extends CI_Model {
         return $query->result_array();
     }
 
+
+    public function get_my_area_donor($id)
+  	{
+        $this->db->select('b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me,upazila,district');
+        $this->db->select('bg.id as group_id, bg.name as blood_group');
+        $this->db->select('up.id as upzila_id, up.name as upazila_name');
+        $this->db->from('blood_donors b');
+        $this->db->join('blood_group as bg','bg.id = b.blood_group');
+        $this->db->join('upazilas as up','up.id = b.upazila');
+        $this->db->where('b.upazila',$id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function get_search_values($query)
   	{
-        $this->db->select('b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me');
+        $this->db->select('b.userId,b.username,blood_group,phone,gender,address,email,image,thumb,first_name,last_name,facebook,twitter,linkedin,instagram,dob,designation,about_me,upazila,district');
         $this->db->select('bg.id as group_id, bg.name as blood_group');
         $this->db->from('blood_donors b');
         $this->db->join('blood_group as bg','bg.id = b.blood_group');

@@ -53,7 +53,7 @@ function DonarList(props) {
                         <div className="portfolioCard" key={i}>
                             <div className="portfolioCardTop">
                                 <div className="portfolioCardHeader">
-                                    <img src={`${IMG_URL}/${portfolio.image}`} alt="" />
+                                    <img src={`${IMG_URL}/${portfolio.thumb}`} alt="" />
                                     <span className="order_lebel">{orderText}</span>
                                 </div>
                                 <div className="portfolioCardBody">
@@ -77,7 +77,7 @@ function DonarList(props) {
                                     </div>
                                 </div>
                                 <div className="portfolio_bg_cover">
-                                    <img src={`${IMG_URL}/${portfolio.image}`} alt="" />
+                                    <img src={`${IMG_URL}/${portfolio.thumb}`} alt="" />
                                     <span className="order_lebel">{orderText}</span>
                                     <div className="profileCover_title">
                                         <h4>{portfolio.first_name} {portfolio.last_name}</h4>

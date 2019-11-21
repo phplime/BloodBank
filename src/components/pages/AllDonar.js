@@ -55,7 +55,7 @@ function AllDonar(props) {
                             <div className="portfolioCardTop donarList">
                                 <div className="PortfolioCovetTop">
                                     <div className="portfolioCardHeader donarList">
-                                        <img src={`${IMG_URL}/${portfolio.image}`} alt="" />
+                                        <img src={`${IMG_URL}/${portfolio.thumb}`} alt="" />
                                         <span className="order_lebel">{orderText}</span>
                                     </div>
                                     <div className="portfolioCardBody donarList">
@@ -73,7 +73,7 @@ function AllDonar(props) {
                                     </div>
                                     {/* cover image */}
                                     <div className="allDonar_cover">
-                                        <img src={`${IMG_URL}/${portfolio.image}`} alt="" />
+                                        <img src={`${IMG_URL}/${portfolio.thumb}`} alt="" />
                                         <span className="order_lebel">{orderText}</span>
                                         <div className="profileCover_title">
                                             <p className="blood_group" ><Icofont className="blood" icon="icofont-blood-drop" /> {portfolio.blood_group} </p>

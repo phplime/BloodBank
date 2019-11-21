@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import { API_URL } from "../../inc/Config";
+import { get_District } from "../../inc/Functions";
 
 export class MyInfo extends Component {
 
@@ -15,19 +16,42 @@ export class MyInfo extends Component {
             about_me:'',
             gender:'',
             blood_group:'',
+            disrtict:'',
+            upazila:'',
             group_id: '',
             active: false,
             ExistingLoading: false,
             infoLoading: false,
+            all_district: [],
+            upazilas: [],
         }
-        if(props.user){
+        if (props.user) {
             this.state = this.props.user
         } else {
             this.state = this.state;
         }
         this.infoSubmitHandler = this.infoSubmitHandler.bind(this);
     }
+
+    get_all_district = () => {
+       
+        var a = get_District();
+        a.then((result) => {
+            this.setState({
+                all_district: result,
+            })
+        
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        
+    }
     
+    componentDidMount() {
+        this.get_all_district();
+        this.get_upazila();
+    }
 
     changeHandler = (e) => {
         const name = e.target.name;
@@ -49,8 +73,9 @@ export class MyInfo extends Component {
             gender:e.target.gender.value,
             blood_group: e.target.blood_group.value,
             about_me: this.state.about_me,
+            district: this.state.district,
+            upazila: this.state.upazila,
         }
-
         this.setState({infoLoading: true }, () => {
             axios.post(`${API_URL}/add_user`, JSON.stringify(infoData))
             .then(response => {
@@ -66,7 +91,35 @@ export class MyInfo extends Component {
         });
         
     }
+
+    get_upazila = (e) => {
+        axios.post(`${API_URL}/get_upazila/${this.state.district}`,)
+        .then(result => {
+            this.setState({
+                upazilas: result.data,
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
+    onChangeDistric = (e) => {
+        var id = e.target.value;
+        axios.post(`${API_URL}/get_upazila/${id}`,)
+        .then(result => {
+            this.setState({
+                upazilas: result.data,
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
+
     render() {
+        
         return (
             <div className={`tab-pane fade show ${this.state.active?'active':''} ${this.state.infoLoading ? 'isLoading active':''}`} id="myInfo" role="tabpanel" aria-labelledby="profile-tab">
                 <div className="profile_area" >
@@ -86,6 +139,26 @@ export class MyInfo extends Component {
                                     <div className="form-group col-sm-6">
                                         <label>Last Name</label>
                                         <input type="text" name="last_name" ref='name' className="form-control" value={this.state.last_name}  onChange={this.changeHandler} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="form-group col-sm-6">
+                                        <label>District</label>
+                                        <select name="district" className="form-control" onChange={(e) => { this.changeHandler(e); this.onChangeDistric(e); }}>
+                                            <option>Select District</option>
+                                            {this.state.all_district && this.state.all_district.map((district, i) => (
+                                                <option selected={this.state.district === district.id} key={i} value={district.id}>{district.en_name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-sm-6">
+                                        <label>Upazila</label>
+                                        <select name="upazila" className="form-control" onChange={this.changeHandler}>
+                                            <option>Select Upazilla</option>
+                                            {this.state.upazilas && this.state.upazilas.map((upazila, i) => (
+                                                <option selected={this.state.upazila === upazila.id} key={i} value={upazila.id}>{upazila.name}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="row">

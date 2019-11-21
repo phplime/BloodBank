@@ -11,9 +11,10 @@ import Profile from './components/pages/Profile';
 import axios from 'axios';
 import md5 from "md5";
 import { API_URL} from "./components/inc/Config";
-import { ToastContainer, toast} from 'react-toastify';    
+import { ToastContainer} from 'react-toastify';    
 import 'react-toastify/dist/ReactToastify.css';
 import SearchPage from './components/pages/SearchPage';
+import MyAreaDonor from './components/pages/MyAreaDonor';
 
 class App extends Component {
   constructor(props) {
@@ -31,21 +32,8 @@ class App extends Component {
     this._isMounted = true;
       if (localStorage.getItem('ID')) {
         this._isMounted && this.loginUser();
-        alert(this.state.user)
-        if (this.state.user.username === '') {
-          toast.error('Username is empty')
-        }
+       
     }
-   
-    // var logData = JSON.parse(localStorage.getItem('logData'));
-    // if(this._isMounted && logData !== null) {
-    //   this.setState({
-    //     user: logData,
-    //     isLogin: true,
-    //     // isLoading:true,
-    //   })
-    // }
-    //console.clear(); 
    
     setTimeout(
         function() {
@@ -101,6 +89,9 @@ class App extends Component {
               <Route path='/contactUs' render={() => <ContactUs showBanner={true} />} />
               {isLogin &&
                 <Route path='/Profile' render={() => <Profile showBanner={true} user={user} />} />
+              }
+              {isLogin &&
+                <Route path='/Area' render={() => <MyAreaDonor />} />
               }
               <Route path='/Search' render={() => <SearchPage showBanner={true} status={0}/>} /> 
               <ToastContainer /> 

@@ -1,2 +1,2 @@
-export const API_URL = 'http://localhost/blood/api';
-export const IMG_URL = 'http://localhost/blood/';
+export const API_URL = 'http://thinkncode.net/blood_api/api';
+export const IMG_URL = 'http://thinkncode.net/blood_api';

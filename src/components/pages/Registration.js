@@ -87,20 +87,7 @@ export class Registration extends Component {
             }) 
         })
     }
-    // get_all_blood_group =  () => {
-    //     axios.get(`${API_URL}/get_all_blood_group`)
-    //     .then(response => {
-    //         this._isMounted && this.setState({
-    //             blood_group: response.data,
-    //         })
-    //     })
-    //     .catch(error => {
-    //         this.setState({
-    //             error:error,
-    //         })
-    //     })
-        
-    // }
+   
     
     onSubmit = (values) => {
        
@@ -248,7 +235,7 @@ export class Registration extends Component {
                                                     onBlur={handleBlur}
                                                     touched={(touched[field.name])}
                                                     errors={errors[field.name]}
-                                                    group={field.name === 'blood_group' ? (this.state.blood_group && this.state.blood_group.length > 0 ?this.state.blood_group: null):''}
+                                                    group={field.name === 'blood_group' ? (this.state.blood_group && this.state.blood_group.length > 0 ?this.state.blood_group: ''):''}
                                                    
                                                 />  
                                             })}

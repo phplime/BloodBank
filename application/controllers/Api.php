@@ -42,6 +42,17 @@ class Api extends CI_Controller {
 		
 	}
 
+	public function get_my_area_donor($id)
+	{
+		header("Access-Control-Allow-Origin: *");
+		$user_info = $this->api_m->get_my_area_donor($id);
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($user_info));
+		;
+		
+	}
+
 	public function add_user(){
 
 		header('Access-Control-Allow-Origin: *');

@@ -10,13 +10,9 @@ import AllDonar from './pages/AllDonar';
 import Gallery from './pages/Gallery';
 import Registration from './pages/Registration';
 import Icofont from 'react-icofont';
-import { get_allUserInfo, bloodGroup } from './inc/Functions'
-// import SearchResult from './inc/SearchResult';
+import { get_allUserInfo,bloodGroup } from './inc/Functions'
 import SearchPage from './pages/SearchPage';
 import contactImg from './assets/images/contact_cover.jpg';
-// import {Redirect,withRouter   } from 'react-router-dom'
-// import _ from 'lodash';
-import ScrollAnimation from 'react-animate-on-scroll';
 
 
 class Home extends Component {
@@ -49,14 +45,14 @@ class Home extends Component {
         this._isMounted = true; 
         this._isMounted && this.getAll_donnor()
         this._isMounted && this.get_all_blood_group()
-       // if (typeof console._commandLineAPI !== 'undefined') {
-       //     console.API = console._commandLineAPI;
-       // } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
-       //     console.API = console._inspectorCommandLineAPI;
-       // } else if (typeof console.clear !== 'undefined') {
-       //     console.API = console;
-       // }
-       // console.API.clear()
+       if (typeof console._commandLineAPI !== 'undefined') {
+           console.API = console._commandLineAPI;
+       } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
+           console.API = console._inspectorCommandLineAPI;
+       } else if (typeof console.clear !== 'undefined') {
+           console.API = console;
+       }
+       console.API.clear()
        
        
    }
@@ -100,6 +96,7 @@ class Home extends Component {
         });
     }
 
+    // for search
     get_all_blood_group = () => {
         if (this._isMounted) {
             var a = bloodGroup();
@@ -139,19 +136,10 @@ class Home extends Component {
         const el = findDOMNode(this.refs.toggle);
         $(el).slideToggle();
     }
-    // componentWillMount(){
-    //     window.addEventListener("beforeunload", (ev) => 
-    //     {  
-    //         ev.preventDefault();
-    //         localStorage.remove('logData');
-    //         localStorage.remove('mydata');
-            
-    //     })
-    // }
+   
     
 
     render() {
-        //  console.log(this.state.search_result)
         const {search_result, status, is_search, all_group} = this.state;
         if (is_search) {
             return (
@@ -194,7 +182,7 @@ class Home extends Component {
                         </div>
                     </div>
                     {/* <SearchPage /> */}
-                    <ScrollAnimation animateIn="fadeIn">
+
                     <div className="contentWarpper text-center counter_area">
                         <div className="container">
                             <div className="defaultHeading">
@@ -211,8 +199,6 @@ class Home extends Component {
                             </div>
                         </div>
                     </div>
-                    </ScrollAnimation>
-                    <ScrollAnimation animateIn="fadeIn">
                         <div className="contentWarpper registrationContent text-center bg_img" style={{ backgroundImage: `url(${contactImg})` }}>
                             <div className="container">
                                 <div className="defaultHeading contactHeading p-r">
@@ -237,7 +223,6 @@ class Home extends Component {
                                 </div>
                             </div>
                         </div>
-                        </ScrollAnimation>
                 
                     <div className="contentWarpper text-center">
                         <div className="container">

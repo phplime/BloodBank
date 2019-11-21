@@ -46,6 +46,9 @@ function Header(props) {
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/contactUs">Contact</Nav.Link>
                     <Nav.Link href="/Search">Search</Nav.Link>
+                    {isLogin &&
+                        <Nav.Link href="/Area">Area Donor</Nav.Link>
+                    }
                     {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
