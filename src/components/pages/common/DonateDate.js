@@ -5,6 +5,8 @@ import axios from "axios";
 import md5 from "md5";
 import { API_URL } from "../../inc/Config";
 import AllDate from './AllDate'
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
 export class DonateDate extends Component {
     constructor(props) {
@@ -72,7 +74,7 @@ export class DonateDate extends Component {
                     location: '',
                 }}
                 validationSchema={Yup.object().shape({
-                    donate_date: Yup.string().min(3, 'Donate Date is longer then that').required('Donate Date is required.'),
+                    donate_date: Yup.string().required('Donate Date is required.'),
                 })}
              
                 onSubmit={this.onSubmit}
@@ -103,6 +105,8 @@ export class DonateDate extends Component {
                                                     onBlur={handleBlur}
                                                     error={touched.donate_date && errors.donate_date}
                                                 />
+                                                
+                                                
                                                 <div>
                                                     <p className="help-block text-danger">
                                                         {(touched.donate_date && errors.donate_date) &&

@@ -144,19 +144,19 @@ export class MyInfo extends Component {
                                 <div className="row">
                                     <div className="form-group col-sm-6">
                                         <label>District</label>
-                                        <select name="district" className="form-control" onChange={(e) => { this.changeHandler(e); this.onChangeDistric(e); }}>
+                                        <select name="district" id="1" className="form-control" onChange={(e) => { this.changeHandler(e); this.onChangeDistric(e); }}>
                                             <option>Select District</option>
                                             {this.state.all_district && this.state.all_district.map((district, i) => (
-                                                <option selected={this.state.district === district.id} key={i} value={district.id}>{district.en_name}</option>
+                                                <option selected={this.state.district === district.id}  key={i} value={district.id}>{district.en_name}</option>
                                             ))}
                                         </select>
                                     </div>
                                     <div className="form-group col-sm-6">
                                         <label>Upazila</label>
-                                        <select name="upazila" className="form-control" onChange={this.changeHandler}>
-                                            <option>Select Upazilla</option>
-                                            {this.state.upazilas && this.state.upazilas.map((upazila, i) => (
-                                                <option selected={this.state.upazila === upazila.id} key={i} value={upazila.id}>{upazila.name}</option>
+                                        <select name="upazila" id="2" className="form-control" onChange={this.changeHandler}>
+                                            <option >Select Upazilla</option>
+                                            {this.state.upazilas && this.state.upazilas.map((upazila, j) => (
+                                                <option selected={this.state.upazila === upazila.id} key={j} value={upazila.id}>{upazila.name}</option>
                                             ))}
                                         </select>
                                     </div>

@@ -431,7 +431,7 @@ label.uploader span {
 .social_icon_area {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   flex-wrap: nowrap;
 }
 
@@ -709,4 +709,9 @@ button.editBtn {
   align-items: center;
   justify-content: center;
   height: 250px;
+}
+.DayPickerInput input {
+  padding: 6px;
+  border: 1px solid #ced4da;
+  /* box-shadow: none; */
 }
