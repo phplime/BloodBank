@@ -5,6 +5,8 @@ import Login from '../inc/Login';
 import {IMG_URL } from "../inc/Config";
 import { Link } from 'react-router-dom';
 import avatar from "../assets/images/avatar.jpg";
+import AllDonateDate from './AllDonateDate';
+import {Button} from 'react-bootstrap';
 
 
 export class SearchResult extends Component {
@@ -16,6 +18,8 @@ export class SearchResult extends Component {
             userInfo: [],
             Loading: true,
             isLoggedin: localStorage.getItem('isLogin'),
+            dateShow: false,
+            uid:'',
         }
         this._isMounted = false;
     }
@@ -39,6 +43,21 @@ export class SearchResult extends Component {
         this.setState({show:false})
     }
 
+    DateshowModal = (e) => {
+        var uid = e.target.getAttribute('data-id');
+        this.setState({
+            uid:uid,
+            dateShow: true,
+        });
+      
+    }
+    DatecloseModal = () => {
+        this.setState({
+            dateShow: false,
+            uid: '',
+        })
+    }
+
     componentDidMount() {
         if (this.props.result !== undefined) {
             setTimeout(
@@ -54,8 +73,7 @@ export class SearchResult extends Component {
     }
     
     render() {
-        
-        const { show, isLoggedin, Loading } = this.state;
+        const { show, isLoggedin, Loading, dateShow, uid } = this.state;
         if (Loading) {
             return (
                 <div className="isLoading"></div>
@@ -91,7 +109,7 @@ export class SearchResult extends Component {
                                                             <h5><button type="button" onClick={this.showPhone}><Icofont icon="icofont-phone" /></button> <span className="phoneNumber hidden">{user.phone}</span></h5>
                                                             :<button type="button"onClick={this.showModal}><Icofont icon="icofont-phone" /></button> 
                                                         }
-                                                        {/* <Button variant="primary">Go somewhere</Button> */}
+                                                        <Button onClick={this.DateshowModal} data-id={user.userId} variant="success">Donate Date</Button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -115,6 +133,7 @@ export class SearchResult extends Component {
                                 
                         }
                         <Login show={show} handleClose={this.closeModal} />
+                        <AllDonateDate dateShow={dateShow} DatecloseModal={this.DatecloseModal} uid={uid}  />
                     </div>
                 )
             }

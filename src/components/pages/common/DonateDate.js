@@ -5,7 +5,7 @@ import axios from "axios";
 import md5 from "md5";
 import { API_URL } from "../../inc/Config";
 import AllDate from './AllDate'
-import DayPickerInput from 'react-day-picker/DayPickerInput';
+// import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 
 export class DonateDate extends Component {
@@ -45,7 +45,7 @@ export class DonateDate extends Component {
     showDateList = () => {
         this.setState({ listLoading: true }, () => {
             const values = {
-                field_name: 'userId',
+                field_name: 'md5(userId)',
                 table: 'donate_date',
                 field_value: md5(localStorage.getItem('ID')),
             }
@@ -69,7 +69,7 @@ export class DonateDate extends Component {
         return (
             <Formik
                 initialValues={{
-                    userid:md5(localStorage.getItem('ID')),
+                    userid:localStorage.getItem('ID'),
                     donate_date: '',
                     location: '',
                 }}
