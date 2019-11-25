@@ -1,28 +1,17 @@
-import  React,{useEffect } from 'react'
+import  React,{useEffect,useState } from 'react'
 import $ from "jquery";
-import img1  from "../assets/images/gallery/01-thumbnail.jpg";
-import img2  from "../assets/images/gallery/02-thumbnail.jpg";
-import img3  from "../assets/images/gallery/03-thumbnail.jpg";
-import img4  from "../assets/images/gallery/04-thumbnail.jpg";
-import img5  from "../assets/images/gallery/05-thumbnail.jpg";
-import img6  from "../assets/images/gallery/06-thumbnail.jpg";
+import axios from "axios";
+import {API_URL, IMG_URL} from "../inc/Config";
 
 function Gallery(props) {
-
-    const gallery = [
-        { name: 'image_1', id: 'web', image: img1 },
-        { name: 'image_2', id: 'web', image: img2 },
-        { name: 'image_3', id: 'web', image: img3 },
-        { name: 'image_4', id: 'develope', image: img4 },
-        { name: 'image_5', id: 'develope', image: img5 },
-        { name: 'image_6', id: 'develope', image: img6 },
-        { name: 'image_7', id: 'html', image: img1 },
-        { name: 'image_8', id: 'html', image: img3 },
-        { name: 'image_9', id: 'html', image: img5 },
-    ];
-    
+    const [post, setPost] = useState([])
+    const [image, setImage] = useState([])
     useEffect(() => {
-        handleCounter()
+        axios.get(`${API_URL}/get_gallery_img`)
+            .then(result => {
+                 setPost(result.data.data);
+                 setImage(result.data.img);
+            });
     }, [])
     
     const handleCounter = (e) => {
@@ -41,15 +30,9 @@ function Gallery(props) {
             }
             $(this).addClass("active");
             $('.gallery_sort li button').not($(this)).removeClass("active");
-         
-
-            
             
             
         });
-        
-        
-        
            
         
     }
@@ -70,20 +53,22 @@ function Gallery(props) {
         <div className="gallery_area">
             <div className="gallery_top_menu">
                 <ul className="gallery_sort">
-                    <li><button onClick={handleCounter} data-filter='all' className='active'>All</button></li>
-                    <li><button onClick={handleCounter} data-filter='web' >Web</button></li>
-                    <li><button onClick={handleCounter} data-filter='develope' >Develope</button></li>
-                    <li><button onClick={handleCounter} data-filter='html' >Html</button></li>
+                <li><button onClick={handleCounter} data-filter='all' className="active">All</button></li>
+                   {post.map((gal, i) => (
+                       <li key={i}><button onClick={handleCounter} data-filter={gal.location} >{gal.district_name}</button></li>
+                   ))}
+                   
+                    
+                    {/* <li><button onClick={handleCounter} data-filter='develope' >Develope</button></li>
+                    <li><button onClick={handleCounter} data-filter='html' >Html</button></li> */}
                 </ul>
             </div>
-            <div className="row">
+            <div className="topRow" id="masonry4">
                 {
-                    gallery.map((gal,i) => {
-                        return(
-                        <div className ={`col-md-3 filter ${gal.id}`} key={i}>
-                            <div className="gallery_single_image">
-                                <img src={gal.image} alt="" /> 
-                           </div>
+                    image.map((gal,i) => {
+                    return(
+                        <div className ={`filter item ${gal.location}`} key={i}>
+                                <img src={`${IMG_URL}/${gal.thumb}`} alt="" /> 
                         </div>
                     ) 
                     })

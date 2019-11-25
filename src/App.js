@@ -22,7 +22,7 @@ class App extends Component {
   
     this.state = {
       user:{},
-      isLoading: false,
+      isLoading: true,
       isLogin: false,
     }
     this._isMounted = false;
@@ -32,7 +32,6 @@ class App extends Component {
     this._isMounted = true;
       if (localStorage.getItem('ID')) {
         this._isMounted && this.loginUser();
-       
     }
    
     setTimeout(

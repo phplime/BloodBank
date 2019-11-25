@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { Navbar, Nav } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-// import { API_URL } from "../inc/Config";
+import { settings } from "../inc/Functions";
 // import {Redirect,withRouter } from 'react-router-dom';
 // import LoginModal from './LoginModal';
 import Login from './Login';
@@ -10,21 +10,33 @@ function Header(props) {
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
     const [data, setData] = useState('');
+    const [setting, setSetting] = useState({});
     const [isLogin, setLogin] = useState(false);
     
     useEffect(() => {
+       
         var logData = JSON.parse(localStorage.getItem('logData'));
         let isMounted = true;
         if (isMounted && logData !== null) {
             setData(logData);
             setLogin(true);
         }
+        if (isMounted) {
+            mySetting(); 
+        }
         return () => {
             isMounted = false;
-            };
+        };
         // clearconsole(); 
     }, []);
     
+// site setting
+     const mySetting = () => {
+        var a = settings();
+        a.then((result) => {
+            setSetting(result);
+        })
+    }
 
     const logout = () => {
         localStorage.removeItem('logData');
@@ -39,7 +51,7 @@ function Header(props) {
         <div>
             <>
             <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
-            <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="/">{setting.site_name}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

@@ -1,5 +1,4 @@
 import React from 'react'
-import {Button } from 'react-bootstrap';
 import OwlCarousel from 'react-owl-carousel2';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css';
@@ -65,7 +64,7 @@ function DonarList(props) {
                                         <div className="portfolioDetails">
                                             {/* {portfolio.about_me} */}
                                             <p><Icofont icon="icofont-blood-drop" /> {portfolio.blood_group} </p>
-                                            <Button variant="primary">Go somewhere</Button>
+                                            <p>{portfolio.donate_date}</p>
                                         </div>
                                     </div>
                                     <div className="portfolioCardFooter">

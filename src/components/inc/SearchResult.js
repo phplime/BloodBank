@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import Icofont from 'react-icofont';
 import $ from "jquery";
 import Login from '../inc/Login';
-import {IMG_URL } from "../inc/Config";
+import {IMG_URL,API_URL } from "../inc/Config";
 import { Link } from 'react-router-dom';
 import avatar from "../assets/images/avatar.jpg";
 import AllDonateDate from './AllDonateDate';
-import {Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import axios from 'axios'
 
 
 export class SearchResult extends Component {
@@ -19,7 +20,7 @@ export class SearchResult extends Component {
             Loading: true,
             isLoggedin: localStorage.getItem('isLogin'),
             dateShow: false,
-            uid:'',
+            donateDate:[],
         }
         this._isMounted = false;
     }
@@ -45,10 +46,20 @@ export class SearchResult extends Component {
 
     DateshowModal = (e) => {
         var uid = e.target.getAttribute('data-id');
-        this.setState({
-            uid:uid,
-            dateShow: true,
-        });
+        const values = {
+            id: uid,
+        }
+        axios.post(`${API_URL}/get_donate_date`, JSON.stringify(values))
+        .then(result => {
+            this.setState({
+                donateDate: result.data,
+                dateShow: true,
+            })
+        })
+            
+        .catch(error => {
+            console.log(error)
+        })
       
     }
     DatecloseModal = () => {
@@ -73,7 +84,7 @@ export class SearchResult extends Component {
     }
     
     render() {
-        const { show, isLoggedin, Loading, dateShow, uid } = this.state;
+        const { show, isLoggedin, Loading, dateShow,donateDate } = this.state;
         if (Loading) {
             return (
                 <div className="isLoading"></div>
@@ -92,7 +103,7 @@ export class SearchResult extends Component {
                                         <div className="PortfolioCovetTop">
                                             <div className="portfolioCardHeader donarList search_list">
                                                 {user.image !== '' ?
-                                                    <img src={`${IMG_URL}/${user.image}`} alt="" />
+                                                    <img src={`${IMG_URL}/${user.thumb}`} alt="" />
                                                     :
                                                     <img src={`${avatar}`} alt="" />
                                                 }
@@ -133,7 +144,7 @@ export class SearchResult extends Component {
                                 
                         }
                         <Login show={show} handleClose={this.closeModal} />
-                        <AllDonateDate dateShow={dateShow} DatecloseModal={this.DatecloseModal} uid={uid}  />
+                        <AllDonateDate dateShow={dateShow} DatecloseModal={this.DatecloseModal} donateDate={donateDate}  />
                     </div>
                 )
             }

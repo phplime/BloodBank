@@ -10,7 +10,7 @@ import AllDonar from './pages/AllDonar';
 import Gallery from './pages/Gallery';
 import Registration from './pages/Registration';
 import Icofont from 'react-icofont';
-import { get_allUserInfo,bloodGroup } from './inc/Functions'
+import { get_allUserInfo, bloodGroup, settings } from './inc/Functions'
 import SearchPage from './pages/SearchPage';
 import contactImg from './assets/images/contact_cover.jpg';
 
@@ -29,7 +29,8 @@ class Home extends Component {
             all_group:[],
             search_result: [],
             is_search: false,
-            status:''
+            status:'',
+            setting:{},
         }
         this._isMounted = false;
         // this.getAll_donnor = _.debounce(this.getAll_donnor, 500); 
@@ -45,6 +46,7 @@ class Home extends Component {
         this._isMounted = true; 
         this._isMounted && this.getAll_donnor()
         this._isMounted && this.get_all_blood_group()
+        this._isMounted && this.settings()
        if (typeof console._commandLineAPI !== 'undefined') {
            console.API = console._commandLineAPI;
        } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
@@ -109,6 +111,19 @@ class Home extends Component {
         }
         
     }
+    // site setting
+    settings = () => {
+        if (this._isMounted) {
+            var a = settings();
+            a.then((result) => {
+                this.setState({
+                    setting: result,
+                })
+            
+            })
+        }
+        
+    }
 
 
     getAll_donnor = () => {
@@ -140,14 +155,14 @@ class Home extends Component {
     
 
     render() {
-        const {search_result, status, is_search, all_group} = this.state;
+        const { search_result, status, is_search, all_group, setting } = this.state;
         if (is_search) {
             return (
                 // <Redirect to={{
                 //     pathname: '/Search',
                 //     state: { result: search_result,status:status }
                 // }} />
-              <SearchPage result={search_result} status={status} />
+                <SearchPage result={search_result} status={status} />
             )
         } else {
             return (
@@ -188,7 +203,7 @@ class Home extends Component {
                             <div className="defaultHeading">
                                 <div className="heading_text">
                                     <h2>DONATION PROCESS</h2>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
                                          
                                 </div>
                             </div>
@@ -199,49 +214,33 @@ class Home extends Component {
                             </div>
                         </div>
                     </div>
-                        <div className="contentWarpper registrationContent text-center bg_img" style={{ backgroundImage: `url(${contactImg})` }}>
-                            <div className="container">
-                                <div className="defaultHeading contactHeading p-r">
-                                    <div className="heading_text">
-                                        <h2>SignUp</h2>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="donation_progress_area mt-20" >
-                                <div className="container">  
-                                    <div className="row">
-                                        <div className="col-md-6 d-none d-sm-block">
-                                            <div className="left_contact_img">
-                                                <img src={contactImg} alt=""/>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 text-left">
-                                            <Registration />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                    <div className="contentWarpper text-center">
+                    <div className="contentWarpper registrationContent text-center bg_img" style={{ backgroundImage: `url(${contactImg})` }}>
                         <div className="container">
-                            <div className="defaultHeading">
+                            <div className="defaultHeading contactHeading p-r">
                                 <div className="heading_text">
-                                    <h2>DONATION PROCESS</h2>
+                                    <h2>SignUp</h2>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, neque!</p>
                                 </div>
                             </div>
-                            <div className="donation_progress_area mt-20">
-                                <div className="portfolio_slider">
-                                    <DonarList portfolio={this.state} />
+                        </div>
+                        <div className="donation_progress_area mt-20" >
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-6 d-none d-sm-block">
+                                        <div className="left_contact_img">
+                                            <img src={contactImg} alt="" />
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6 text-left">
+                                        <Registration />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                   
                     <div className="contentWarpper text-center">
-                        <div className="container">
+                            <div className="container">
                             <div className="defaultHeading">
                                 <div className="heading_text">
                                     <h2>DONATION PROCESS</h2>
@@ -249,8 +248,12 @@ class Home extends Component {
                                 </div>
                             </div>
                             <div className="donation_progress_area mt-20">
-                                <div className="portfolio_slider">
+                            <div className="portfolio_slider">
+                                {Object.keys('setting') && setting.donor_style === 1 ?
+                                    <DonarList portfolio={this.state} />
+                                    :
                                     <AllDonar donar={this.state.userInfo} />
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -29,4 +29,14 @@ export const get_District = () => {
     .catch(function (ex) {
         return ex;
    })
+};
+ 
+export const settings = () => {
+   return axios.get(`${API_URL}/get_single_data`)
+    .then(function (response) {
+     return response.data
+   })
+    .catch(function (ex) {
+        return ex;
+   })
  };
